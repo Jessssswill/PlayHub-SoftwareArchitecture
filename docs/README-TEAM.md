@@ -495,38 +495,6 @@ Sebelum request PR review, pastikan:
 
 ---
 
-## 💬 Komunikasi & Sync
-
-### Daily Check-in (via WA/Discord grup)
-
-Setiap hari kerja (minimal saat ada progress), kirim update singkat dengan format:
-
-```
-Done: [apa yang sudah selesai hari ini]
-WIP:  [sedang ngerjain apa sekarang]
-Blocker: [ada hambatan tidak? kalau iya, butuh bantuan dari siapa?]
-ETA:  [estimasi kapan bagian ini selesai]
-```
-
-Contoh:
-```
-Done: Setup lokal berhasil, berhasil jalankan 2-player TicTacToe
-WIP:  Testing Chess di Firefox ada visual glitch di coordinate labels
-Blocker: Tidak ada
-ETA:  Testing selesai besok sore
-```
-
-Kalau ada blocker, tag langsung orangnya di grup jangan didiamkan, karena blocker yang tidak diselesaikan bisa delay seluruh tim.
-
-### Kalau Stuck
-
-Urutan yang disarankan kalau mentok:
-1. Coba cari sendiri 15 menit baca error message dengan teliti, Google spesifik error-nya
-2. Tanya di grup tim mungkin ada yang sudah nemu masalah yang sama
-3. Ping project lead langsung tidak ada pertanyaan yang terlalu "noob"
-
-Untuk pertanyaan teknis tentang codebase, bisa buka Claude Code dan tanya langsung itu yang dipake pas build foundation ini.
-
 ### Deadline Estimasi
 
 Sesuaikan dengan deadline aktual dari dosen, tapi sebagai panduan:
@@ -572,7 +540,3 @@ game-session-manager/
 ```
 
 ---
-
-> **Pro tip**: Kalau ada yang mau nambah fitur atau fix sesuatu yang belum ada di task list, diskusi dulu di grup sebelum mulai biar gak ada duplikasi effort atau conflict sama pekerjaan orang lain.
->
-> Semangat! Project ini kalau berhasil di-present dengan baik bisa jadi portfolio yang impressive untuk kalian semua. 
