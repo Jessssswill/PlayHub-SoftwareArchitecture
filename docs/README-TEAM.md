@@ -1,23 +1,19 @@
-# PlayHub Panduan Tim 👾
+# PlayHub Panduan Tim
 
 > Game Session Manager API | Software Architecture Final Project
 > Dibaca pertama kali oleh setiap anggota tim baru.
 
 ---
 
-## 👋 Welcome, Tim!
+## Pembagian
 
-Halo semua! Ini adalah dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi dalam pengerjaan).
+Dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi on progress).
 
-Project ini adalah final project mata kuliah Software Architecture. Target utama kita bukan cuma bikin aplikasinya jalan, tapi juga **mendemonstrasikan pemahaman mendalam tentang 10 GoF Design Patterns** kepada dosen. Jadi setiap bagian code yang ada itu punya alasan arsitektur yang harus bisa kita jelasin.
-
-Good news-nya: foundation sudah 100% selesai. Backend berjalan, frontend sudah polished, 142 tests passing, dokumentasi sudah lengkap. Yang tersisa sekarang adalah polish, 1 fitur tambahan (Connect Four), dan persiapan presentasi. Estimasi total effort tersisa: **6–10 jam per orang**, tergantung track yang dipilih.
-
-Kalau ada yang bingung atau nemu bug, jangan panik dan jangan diam langsung tanya di grup atau ping project lead. Ini proyek tim, bukan ujian individual. 🤝
+Foundation sudah 100% selesai. Backend berjalan, frontend sudah polished, 142 tests passing, dokumentasi sudah lengkap. Yang tersisa sekarang adalah polish, 1 fitur tambahan (Connect Four), dan persiapan presentasi. Estimasi total effort tersisa: **6–10 jam per orang**, tergantung track yang dipilih.
 
 ---
 
-## ✅ Apa Yang Sudah Jadi
+## Apa Yang Sudah Jadi
 
 ### Backend
 
@@ -82,7 +78,7 @@ Fitur frontend:
 
 ---
 
-## 🛠️ Tech Stack & Kenapa Pilih Itu
+## Tech Stack & Kenapa Pilih Itu
 
 ### Backend
 
@@ -106,7 +102,7 @@ Fitur frontend:
 
 ---
 
-## 💻 Setup Lokal
+## Setup Lokal
 
 ### Pre-requisites
 
@@ -149,7 +145,7 @@ cd frontend
 npm run dev
 ```
 
-#### Opsi B: Lighter Mode ⭐ (recommended untuk laptop RAM 8 GB)
+#### Opsi B: Lighter Mode (recommended untuk laptop RAM 8 GB)
 
 ```bash
 # Terminal 1 Backend di production mode (lebih ringan, no hot reload)
@@ -195,7 +191,7 @@ npm test
 
 ---
 
-## 📋 Pembagian Task
+## Pembagian Task
 
 Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya scope yang jelas, deliverable yang terukur, dan estimasi effort yang realistis.
 
@@ -203,7 +199,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 1: Project Lead & Integration 🔒 (Sudah di-claim)
+### Track 1: Project Lead & Integration (Sudah di-claim)
 
 **Scope**: Foundation sudah selesai. Sisa task adalah implement Connect Four dan pastikan semua PR dari tim terintegrasi dengan benar.
 
@@ -216,7 +212,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 2: Testing & Quality Assurance 🔍
+### Track 2: Testing & Quality Assurance
 
 **Goal**: Pastikan aplikasi bekerja sempurna di semua skenario yang mungkin diuji dosen saat demo.
 
@@ -261,7 +257,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 3: Documentation & Slide Design 📊
+### Track 3: Documentation & Slide Design
 
 **Goal**: Project terlihat polished dan profesional di mata dosen. Slide yang bagus bisa naikkan kesan keseluruhan secara signifikan.
 
@@ -286,7 +282,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 4: Feature & Code Polish 💻
+### Track 4: Feature & Code Polish
 
 **Goal**: Pastikan code quality terjaga dan gameplay-nya solid.
 
@@ -304,7 +300,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 5: Demo & Presentation 🎤
+### Track 5: Demo & Presentation
 
 **Goal**: Deliverable presentasi yang smooth dan impressive. Dosen terkesan bukan cuma dari kode, tapi dari cara tim menyampaikannya.
 
@@ -329,7 +325,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-## 🎯 Pattern Assignment untuk Presentasi
+## Pattern Assignment untuk Presentasi
 
 Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 pattern** terutama yang di-assign ke track masing-masing.
 
@@ -363,7 +359,7 @@ Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
 ---
 
-## 🔧 Yang Belum Selesai
+## Yang Belum Selesai
 
 ### Priority 1 Wajib Selesai Sebelum Submit
 
@@ -422,7 +418,7 @@ Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
 ---
 
-## 🌿 Git Workflow
+## Git Workflow
 
 ### Branch Strategy
 
@@ -506,18 +502,18 @@ Sebelum request PR review, pastikan:
 Setiap hari kerja (minimal saat ada progress), kirim update singkat dengan format:
 
 ```
-✅ Done: [apa yang sudah selesai hari ini]
-🚧 WIP:  [sedang ngerjain apa sekarang]
-❌ Blocker: [ada hambatan tidak? kalau iya, butuh bantuan dari siapa?]
-⏰ ETA:  [estimasi kapan bagian ini selesai]
+Done: [apa yang sudah selesai hari ini]
+WIP:  [sedang ngerjain apa sekarang]
+Blocker: [ada hambatan tidak? kalau iya, butuh bantuan dari siapa?]
+ETA:  [estimasi kapan bagian ini selesai]
 ```
 
 Contoh:
 ```
-✅ Done: Setup lokal berhasil, berhasil jalankan 2-player TicTacToe
-🚧 WIP:  Testing Chess di Firefox ada visual glitch di coordinate labels
-❌ Blocker: Tidak ada
-⏰ ETA:  Testing selesai besok sore
+Done: Setup lokal berhasil, berhasil jalankan 2-player TicTacToe
+WIP:  Testing Chess di Firefox ada visual glitch di coordinate labels
+Blocker: Tidak ada
+ETA:  Testing selesai besok sore
 ```
 
 Kalau ada blocker, tag langsung orangnya di grup jangan didiamkan, karena blocker yang tidak diselesaikan bisa delay seluruh tim.
@@ -553,7 +549,7 @@ Sesuaikan dengan deadline aktual dari dosen, tapi sebagai panduan:
 
 ---
 
-## 📁 Struktur Folder (Quick Reference)
+## Struktur Folder (Quick Reference)
 
 ```
 game-session-manager/
@@ -584,6 +580,6 @@ game-session-manager/
 
 ---
 
-> 💡 **Pro tip**: Kalau ada yang mau nambah fitur atau fix sesuatu yang belum ada di task list, diskusi dulu di grup sebelum mulai biar gak ada duplikasi effort atau conflict sama pekerjaan orang lain.
+> **Pro tip**: Kalau ada yang mau nambah fitur atau fix sesuatu yang belum ada di task list, diskusi dulu di grup sebelum mulai biar gak ada duplikasi effort atau conflict sama pekerjaan orang lain.
 >
-> Semangat! Project ini kalau berhasil di-present dengan baik bisa jadi portfolio yang impressive untuk kalian semua. 🚀
+> Semangat! Project ini kalau berhasil di-present dengan baik bisa jadi portfolio yang impressive untuk kalian semua. 
