@@ -5,7 +5,7 @@
 
 ---
 
-## Pembagian
+## Pembagian Tugas
 
 Dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi on progress).
 
