@@ -4,13 +4,13 @@ All Mermaid diagrams are embedded in the Markdown documentation files and render
 
 To export PNG for presentations, use one of these methods:
 
-## Option 1 — mermaid.live (Recommended, no install)
+## Option 1: mermaid.live (Recommended, no install)
 
 1. Open https://mermaid.live
 2. Copy diagram source from the sections below
 3. Click "Export" → PNG or SVG
 
-## Option 2 — Mermaid CLI (requires Node.js)
+## Option 2: Mermaid CLI (requires Node.js)
 
 ```bash
 npm install -g @mermaid-js/mermaid-cli
@@ -37,7 +37,7 @@ graph TD
 
 ### sequence-make-move.mmd
 
-See full source in `docs/ARCHITECTURE.md` — Section 5 "Sequence Diagram — Make a Move"
+See full source in `docs/ARCHITECTURE.md`, Section 5 "Sequence Diagram: Make a Move"
 
 ### state-machine.mmd
 
@@ -72,5 +72,5 @@ classDiagram
 ---
 
 All inline diagrams (component diagram, UML class diagrams per pattern) can be found in:
-- `docs/ARCHITECTURE.md` — system-level diagrams
-- `docs/PATTERNS.md` — per-pattern UML class diagrams
+- `docs/ARCHITECTURE.md`: system-level diagrams
+- `docs/PATTERNS.md`: per-pattern UML class diagrams

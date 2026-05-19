@@ -1,6 +1,6 @@
 # Design Patterns Reference
 
-> Game Session Manager — 11 GoF Design Patterns
+> Game Session Manager 11 GoF Design Patterns
 > Grading artifact for Software Architecture Final Project
 
 ---
@@ -17,8 +17,8 @@
 | 6 | [State](#6-state) | Behavioral | `business/domain/states/` |
 | 7 | [Observer](#7-observer) | Behavioral | `business/domain/events/` |
 | 8 | [Facade](#8-facade) | Structural | `business/facades/game-engine.facade.ts` |
-| 9 | [Proxy — Protection](#9-proxy--protection) | Structural | `persistence/proxies/authorization.proxy.ts` |
-| 10 | [Proxy — Cache](#10-proxy--cache) | Structural | `persistence/proxies/cached-game-state.proxy.ts` |
+| 9 | [Proxy Protection](#9-proxy--protection) | Structural | `persistence/proxies/authorization.proxy.ts` |
+| 10 | [Proxy Cache](#10-proxy--cache) | Structural | `persistence/proxies/cached-game-state.proxy.ts` |
 | 11 | [Adapter](#11-adapter) | Structural | `infrastructure/adapters/` |
 
 ---
@@ -42,7 +42,7 @@ Memastikan hanya ada satu instance `GameRegistry` sepanjang lifetime aplikasi, s
 | Consumer | `GameEngineFacade`, `GameEngineAuthorizationProxy` |
 
 ### Kenapa Singleton, bukan alternatif?
-NestJS default DI scope adalah singleton — tidak perlu `getInstance()` manual yang raw Singleton klasik perlukan. Ini membuat pattern idiomatik di framework: tetap satu instance, tetap testable (bisa di-mock di unit test), tetap bisa di-replace dengan implementasi lain via DI token.
+NestJS default DI scope adalah singleton, tidak perlu `getInstance()` manual yang raw Singleton klasik perlukan. Ini membuat pattern idiomatik di framework: tetap satu instance, tetap testable (bisa di-mock di unit test), tetap bisa di-replace dengan implementasi lain via DI token.
 
 Alternatif `static Map` di level modul ditolak karena tidak bisa di-mock dan menyulitkan testing.
 
@@ -113,9 +113,9 @@ Memungkinkan kloning `GameState` sebelum mutasi, sehingga "preview move" atau va
 | Client (caller) | `TicTacToeGame.applyMove()`, `ChessGame.applyMove()` |
 
 ### Kenapa Prototype, bukan alternatif?
-Tanpa `clone()`, setiap `applyMove` harus tahu cara membangun GameState baru secara manual — melanggar enkapsulasi. `clone()` juga memastikan deep-copy yang benar untuk array nested (board state) tanpa client perlu peduli detailnya.
+Tanpa `clone()`, setiap `applyMove` harus tahu cara membangun GameState baru secara manual, melanggar enkapsulasi. `clone()` juga memastikan deep-copy yang benar untuk array nested (board state) tanpa client perlu peduli detailnya.
 
-Alternatif spread operator `{ ...state }` tidak cukup untuk nested array (board) — akan terjadi shallow copy dan moves berikutnya akan merusak history.
+Alternatif spread operator `{ ...state }` tidak cukup untuk nested array (board), akan terjadi shallow copy dan moves berikutnya akan merusak history.
 
 ### Code Snippet
 
@@ -246,7 +246,7 @@ classDiagram
 **Sumber:** Coursework
 
 ### Intent
-Menyediakan interface untuk membuat sekumpulan objek game yang saling compatible (Board + Rules + InitialState) tanpa menentukan concrete class-nya. Menambah game type baru hanya butuh satu factory baru — tidak ada perubahan di kode yang sudah ada.
+Menyediakan interface untuk membuat sekumpulan objek game yang saling compatible (Board + Rules + InitialState) tanpa menentukan concrete class-nya. Menambah game type baru hanya butuh satu factory baru, tidak ada perubahan di kode yang sudah ada.
 
 ### Lokasi
 - Interface: `backend/src/business/factories/game-factory.interface.ts`
@@ -267,7 +267,7 @@ Menyediakan interface untuk membuat sekumpulan objek game yang saling compatible
 | Client | `GameEngineFacade` via `GameFactoryProvider` |
 
 ### Kenapa Abstract Factory, bukan alternatif?
-Alternatif switch-case di facade akan meledak saat game type bertambah dan melanggar OCP. Factory memastikan setiap game memiliki board, rules, dan initial state yang konsisten — tidak bisa secara tidak sengaja mix TicTacToe board dengan Chess rules.
+Alternatif switch-case di facade akan meledak saat game type bertambah dan melanggar OCP. Factory memastikan setiap game memiliki board, rules, dan initial state yang konsisten, tidak bisa secara tidak sengaja mix TicTacToe board dengan Chess rules.
 
 ### Code Snippet
 
@@ -279,7 +279,7 @@ export interface IGameFactory {
   createInitialState(playerIds: [string, string]): GameState;
 }
 
-// Concrete Factory — TicTacToe
+// Concrete Factory TicTacToe
 @Injectable()
 export class TicTacToeFactory implements IGameFactory {
   createBoard(): Board<string> {
@@ -353,7 +353,7 @@ Alternatif Strategy pattern (delegate seluruh turn ke strategy object) akan mend
 ```typescript
 // backend/src/business/domain/games/game.abstract.ts
 export abstract class Game {
-  // Template Method — final, tidak boleh di-override
+  // Template Method final, tidak boleh di-override
   executeTurn(state: GameState, move: Move, emitter: GameEventEmitter): TurnResult {
     this.validateMove(state, move);               // hook 1
     const newState = this.applyMove(state, move); // hook 2
@@ -363,7 +363,7 @@ export abstract class Game {
     return { newState, endResult };
   }
 
-  // Primitive operations — subclass WAJIB implement
+  // Primitive operations subclass WAJIB implement
   protected abstract validateMove(state: GameState, move: Move): void;
   protected abstract applyMove(state: GameState, move: Move): GameState;
   protected abstract checkEndCondition(state: GameState): EndCondition;
@@ -404,7 +404,7 @@ classDiagram
 **Sumber:** Coursework
 
 ### Intent
-Mengelola lifecycle sesi (WAITING → IN_PROGRESS → PAUSED → FINISHED) dengan mendelegasikan setiap operasi ke concrete state object. Tiap state mendefinisikan sendiri mana operasi yang diizinkan dan mana yang di-throw — tidak ada `if/switch` di `GameSession`.
+Mengelola lifecycle sesi (WAITING → IN_PROGRESS → PAUSED → FINISHED) dengan mendelegasikan setiap operasi ke concrete state object. Tiap state mendefinisikan sendiri mana operasi yang diizinkan dan mana yang di-throw, tidak ada `if/switch` di `GameSession`.
 
 ### Lokasi
 - Interface: `backend/src/business/domain/states/game-lifecycle-state.interface.ts`
@@ -430,7 +430,7 @@ Mengelola lifecycle sesi (WAITING → IN_PROGRESS → PAUSED → FINISHED) denga
 ### Code Snippet
 
 ```typescript
-// WaitingForPlayersState — move ditolak, join diizinkan
+// WaitingForPlayersState move ditolak, join diizinkan
 export class WaitingForPlayersState implements IGameLifecycleState {
   canAcceptMove(_session: ISessionContext, _move: Move): void {
     throw new BadRequestException('Game belum mulai. Tunggu hingga game di-start.');
@@ -443,10 +443,10 @@ export class WaitingForPlayersState implements IGameLifecycleState {
   }
 }
 
-// InProgressState — move diizinkan, join ditolak
+// InProgressState move diizinkan, join ditolak
 export class InProgressState implements IGameLifecycleState {
   canAcceptMove(_session: ISessionContext, _move: Move): void {
-    // tidak throw — move diizinkan saat IN_PROGRESS
+    // tidak throw move diizinkan saat IN_PROGRESS
   }
 
   joinPlayer(_session: ISessionContext, _player: Player): void {
@@ -494,7 +494,7 @@ classDiagram
 **Sumber:** Coursework
 
 ### Intent
-Decoupling antara game engine (subject) dan WebSocket Gateway (observer) — game tidak perlu tahu siapa yang mendengarkan eventnya. Dua level observer: `GameEventEmitter` (per-session) dan `GameEventBus` (global bridge ke WebSocket).
+Decoupling antara game engine (subject) dan WebSocket Gateway (observer) game tidak perlu tahu siapa yang mendengarkan eventnya. Dua level observer: `GameEventEmitter` (per-session) dan `GameEventBus` (global bridge ke WebSocket).
 
 ### Lokasi
 - `backend/src/business/domain/events/game-event-emitter.ts`
@@ -516,7 +516,7 @@ Direct call dari `GameEngineFacade` ke `GameGateway` akan menciptakan circular d
 ### Code Snippet
 
 ```typescript
-// GameEventEmitter — strongly-typed event bus per session
+// GameEventEmitter strongly-typed event bus per session
 export class GameEventEmitter {
   private readonly emitter = new EventEmitter();
 
@@ -593,7 +593,7 @@ Menyediakan satu API sederhana untuk semua operasi game, menyembunyikan koordina
 | Client | `SessionController`, `GameEngineAuthorizationProxy` |
 
 ### Kenapa Facade, bukan alternatif?
-Tanpa Facade, controller harus mengorkestrasi 6+ subsystem langsung — controller jadi god class. Facade memisahkan "cara menggunakan" dari "cara kerja dalam", sesuai Single Responsibility Principle.
+Tanpa Facade, controller harus mengorkestrasi 6+ subsystem langsung controller jadi god class. Facade memisahkan "cara menggunakan" dari "cara kerja dalam", sesuai Single Responsibility Principle.
 
 ### Code Snippet
 
@@ -643,7 +643,7 @@ classDiagram
 
 ---
 
-## 9. Proxy — Protection
+## 9. Proxy Protection
 
 **Kategori:** Structural
 **Sumber:** Coursework
@@ -715,7 +715,7 @@ classDiagram
 
 ---
 
-## 10. Proxy — Cache
+## 10. Proxy Cache
 
 **Kategori:** Structural
 **Sumber:** Coursework
@@ -735,7 +735,7 @@ Meng-cache hasil `getState()` dengan TTL 1 detik sehingga spectator broadcast ya
 | Cache | `Map<string, CacheEntry>` (in-process) |
 
 ### Kenapa Cache Proxy, bukan decorator atau interceptor?
-Cache di-proxy level lebih efisien dari HTTP caching (tidak perlu serialize/deserialize). Auto-invalidasi via event `move.applied` menjamin freshness data — client tidak pernah melihat state stale lebih dari 1 detik setelah move dieksekusi.
+Cache di-proxy level lebih efisien dari HTTP caching (tidak perlu serialize/deserialize). Auto-invalidasi via event `move.applied` menjamin freshness data client tidak pernah melihat state stale lebih dari 1 detik setelah move dieksekusi.
 
 ### Code Snippet
 
@@ -792,7 +792,7 @@ classDiagram
 **Sumber:** Coursework
 
 ### Intent
-Menyatukan tiga implementasi AI move generation yang berbeda (Random, Minimax, External engine) di balik satu interface `IAIEngine` yang seragam. `GameEngineFacade` hanya kenal interface — implementasi AI bisa di-swap tanpa mengubah satu baris kode facade.
+Menyatukan tiga implementasi AI move generation yang berbeda (Random, Minimax, External engine) di balik satu interface `IAIEngine` yang seragam. `GameEngineFacade` hanya kenal interface, implementasi AI bisa di-swap tanpa mengubah satu baris kode facade.
 
 ### Lokasi
 - Interface (Target): `backend/src/infrastructure/adapters/ai-engine.interface.ts`
@@ -816,12 +816,12 @@ Setiap AI engine memiliki API berbeda (random tidak async-heavy, minimax butuh d
 ### Code Snippet
 
 ```typescript
-// Target interface — yang dikenal facade
+// Target interface yang dikenal facade
 export interface IAIEngine {
   getNextMove(state: GameState, gameType: GameType): Promise<Move>;
 }
 
-// RandomAiAdapter — adaptasi strategi random ke IAIEngine
+// RandomAiAdapter adaptasi strategi random ke IAIEngine
 @Injectable()
 export class RandomAiAdapter implements IAIEngine {
   async getNextMove(state: GameState, gameType: GameType): Promise<Move> {

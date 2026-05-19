@@ -1,6 +1,6 @@
 # Architecture Documentation
 
-> Game Session Manager — Software Architecture Final Project
+> Game Session Manager | Software Architecture Final Project
 
 ---
 
@@ -9,15 +9,15 @@
 **Game Session Manager** adalah sistem backend yang memungkinkan dua pemain bermain TicTacToe atau Chess secara real-time melalui browser. Sistem menerima permintaan melalui REST API dan WebSocket, mengelola lifecycle sesi permainan melalui state machine, dan mendistribusikan update ke semua subscriber secara push (Observer).
 
 **Pengguna utama:**
-- **Player** — membuat sesi, bergabung, dan mengirim move
-- **Spectator** — menonton sesi aktif secara real-time
-- **Frontend App** — mengkonsumsi REST API dan WebSocket
+- **Player**: membuat sesi, bergabung, dan mengirim move
+- **Spectator**: menonton sesi aktif secara real-time
+- **Frontend App**: mengkonsumsi REST API dan WebSocket
 
 **Scope saat ini:** Monolith tunggal, single-process, single-machine. Data persisted di SQLite; state aktif disimpan in-memory di GameRegistry.
 
 ---
 
-## 2. Architecture Style — Layered Architecture (Closed)
+## 2. Architecture Style: Layered Architecture (Closed)
 
 Sistem menggunakan **Closed Layered Architecture**: setiap lapisan hanya boleh berkomunikasi dengan lapisan langsung di bawahnya. Lapisan tidak boleh di-bypass.
 
@@ -46,7 +46,7 @@ graph TD
 
 | Layer | Responsibility | Komponen Utama | Patterns Used |
 |-------|---------------|----------------|--------------|
-| **Presentation** | Terima HTTP/WS request, serialize/deserialize DTO, route ke business | `SessionController`, `GameGateway` | — |
+| **Presentation** | Terima HTTP/WS request, serialize/deserialize DTO, route ke business | `SessionController`, `GameGateway` | (none) |
 | **Business** | Orkestrasikan use-case, enforce authorization, validasi move, emit events | `GameEngineFacade`, `AuthorizationProxy`, `CachedStateProxy`, `MoveValidationService` | Facade, Proxy ×2 |
 | **Domain** | Aturan game murni, lifecycle state machine, event emission | `GameSession`, `TicTacToeGame`, `ChessGame`, `GameEventEmitter`, concrete states | Template Method, State, Observer, Prototype |
 | **Persistence** | Simpan dan ambil session objects, provide in-memory cache | `GameRegistry`, `InMemoryStorage`, `TypeOrmStorage` | Singleton |
@@ -114,7 +114,7 @@ graph TD
 
 ---
 
-## 5. Sequence Diagram — "Make a Move"
+## 5. Sequence Diagram: Make a Move
 
 Flow lengkap ketika player mengirim move melalui REST API:
 
@@ -139,7 +139,7 @@ sequenceDiagram
     end
     AP->>FE: makeMove(sessionId, playerId, move)
     FE->>GS: canAcceptMove(move)
-    GS->>GS: state.canAcceptMove() — throws if not IN_PROGRESS
+    GS->>GS: state.canAcceptMove(), throws if not IN_PROGRESS
     FE->>VS: validate(session, playerId, move, engine)
     VS->>VS: check turn order + board bounds + occupancy
     alt invalid
@@ -161,7 +161,7 @@ sequenceDiagram
 
 ---
 
-## 6. State Machine Diagram — Session Lifecycle
+## 6. State Machine Diagram: Session Lifecycle
 
 ```mermaid
 stateDiagram-v2
@@ -188,7 +188,7 @@ stateDiagram-v2
 | PAUSED | ❌ throws | ❌ throws | ❌ throws | ✅ allowed | ✅ allowed |
 | FINISHED | ❌ throws | ❌ throws | ❌ throws | ❌ throws | ❌ throws |
 
-**Implementasi:** Tiap state adalah class terpisah (`WaitingForPlayersState`, `InProgressState`, `PausedState`, `FinishedState`) yang meng-implement `IGameLifecycleState`. `GameSession` mendelegasikan semua lifecycle ke state object saat ini — tidak ada `if/switch` di session class.
+**Implementasi:** Tiap state adalah class terpisah (`WaitingForPlayersState`, `InProgressState`, `PausedState`, `FinishedState`) yang meng-implement `IGameLifecycleState`. `GameSession` mendelegasikan semua lifecycle ke state object saat ini, tidak ada `if/switch` di session class.
 
 ---
 

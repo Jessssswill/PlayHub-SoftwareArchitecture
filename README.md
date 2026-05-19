@@ -1,6 +1,6 @@
 # Game Session Manager
 
-> **Software Architecture Final Project** — IF [Course Code] | [Semester] [Year]
+> Software Architecture Final Project | IF [Course Code] | [Semester] [Year]
 
 A real-time multiplayer game lobby and session backend supporting **TicTacToe** and **Chess**, demonstrating a strict **Layered Architecture** with **11 GoF design patterns** from the Software Architecture coursework.
 
@@ -23,7 +23,7 @@ A real-time multiplayer game lobby and session backend supporting **TicTacToe** 
 
 Backend dibangun di atas **NestJS 11** dengan TypeScript, menggunakan **SQLite via TypeORM** sebagai persistent store dan **Socket.io** untuk komunikasi dua arah. Frontend menggunakan **Next.js 16** dengan Zustand untuk state management dan polling/WebSocket untuk sinkronisasi real-time.
 
-Arsitektur sistem mengikuti pola **Layered Architecture (Closed Layers)** — Presentation, Business, Domain, Persistence — sehingga ketergantungan hanya mengalir ke bawah. Setiap layer terisolasi dan dapat diuji secara independen.
+Arsitektur sistem mengikuti pola **Layered Architecture (Closed Layers)** dengan empat lapisan: Presentation, Business, Domain, dan Persistence, sehingga ketergantungan hanya mengalir ke bawah. Setiap layer terisolasi dan dapat diuji secara independen.
 
 ---
 
@@ -75,20 +75,20 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full architecture documenta
 - **Node.js** 20+
 - **npm** 9+
 
-### 1 — Clone
+### 1. Clone
 
 ```bash
 git clone [repo-url]
 cd game-session-manager
 ```
 
-### 2 — Install all dependencies
+### 2. Install all dependencies
 
 ```bash
 npm run install:all
 ```
 
-### 3 — Run in development mode
+### 3. Run in development mode
 
 ```bash
 # Runs backend (:3001) + frontend (:3000) concurrently
@@ -102,14 +102,14 @@ npm run dev:backend    # http://localhost:3001
 npm run dev:frontend   # http://localhost:3000
 ```
 
-### 4 — Try Demo Mode (quickest verification)
+### 4. Try Demo Mode (quickest verification)
 
 1. Open [http://localhost:3000](http://localhost:3000)
 2. Click **"Try Demo Mode"** button
 3. A pre-configured TicTacToe session opens immediately
 4. Click any cell to make a move; WebSocket will update both players' views in real-time
 
-### 5 — API Documentation (Swagger)
+### 5. API Documentation (Swagger)
 
 Interactive docs: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
 
@@ -179,7 +179,7 @@ npm run test:cov   # Coverage report
 | Document | Purpose |
 |----------|---------|
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Layered architecture, component/sequence/state diagrams |
-| [PATTERNS.md](docs/PATTERNS.md) | All 11 patterns — intent, location, code snippet, UML |
+| [PATTERNS.md](docs/PATTERNS.md) | All 11 patterns (intent, location, code snippet, UML) |
 | [ISO-25010-JUSTIFICATION.md](docs/ISO-25010-JUSTIFICATION.md) | Quality attribute mapping |
 | [GSLC-SLIDE-CONTENT.md](docs/GSLC-SLIDE-CONTENT.md) | Slide-by-slide presentation content |
 | [HANDOFF.md](docs/HANDOFF.md) | Team notes, decision log, presentation prep |
@@ -188,4 +188,4 @@ npm run test:cov   # Coverage report
 
 ## License
 
-MIT — for academic use.
+MIT, untuk keperluan akademik.

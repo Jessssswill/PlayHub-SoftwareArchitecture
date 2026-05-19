@@ -1,14 +1,14 @@
 # Team Handoff Notes
 
-> Game Session Manager — Software Architecture Final Project
+> Game Session Manager | Software Architecture Final Project
 > Last updated: May 2026
 
 ---
 
 ## What's Done
 
-- ✅ All 11 patterns implemented (see [PATTERNS.md](PATTERNS.md))
-- ✅ Layered Architecture enforced — no cross-layer imports
+- ✅ All 10 design patterns implemented (Proxy applied in 2 contexts: Protection + Cache see [PATTERNS.md](PATTERNS.md))
+- ✅ Layered Architecture enforced (no cross-layer imports)
 - ✅ REST API: 7 endpoints (GET/POST /sessions, GET/:id/state, POST/:id/move, PATCH/:id/end, POST/:id/join, POST /demo)
 - ✅ WebSocket Gateway: real-time move broadcast to session room
 - ✅ Frontend with Tier S polish (consistent design tokens, Demo Mode, /architecture page)
@@ -22,14 +22,14 @@
 
 ## What's Pending (for team to complete)
 
-- [ ] **Chess: implement check/checkmate detection** — currently win = king captured. True chess rules require check/checkmate logic in `ChessRules.ts`
-- [ ] **Increase test coverage** — target >70%. Current coverage focused on facade + proxies. Missing: state machine transitions, event emitter, builder edge cases
-- [ ] **Cross-browser testing** — verify on Chrome, Firefox, Edge; Safari WebSocket behavior may differ
-- [ ] **Mobile UX** — verify board sizing on small phones (<375px viewport). TicTacToe cells may overflow.
-- [ ] **PowerPoint design** — content is in `docs/GSLC-SLIDE-CONTENT.md`. Just apply visual styling.
-- [ ] **Screenshot UI** — take screenshots for slide 9 while system is running. Capture: lobby, both game boards, architecture page.
-- [ ] **Practice presentation flow** — especially the live demo (2 tabs for real-time). Rehearse once before the real thing.
-- [ ] **Fill in team member names** — replace `[Member N]` and `[NIM]` placeholders in README + GSLC slides
+- [ ] **Chess: implement check/checkmate detection** (currently win = king captured, belum true checkmate logic di `ChessRules.ts`)
+- [ ] **Increase test coverage** target >70%. Coverage saat ini fokus di facade + proxies. Yang belum: state machine transitions, event emitter, builder edge cases
+- [ ] **Cross-browser testing**, verify on Chrome, Firefox, Edge; Safari WebSocket behavior may differ
+- [ ] **Mobile UX**, verify board sizing on small phones (<375px viewport). TicTacToe cells may overflow.
+- [ ] **PowerPoint design**, content sudah ada di `docs/GSLC-SLIDE-CONTENT.md`, tinggal styling visual
+- [ ] **Screenshot UI**, take screenshots for slide 9 while system is running. Capture: lobby, both game boards, architecture page.
+- [ ] **Practice presentation flow**, especially the live demo (2 tabs for real-time). Rehearse once before the real thing.
+- [ ] **Fill in team member names**, replace `[Member N]` and `[NIM]` placeholders in README + GSLC slides
 
 ---
 
@@ -62,25 +62,25 @@ npm run dev
 
 The system is designed so adding a new game type (e.g., Checkers, Go) requires **zero changes to existing code**:
 
-1. **Domain** — Create `business/domain/games/checkers/checkers.game.ts extends Game`:
-   - Implement `validateMove()` — throw if move illegal
-   - Implement `applyMove()` — return new GameState with updated board
-   - Implement `checkEndCondition()` — return `EndCondition` (isOver, isDraw, winnerId)
+1. **Domain**: Create `business/domain/games/checkers/checkers.game.ts extends Game`:
+   - Implement `validateMove()`, throw if move illegal
+   - Implement `applyMove()`, return new GameState with updated board
+   - Implement `checkEndCondition()`, return `EndCondition` (isOver, isDraw, winnerId)
 
-2. **Rules** — Create `checkers.rules.ts` with static validation helpers
+2. **Rules**, Create `checkers.rules.ts` with static validation helpers
 
-3. **Factory** — Create `business/factories/checkers.factory.ts implements IGameFactory`:
-   - `createBoard()` — return 8×8 board with initial piece positions
-   - `createRules()` — return Checkers rules instance
-   - `createInitialState(playerIds)` — return GameState with standard setup
+3. **Factory**, Create `business/factories/checkers.factory.ts implements IGameFactory`:
+   - `createBoard()`, return 8×8 board with initial piece positions
+   - `createRules()`, return Checkers rules instance
+   - `createInitialState(playerIds)`, return GameState with standard setup
 
-4. **Registration** — Add to `GameFactoryProvider.getFactory()` map
+4. **Registration**, Add to `GameFactoryProvider.getFactory()` map
 
-5. **Enum** — Add `CHECKERS = 'CHECKERS'` to `GameType` enum
+5. **Enum**, Add `CHECKERS = 'CHECKERS'` to `GameType` enum
 
-6. **Frontend board** — Create `frontend/src/components/CheckersBoard.tsx`
+6. **Frontend board**, Create `frontend/src/components/CheckersBoard.tsx`
 
-7. **Frontend patterns page** — Add entry to `frontend/src/lib/patterns-data.ts` if new pattern introduced
+7. **Frontend patterns page**, Add entry to `frontend/src/lib/patterns-data.ts` if new pattern introduced
 
 That's it. The Facade, Controller, Gateway, Builder, Registry, and Proxy all work without modification.
 
@@ -93,10 +93,10 @@ That's it. The Facade, Controller, Gateway, Builder, Registry, and Proxy all wor
 | **Architecture style** | Layered (Closed) | Microservices | Team 4 orang + 2 minggu = monolith optimal. Microservices punya deployment overhead tidak sebanding dengan scope |
 | **Architecture style** | Layered (Closed) | Hexagonal/Ports & Adapters | Migration path ada jika perlu. Hexagonal over-engineered untuk game monolith ini |
 | **Framework** | NestJS | Express | DI + module system natively enforce Layered Architecture; decorators membuat patterns eksplisit |
-| **Database** | SQLite + TypeORM | PostgreSQL | Demo scope — SQLite zero-config. TypeORM abstraction memungkinkan swap ke PostgreSQL tanpa ubah kode |
+| **Database** | SQLite + TypeORM | PostgreSQL | Demo scope, SQLite zero-config. TypeORM abstraction memungkinkan swap ke PostgreSQL tanpa ubah kode |
 | **Caching** | In-process Proxy | Redis | Redis over-engineered untuk single-instance demo. Jika scale out, ganti ke Redis di CachedGameStateProxy |
 | **AI move gen** | Adapter pattern | Direct switch-case | Adapter memungkinkan swap AI engine tanpa ubah Facade. 3 implementasi sudah dibuat |
-| **Bonus patterns** | Tidak diimplementasi | Strategy, Command, CoR | Scope management — 11 coursework patterns sudah comprehensive. Bonus patterns bisa jadi feature Phase 2 |
+| **Bonus patterns** | Tidak diimplementasi | Strategy, Command, CoR | Scope management, 11 coursework patterns sudah comprehensive. Bonus patterns bisa jadi feature Phase 2 |
 
 ---
 
@@ -119,7 +119,7 @@ Baca `docs/PATTERNS.md` untuk intent lengkap, lokasi file, code snippet, dan UML
 
 **Q1: "Kenapa Layered, bukan Clean Architecture atau Hexagonal?"**
 
-A: Layered cocok untuk tim kecil dengan timeline pendek. Clean/Hexagonal menambahkan lapisan abstraksi (ports, use case interactors) yang memberikan value lebih jika domain sangat kompleks atau perlu swap framework. Untuk game monolith dengan 2 game type, Layered sudah memberikan testability dan modularity yang cukup. Dan Layered punya migration path ke Hexagonal — layer Domain kami sudah tanpa dependency NestJS, yang merupakan langkah pertama menuju Hexagonal.
+A: Layered cocok untuk tim kecil dengan timeline pendek. Clean/Hexagonal menambahkan lapisan abstraksi (ports, use case interactors) yang memberikan value lebih jika domain sangat kompleks atau perlu swap framework. Untuk game monolith dengan 2 game type, Layered sudah memberikan testability dan modularity yang cukup. Dan Layered punya migration path ke Hexagonal, layer Domain kami sudah tanpa dependency NestJS, yang merupakan langkah pertama menuju Hexagonal.
 
 **Q2: "Kenapa State pattern di session lifecycle, bukan enum + if-else?"**
 
@@ -127,11 +127,11 @@ A: 4 lifecycle state × 6 operasi = 24 branch kondisi. Setiap tambahan state (mi
 
 **Q3: "Singleton itu anti-pattern, kenapa dipakai?"**
 
-A: Singleton yang dimaksud di sini bukan classical getInstance() — itu memang anti-pattern karena global mutable state sulit ditest. Kami menggunakan DI-managed singleton (NestJS default scope), yang tetap bisa di-mock di unit test dan bisa di-replace via DI token. Tujuannya: satu registry untuk semua request, bukan class variable global.
+A: Singleton yang dimaksud di sini bukan classical getInstance(), itu memang anti-pattern karena global mutable state sulit ditest. Kami menggunakan DI-managed singleton (NestJS default scope), yang tetap bisa di-mock di unit test dan bisa di-replace via DI token. Tujuannya: satu registry untuk semua request, bukan class variable global.
 
 **Q4: "Kenapa Proxy (Protection), bukan NestJS Guard?"**
 
-A: NestJS Guard berjalan di HTTP layer — tidak bisa diuji tanpa HTTP context dan tidak berlaku untuk WebSocket. Authorization Proxy adalah pure TypeScript class yang bisa diuji dengan unit test biasa, berjalan untuk semua transport (REST + WebSocket), dan bisa di-stack dengan Proxy lain (Cache Proxy). Separation of concerns lebih jelas.
+A: NestJS Guard berjalan di HTTP layer, tidak bisa diuji tanpa HTTP context dan tidak berlaku untuk WebSocket. Authorization Proxy adalah pure TypeScript class yang bisa diuji dengan unit test biasa, berjalan untuk semua transport (REST + WebSocket), dan bisa di-stack dengan Proxy lain (Cache Proxy). Separation of concerns lebih jelas.
 
 **Q5: "Kenapa tidak ada Redis untuk WebSocket?"**
 
