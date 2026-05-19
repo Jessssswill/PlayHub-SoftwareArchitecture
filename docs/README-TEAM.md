@@ -518,13 +518,6 @@ ETA:  Testing selesai besok sore
 
 Kalau ada blocker, tag langsung orangnya di grup jangan didiamkan, karena blocker yang tidak diselesaikan bisa delay seluruh tim.
 
-### Meeting Sync
-
-- **Meeting 1 (ASAP)**: Assign track, pastikan semua orang bisa setup lokal
-- **Meeting 2 (Mid-sprint)**: Review progress, solve blocker, adjust timeline kalau perlu
-- **Dry-run #1**: Presentasi simulasi penuh
-- **Dry-run #2**: H-1 presentasi
-
 ### Kalau Stuck
 
 Urutan yang disarankan kalau mentok:
