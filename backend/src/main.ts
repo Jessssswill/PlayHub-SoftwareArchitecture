@@ -1,10 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Socket.io WebSocket adapter
+  app.useWebSocketAdapter(new IoAdapter(app));
 
   // CORS — izinkan frontend Next.js di port 3000
   app.enableCors({
@@ -27,8 +31,6 @@ async function bootstrap() {
     .setDescription('Multiplayer game lobby & session backend')
     .setVersion('1.0')
     .addTag('sessions', 'Game session lifecycle')
-    .addTag('players', 'Player management')
-    .addTag('moves', 'In-game move operations')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

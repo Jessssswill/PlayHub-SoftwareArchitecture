@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PresentationModule } from './presentation/presentation.module';
 
 @Module({
   imports: [
-    // ConfigService tersedia global — tidak perlu import ulang di tiap module
     ConfigModule.forRoot({ isGlobal: true }),
-
-    // SQLite file-based DB; synchronize:true hanya untuk development
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'game.db',
@@ -15,8 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       logging: false,
     }),
+    // PresentationModule → PersistenceModule → BusinessModule → InfrastructureModule
+    PresentationModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
