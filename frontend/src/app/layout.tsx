@@ -13,18 +13,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="h-full antialiased">
       <body className={`${tokens.bg} ${tokens.text} min-h-screen`}>
-        {/* Sticky Header */}
-        <header
-          className={`sticky top-0 z-50 ${tokens.bgCard} border-b ${tokens.border} px-6 py-4`}
-        >
+        {/* Sticky Header — glassmorphism */}
+        <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 py-3.5">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
-            <Link href="/" className={`font-semibold text-base ${tokens.text} hover:${tokens.accentText}`}>
-              Game Session Manager
+            <Link href="/" className="font-bold text-sm tracking-tight group">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200 group-hover:from-blue-300 group-hover:to-blue-100 transition-all duration-200">
+                Game Session Manager
+              </span>
             </Link>
-            <nav className="flex items-center gap-4">
+            <nav className="flex items-center gap-6">
               <Link
                 href="/architecture"
-                className={`text-sm ${tokens.textMuted} hover:${tokens.text} transition-colors duration-150`}
+                className={`text-sm ${tokens.textMuted} hover:text-slate-100 transition-colors duration-150`}
               >
                 Architecture
               </Link>
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`text-sm ${tokens.textMuted} hover:${tokens.text} transition-colors duration-150`}
+                className={`text-sm ${tokens.textMuted} hover:text-slate-100 transition-colors duration-150`}
               >
                 GitHub
               </a>

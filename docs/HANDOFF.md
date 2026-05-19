@@ -90,7 +90,7 @@ That's it. The Facade, Controller, Gateway, Builder, Registry, and Proxy all wor
 
 | Decision | Chosen | Rejected | Reason |
 |---------|--------|---------|--------|
-| **Architecture style** | Layered (Closed) | Microservices | Team 4 orang + 2 minggu = monolith optimal. Microservices punya deployment overhead tidak sebanding dengan scope |
+| **Architecture style** | Layered (Closed) | Microservices | Tim 5 orang + 2 minggu = monolith optimal. Microservices punya deployment overhead tidak sebanding dengan scope |
 | **Architecture style** | Layered (Closed) | Hexagonal/Ports & Adapters | Migration path ada jika perlu. Hexagonal over-engineered untuk game monolith ini |
 | **Framework** | NestJS | Express | DI + module system natively enforce Layered Architecture; decorators membuat patterns eksplisit |
 | **Database** | SQLite + TypeORM | PostgreSQL | Demo scope, SQLite zero-config. TypeORM abstraction memungkinkan swap ke PostgreSQL tanpa ubah kode |
@@ -107,9 +107,10 @@ Tiap presenter harus paham **intent + lokasi + justifikasi** pola yang ditugaska
 | Orang | Patterns | File Utama |
 |-------|---------|-----------|
 | **1** | Singleton, Prototype, Template Method | `registry/game-registry.service.ts`, `games/game-state.ts`, `games/game.abstract.ts` |
-| **2** | Abstract Factory, Builder, Adapter | `factories/`, `builders/game-session.builder.ts`, `adapters/` |
-| **3** | Observer, Facade | `events/game-event-emitter.ts`, `facades/game-engine.facade.ts` |
-| **4** | State, Proxy (×2) | `states/`, `proxies/authorization.proxy.ts`, `proxies/cached-game-state.proxy.ts` |
+| **2** | Abstract Factory, Builder | `factories/`, `builders/game-session.builder.ts` |
+| **3** | Adapter, Facade | `infrastructure/adapters/`, `facades/game-engine.facade.ts` |
+| **4** | Observer, State | `events/game-event-emitter.ts`, `states/` |
+| **5** | Proxy (×2) | `proxies/authorization.proxy.ts`, `proxies/cached-game-state.proxy.ts` |
 
 Baca `docs/PATTERNS.md` untuk intent lengkap, lokasi file, code snippet, dan UML per pattern.
 

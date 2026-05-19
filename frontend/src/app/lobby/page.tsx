@@ -6,7 +6,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { ArrowLeft } from 'lucide-react';
 import { GameType } from '../../lib/types';
-import { tokens, btn, transitions } from '../../lib/design-tokens';
+import { tokens, btn, transitions, card } from '../../lib/design-tokens';
 import { createSession } from '../../lib/api';
 
 export default function LobbyCreatePage() {
@@ -44,69 +44,82 @@ export default function LobbyCreatePage() {
     <main className="max-w-md mx-auto px-4 py-10">
       <Link
         href="/"
-        className={`inline-flex items-center gap-1 text-sm ${tokens.textMuted} hover:${tokens.text} ${transitions.default} mb-6`}
+        className={`inline-flex items-center gap-1.5 text-sm ${tokens.textMuted} hover:text-slate-100 ${transitions.default} mb-8`}
       >
         <ArrowLeft className="w-4 h-4" />
         Back to lobby
       </Link>
 
-      <h1 className={`text-xl font-bold ${tokens.text} mb-1`}>New Game Session</h1>
-      <p className={`text-sm ${tokens.textMuted} mb-6`}>
-        Both players share the same URL to play.
-      </p>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold mb-1">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-200">
+            New Game Session
+          </span>
+        </h1>
+        <p className={`text-sm ${tokens.textMuted}`}>
+          Both players share the same URL to play.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Game Type */}
-        <div>
-          <label className={`block text-sm font-medium ${tokens.text} mb-2`}>Game Type</label>
-          <div className="grid grid-cols-2 gap-3">
-            {([GameType.TIC_TAC_TOE, GameType.CHESS] as const).map((gt) => (
-              <button
-                type="button"
-                key={gt}
-                onClick={() => setGameType(gt)}
-                className={`p-4 border-2 rounded-lg text-center transition-colors duration-150 ${
-                  gameType === gt
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : `border-zinc-200 hover:border-zinc-300 ${tokens.bgCard}`
-                }`}
-              >
-                <div className="text-3xl mb-1">{gt === GameType.TIC_TAC_TOE ? '⭕' : '♟'}</div>
-                <div className={`text-sm font-medium ${tokens.text}`}>
-                  {gt === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : 'Chess'}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Player Names */}
-        {(['Player 1', 'Player 2'] as const).map((label, i) => (
-          <div key={label}>
-            <label className={`block text-sm font-medium ${tokens.text} mb-1`}>
-              {label} Name <span className={tokens.danger}>*</span>
+      <div className={card}>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Game Type */}
+          <div>
+            <label className={`block text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-3`}>
+              Game Type
             </label>
-            <input
-              type="text"
-              value={i === 0 ? p1Name : p2Name}
-              onChange={(e) => (i === 0 ? setP1Name : setP2Name)(e.target.value)}
-              placeholder={i === 0 ? 'e.g. Alice' : 'e.g. Bob'}
-              required
-              className={`w-full border ${tokens.border} rounded-lg px-3 py-2 text-sm ${tokens.text}
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                bg-white placeholder:${tokens.textMuted}`}
-            />
+            <div className="grid grid-cols-2 gap-3">
+              {([GameType.TIC_TAC_TOE, GameType.CHESS] as const).map((gt) => (
+                <button
+                  type="button"
+                  key={gt}
+                  onClick={() => setGameType(gt)}
+                  className={`p-4 border-2 rounded-xl text-center transition-all duration-150 ${
+                    gameType === gt
+                      ? 'border-blue-500 bg-blue-950 shadow-[0_0_16px_rgba(59,130,246,0.15)]'
+                      : 'border-slate-600 hover:border-slate-500 bg-slate-900'
+                  }`}
+                >
+                  <div className="text-3xl mb-2">{gt === GameType.TIC_TAC_TOE ? '⭕' : '♟'}</div>
+                  <div className={`text-sm font-semibold ${gameType === gt ? 'text-blue-300' : tokens.textMuted}`}>
+                    {gt === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : 'Chess'}
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-        ))}
 
-        <button
-          type="submit"
-          disabled={submitting || !p1Name.trim() || !p2Name.trim()}
-          className={`w-full py-2.5 ${btn.primary} text-center`}
-        >
-          {submitting ? 'Creating…' : 'Create Session'}
-        </button>
-      </form>
+          {/* Divider */}
+          <div className="border-t border-slate-700" />
+
+          {/* Player Names */}
+          {(['Player 1', 'Player 2'] as const).map((label, i) => (
+            <div key={label}>
+              <label className={`block text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-2`}>
+                {label} Name <span className={tokens.danger}>*</span>
+              </label>
+              <input
+                type="text"
+                value={i === 0 ? p1Name : p2Name}
+                onChange={(e) => (i === 0 ? setP1Name : setP2Name)(e.target.value)}
+                placeholder={i === 0 ? 'e.g. Alice' : 'e.g. Bob'}
+                required
+                className={`w-full border ${tokens.border} rounded-xl px-3 py-2.5 text-sm ${tokens.text}
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                  bg-slate-900 placeholder:text-slate-600 transition-colors duration-150`}
+              />
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            disabled={submitting || !p1Name.trim() || !p2Name.trim()}
+            className={`w-full py-2.5 ${btn.primary} text-center text-sm`}
+          >
+            {submitting ? 'Creating…' : 'Create Session'}
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

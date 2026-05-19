@@ -21,7 +21,7 @@ export class GameSessionBuilder {
   private allowSpectatorsFlag = false;
   private maxSpectatorsCount = 0;
 
-  /** Reset builder ke kondisi awal — bisa di-reuse untuk session berikutnya. */
+  /** Reset builder ke kondisi awal, bisa di-reuse untuk session berikutnya. */
   reset(): this {
     this.gameType = null;
     this.players = [];

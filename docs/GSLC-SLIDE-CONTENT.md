@@ -32,7 +32,7 @@
 
 4. **Authorization**: Hanya player terdaftar yang boleh mengirim move. Bagaimana memisahkan logika auth dari business logic game?
 
-5. **Maintainability**: Tim 4 orang, timeline 2 minggu. Arsitektur harus cukup terstruktur untuk kolaborasi paralel tanpa konflik.
+5. **Maintainability**: Tim 5 orang, timeline 2 minggu. Arsitektur harus cukup terstruktur untuk kolaborasi paralel tanpa konflik.
 
 ---
 
@@ -66,7 +66,7 @@
 |-----------|---------|-----------|
 | **User Needs** | Real-time low-latency, API-first untuk multi-platform client | Monolith dengan WebSocket, tidak perlu service mesh |
 | **Business / Domain** | Game rules terpisah dari API handling; bounded context jelas | Layer Domain terpisah dari Presentation |
-| **System Analysis** | Tim 4 orang, 2 minggu → deployment complexity harus minimal | Monolith > Microservices untuk scope ini |
+| **System Analysis** | Tim 5 orang, 2 minggu → deployment complexity harus minimal | Monolith > Microservices untuk scope ini |
 | **ISO 25010** | Prioritas: Maintainability + Modifiability + Security | Closed layers enforce dependency direction |
 
 **Alternatif yang Ditolak:**
@@ -176,15 +176,17 @@ NestJS dipilih secara spesifik karena framework ini natively mendukung pattern y
 | Nama | NIM | Kontribusi Utama |
 |------|-----|-----------------|
 | [Member 1] | [NIM] | Backend Lead (Domain Layer, State Machine, Template Method) |
-| [Member 2] | [NIM] | Backend (Factory, Builder, Proxy, Adapter) |
-| [Member 3] | [NIM] | Frontend (Next.js, Zustand, WebSocket client) |
-| [Member 4] | [NIM] | Testing, Documentation, ISO 25010 Mapping |
+| [Member 2] | [NIM] | Backend (Factory, Builder, Creational Patterns) |
+| [Member 3] | [NIM] | Backend Infrastructure (Adapter, Facade, AI Engine) |
+| [Member 4] | [NIM] | Frontend (Next.js, Zustand, WebSocket client, Observer) |
+| [Member 5] | [NIM] | Testing, Documentation, Proxy, ISO 25010 Mapping |
 
 **Pattern per orang (untuk presentasi):**
-- Orang 1: Singleton, Prototype, Template Method, State
-- Orang 2: Abstract Factory, Builder, Adapter
-- Orang 3: Observer (frontend side), Facade
-- Orang 4: Proxy (Protection + Cache), ISO 25010
+- Orang 1: Singleton, Prototype, Template Method
+- Orang 2: Abstract Factory, Builder
+- Orang 3: Adapter, Facade
+- Orang 4: Observer, State
+- Orang 5: Proxy (Protection + Cache), ISO 25010
 
 ---
 

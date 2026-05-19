@@ -4,7 +4,7 @@ import { Player } from '../../../shared/types/player.interface';
 import { Move, EndCondition } from '../../../shared/types/move.types';
 import { GameState } from '../games/game-state';
 
-/** Strongly-typed event map — setiap event key punya payload yang terdefinisi. */
+/** Strongly-typed event map, setiap event key punya payload yang terdefinisi. */
 interface GameEventPayloads {
   'move.applied': { newState: GameState; move: Move; endResult: EndCondition };
   'state.changed': { from: GameStatus; to: GameStatus };

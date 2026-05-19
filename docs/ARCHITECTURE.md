@@ -35,7 +35,7 @@ graph TD
 ```
 
 **Justifikasi pemilihan Layered Architecture:**
-- Tim kecil (4 orang) + timeline 2 minggu → monolith optimal vs microservices
+- Tim kecil (5 orang) + timeline 2 minggu → monolith optimal vs microservices
 - Bounded context jelas: game rules terpisah dari API handling
 - Testability per-layer: domain logic tidak bergantung HTTP atau database
 - Migration path: dapat berevolusi ke Hexagonal/Clean tanpa rewrite total

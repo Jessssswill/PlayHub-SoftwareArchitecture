@@ -103,12 +103,12 @@ export default function GamePageClient({ sessionId }: Props) {
 
   const statusBadge =
     currentSession.status === GameStatus.IN_PROGRESS
-      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+      ? 'bg-blue-950 text-blue-300 border border-blue-800'
       : currentSession.status === GameStatus.FINISHED
-        ? 'bg-red-50 text-red-700 border border-red-200'
+        ? 'bg-red-950 text-red-300 border border-red-800'
         : currentSession.status === GameStatus.PAUSED
-          ? 'bg-zinc-100 text-zinc-600 border border-zinc-200'
-          : 'bg-amber-50 text-amber-700 border border-amber-200';
+          ? 'bg-slate-700 text-slate-300 border border-slate-600'
+          : 'bg-amber-950 text-amber-300 border border-amber-800';
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
@@ -134,7 +134,7 @@ export default function GamePageClient({ sessionId }: Props) {
 
       {/* Player identity selector */}
       {!myPlayerId && (
-        <div className={`mb-6 p-4 ${card} border-zinc-300`}>
+        <div className={`mb-6 p-4 ${card}`}>
           <p className={`text-sm font-medium ${tokens.text} mb-3`}>Who are you?</p>
           <div className="flex gap-3 flex-wrap">
             {currentSession.players.map((p) => (
@@ -159,10 +159,10 @@ export default function GamePageClient({ sessionId }: Props) {
       {/* Game over banner */}
       {(isFinished || endResult) && (
         <div
-          className={`mb-6 p-4 rounded-lg border text-center ${
+          className={`mb-6 p-4 rounded-xl border text-center ${
             endResult?.isDraw
-              ? `bg-zinc-50 border-zinc-200 ${tokens.textMuted}`
-              : 'bg-blue-50 border-blue-200 text-blue-800'
+              ? `bg-slate-800 border-slate-600 ${tokens.textMuted}`
+              : 'bg-blue-950 border-blue-800 text-blue-200'
           }`}
         >
           {endResult?.isDraw ? (
@@ -182,17 +182,23 @@ export default function GamePageClient({ sessionId }: Props) {
       {/* Turn indicator */}
       {!isFinished && (
         <div
-          className={`mb-4 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 ${
+          className={`mb-4 px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2.5 border ${
             isMyTurn
-              ? 'bg-blue-50 border border-blue-200 text-blue-700'
-              : `bg-zinc-50 border ${tokens.border} ${tokens.textMuted}`
+              ? 'bg-blue-950 border-blue-800 text-blue-200'
+              : `bg-slate-800 ${tokens.border} ${tokens.textMuted}`
           }`}
         >
           {isMyTurn ? (
-            <>Your turn — click to move</>
+            <>
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+              </span>
+              Your turn — click to move
+            </>
           ) : (
             <>
-              <Clock className="w-3.5 h-3.5" />
+              <Clock className="w-3.5 h-3.5 shrink-0" />
               Waiting for{' '}
               {currentSession.players.find((p) => p.id === gameState.currentPlayerId)?.name ?? '…'}
             </>

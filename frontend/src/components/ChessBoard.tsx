@@ -44,10 +44,10 @@ export default function ChessBoard({ board, onMove, disabled, myPlayerId, curren
   };
 
   return (
-    <div className="inline-block border-2 border-zinc-400 rounded overflow-hidden">
+    <div className="inline-block border-2 border-slate-600 rounded-xl overflow-hidden shadow-lg shadow-black/40">
       {board.map((row, r) => (
         <div key={r} className="flex">
-          <span className="w-6 flex items-center justify-center text-xs text-zinc-400 select-none bg-zinc-50">
+          <span className="w-6 flex items-center justify-center text-xs text-slate-500 select-none bg-slate-800">
             {8 - r}
           </span>
           {row.map((cell, c) => {
@@ -60,16 +60,16 @@ export default function ChessBoard({ board, onMove, disabled, myPlayerId, curren
                 onClick={() => handleClick(r, c)}
                 className={[
                   'w-10 h-10 flex items-center justify-center text-2xl',
-                  isLight ? 'bg-zinc-100' : 'bg-zinc-400',
-                  isSelected ? 'ring-2 ring-blue-500 ring-inset' : '',
-                  !disabled && isMyTurn ? 'cursor-pointer hover:opacity-75' : 'cursor-default',
+                  isLight ? 'bg-slate-300' : 'bg-slate-600',
+                  isSelected ? 'ring-2 ring-blue-400 ring-inset' : '',
+                  !disabled && isMyTurn ? 'cursor-pointer hover:opacity-80' : 'cursor-default',
                 ].join(' ')}
               >
                 {cell ? (
                   <span
                     className={[
-                      isWhitePiece ? 'text-zinc-900' : 'text-zinc-700',
-                      'drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]',
+                      isWhitePiece ? 'text-slate-950' : 'text-slate-100',
+                      'drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]',
                     ].join(' ')}
                   >
                     {PIECE_SYMBOLS[cell] ?? cell}
@@ -80,9 +80,9 @@ export default function ChessBoard({ board, onMove, disabled, myPlayerId, curren
           })}
         </div>
       ))}
-      <div className="flex ml-6 bg-zinc-50">
+      <div className="flex ml-6 bg-slate-800">
         {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((f) => (
-          <span key={f} className="w-10 text-center text-xs text-zinc-400 select-none py-0.5">{f}</span>
+          <span key={f} className="w-10 text-center text-xs text-slate-500 select-none py-0.5">{f}</span>
         ))}
       </div>
     </div>

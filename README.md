@@ -10,10 +10,11 @@ A real-time multiplayer game lobby and session backend supporting **TicTacToe** 
 
 | Name | Student ID | Role |
 |------|-----------|------|
-| [Member 1] | [NIM] | Backend Lead / Patterns |
-| [Member 2] | [NIM] | Backend / Testing |
-| [Member 3] | [NIM] | Frontend |
-| [Member 4] | [NIM] | Docs / QA |
+| [Member 1] | [NIM] | Backend Lead (Domain Layer, State Machine) |
+| [Member 2] | [NIM] | Backend (Creational Patterns, Factory, Builder) |
+| [Member 3] | [NIM] | Backend Infrastructure (Adapter, Facade, AI Engine) |
+| [Member 4] | [NIM] | Frontend (Next.js, Zustand, WebSocket client) |
+| [Member 5] | [NIM] | Testing, Documentation, Proxy, ISO 25010 |
 
 ---
 

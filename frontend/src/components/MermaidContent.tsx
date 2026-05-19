@@ -13,7 +13,7 @@ export default function MermaidContent({ chart }: Props) {
     let cancelled = false;
     const render = async () => {
       const mermaid = (await import('mermaid')).default;
-      mermaid.initialize({ startOnLoad: false, theme: 'neutral', fontFamily: 'inherit' });
+      mermaid.initialize({ startOnLoad: false, theme: 'dark', fontFamily: 'inherit' });
       if (cancelled || !ref.current) return;
       const id = `mermaid-${Math.random().toString(36).slice(2)}`;
       try {
