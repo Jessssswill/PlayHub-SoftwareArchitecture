@@ -1,7 +1,7 @@
 # Prompt: Implement Connect Four
 
 > Paste isi file ini ke Claude Code untuk mengimplementasikan game Connect Four.
-> File ini adalah instruksi teknis lengkap — baca dulu dari atas ke bawah sebelum mulai.
+> File ini adalah instruksi teknis lengkap baca dulu dari atas ke bawah sebelum mulai.
 
 ---
 
@@ -9,7 +9,7 @@
 
 Kamu diminta implement game **Connect Four** ke dalam codebase PlayHub (Game Session Manager API).
 
-Codebase ini sudah punya dua game yang berfungsi: **TicTacToe** dan **Chess**. Connect Four harus mengikuti **pola arsitektur yang persis sama** — jangan re-invent the wheel, ikuti struktur yang sudah ada.
+Codebase ini sudah punya dua game yang berfungsi: **TicTacToe** dan **Chess**. Connect Four harus mengikuti **pola arsitektur yang persis sama** jangan re-invent the wheel, ikuti struktur yang sudah ada.
 
 Penting: codebase ini punya strict **Layered Architecture** dan menggunakan **GoF Design Patterns**. Setiap keputusan desain harus konsisten dengan pola yang ada. Baca referensi file di bawah sebelum menulis kode apapun.
 
@@ -34,7 +34,7 @@ Baca file-file ini untuk memahami pola yang harus diikuti:
 backend/src/business/domain/games/game.abstract.ts       ← Abstract base class (Template Method)
 backend/src/business/domain/games/game-state.ts          ← GameState dengan Prototype pattern
 backend/src/business/domain/games/tic-tac-toe/           ← Referensi utama, ikuti ini
-  ├── tic-tac-toe.game.ts                                 ← Implementasi konkret game
+  ├── tic-tac-toe.game.ts                                ← Implementasi konkret game
   └── tic-tac-toe.rules.ts                               ← Validasi rules
 ```
 
