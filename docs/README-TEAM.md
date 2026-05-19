@@ -1,4 +1,4 @@
-# PlayHub — Panduan Tim 👾
+# PlayHub Panduan Tim 👾
 
 > Game Session Manager API | Software Architecture Final Project
 > Dibaca pertama kali oleh setiap anggota tim baru.
@@ -7,13 +7,13 @@
 
 ## 👋 Welcome, Tim!
 
-Halo semua! Ini adalah dokumentasi utama untuk project **PlayHub** — API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi dalam pengerjaan).
+Halo semua! Ini adalah dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi dalam pengerjaan).
 
 Project ini adalah final project mata kuliah Software Architecture. Target utama kita bukan cuma bikin aplikasinya jalan, tapi juga **mendemonstrasikan pemahaman mendalam tentang 10 GoF Design Patterns** kepada dosen. Jadi setiap bagian code yang ada itu punya alasan arsitektur yang harus bisa kita jelasin.
 
 Good news-nya: foundation sudah 100% selesai. Backend berjalan, frontend sudah polished, 142 tests passing, dokumentasi sudah lengkap. Yang tersisa sekarang adalah polish, 1 fitur tambahan (Connect Four), dan persiapan presentasi. Estimasi total effort tersisa: **6–10 jam per orang**, tergantung track yang dipilih.
 
-Kalau ada yang bingung atau nemu bug, jangan panik dan jangan diam — langsung tanya di grup atau ping project lead. Ini proyek tim, bukan ujian individual. 🤝
+Kalau ada yang bingung atau nemu bug, jangan panik dan jangan diam langsung tanya di grup atau ping project lead. Ini proyek tim, bukan ujian individual. 🤝
 
 ---
 
@@ -55,8 +55,8 @@ Kalau ada yang bingung atau nemu bug, jangan panik dan jangan diam — langsung 
 | Architecture Showcase | `/architecture` | Done (killer feature buat presentasi!) |
 
 Fitur frontend:
-- Design tokens consistent (`frontend/src/lib/design-tokens.ts`) — dark theme polished
-- Toast notifications via react-hot-toast — no `alert()` popup jadul
+- Design tokens consistent (`frontend/src/lib/design-tokens.ts`) dark theme polished
+- Toast notifications via react-hot-toast no `alert()` popup jadul
 - Real-time WebSocket integration dengan Zustand state management
 - LoadingState, EmptyState, ErrorState components
 
@@ -78,7 +78,7 @@ Fitur frontend:
 | `GSLC-SLIDE-CONTENT.md` | Content slide 10 halaman, siap didesain |
 | `HANDOFF.md` | Q&A preparation + ADR (Architecture Decision Record) |
 | `CONNECT-FOUR-PROMPT.md` | Prompt Claude Code untuk implement Connect Four |
-| `README-TEAM.md` | File ini — panduan tim |
+| `README-TEAM.md` | File ini panduan tim |
 
 ---
 
@@ -88,11 +88,11 @@ Fitur frontend:
 
 | Tech | Version | Buat Apa | Kenapa Pilih |
 |------|---------|---------|--------------|
-| NestJS | 11 | Backend framework | Native support dependency injection + decorator. Bikin Layered Architecture jadi natural enforce — gak perlu manual setup folder convention. `@Injectable()` itu literally Singleton pattern. |
+| NestJS | 11 | Backend framework | Native support dependency injection + decorator. Bikin Layered Architecture jadi natural enforce gak perlu manual setup folder convention. `@Injectable()` itu literally Singleton pattern. |
 | TypeScript | 5.7 | Bahasa pemrograman | Static typing untuk domain model yang kompleks. Interface enforcement memastikan tiap pattern diimplementasi dengan benar. Kalau salah, langsung error saat compile, bukan saat runtime. |
-| TypeORM | 0.3 | ORM (database access) | Abstraksi database — kalau mau ganti dari SQLite ke PostgreSQL untuk production, cukup ubah 1 baris config. Tidak ada perubahan di business logic. |
+| TypeORM | 0.3 | ORM (database access) | Abstraksi database kalau mau ganti dari SQLite ke PostgreSQL untuk production, cukup ubah 1 baris config. Tidak ada perubahan di business logic. |
 | SQLite | - | Database | File-based, zero config, cocok untuk demo akademik. Tidak perlu install MySQL/PostgreSQL. Database otomatis terbuat saat app dijalankan pertama kali. |
-| Socket.io | 4 | Real-time WebSocket | Room broadcasting bawaan — tiap game session punya "room"-nya sendiri. Kalau player A move, semua yang join room yang sama langsung dapat update tanpa polling. |
+| Socket.io | 4 | Real-time WebSocket | Room broadcasting bawaan tiap game session punya "room"-nya sendiri. Kalau player A move, semua yang join room yang sama langsung dapat update tanpa polling. |
 
 ### Frontend
 
@@ -111,9 +111,9 @@ Fitur frontend:
 ### Pre-requisites
 
 Sebelum mulai, pastikan sudah terinstall:
-- **Node.js 20+** — download di [nodejs.org](https://nodejs.org). Cek versi: `node --version`
-- **Git** — download di [git-scm.com](https://git-scm.com). Cek versi: `git --version`
-- **VSCode** (recommended) — extension yang berguna: ESLint, TypeScript, Tailwind IntelliSense
+- **Node.js 20+** download di [nodejs.org](https://nodejs.org). Cek versi: `node --version`
+- **Git** download di [git-scm.com](https://git-scm.com). Cek versi: `git --version`
+- **VSCode** (recommended) extension yang berguna: ESLint, TypeScript, Tailwind IntelliSense
 
 ### Clone & Install
 
@@ -140,11 +140,11 @@ Ada 2 opsi tergantung spec laptop:
 Buka 2 terminal terpisah:
 
 ```bash
-# Terminal 1 — Backend (port 3001)
+# Terminal 1 Backend (port 3001)
 cd backend
 npm run start:dev
 
-# Terminal 2 — Frontend (port 3000)
+# Terminal 2 Frontend (port 3000)
 cd frontend
 npm run dev
 ```
@@ -152,12 +152,12 @@ npm run dev
 #### Opsi B: Lighter Mode ⭐ (recommended untuk laptop RAM 8 GB)
 
 ```bash
-# Terminal 1 — Backend di production mode (lebih ringan, no hot reload)
+# Terminal 1 Backend di production mode (lebih ringan, no hot reload)
 cd backend
 npm run build
 npm run start:prod
 
-# Terminal 2 — Frontend (tetap dev mode supaya perubahan UI langsung ke-update)
+# Terminal 2 Frontend (tetap dev mode supaya perubahan UI langsung ke-update)
 cd frontend
 npm run dev
 ```
@@ -166,10 +166,10 @@ npm run dev
 
 ### Verifikasi Setup Berhasil
 
-1. Buka http://localhost:3000 — harus muncul Game Lobby (dark theme)
-2. Klik **"Demo Mode"** — harus redirect ke game page dengan TicTacToe board aktif
-3. Buka http://localhost:3001/api/docs — harus muncul Swagger UI dengan semua endpoint
-4. Di game page, coba klik cell di board — harus bisa move
+1. Buka http://localhost:3000 harus muncul Game Lobby (dark theme)
+2. Klik **"Demo Mode"** harus redirect ke game page dengan TicTacToe board aktif
+3. Buka http://localhost:3001/api/docs harus muncul Swagger UI dengan semua endpoint
+4. Di game page, coba klik cell di board harus bisa move
 
 Kalau ada error saat `npm install`, coba:
 ```bash
@@ -224,7 +224,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 - [ ] **Multi-player test**: Buka 2 tab browser yang berbeda (atau 2 device), join session yang sama, mainkan TicTacToe + Chess sampai selesai. Verifikasi state sync real-time benar-benar jalan.
 - [ ] **Cross-browser test**: Jalankan flow lengkap di Chrome, Firefox, dan Edge. Catat kalau ada yang berbeda.
 - [ ] **Responsive test**: Buka Chrome DevTools (`F12`), toggle device toolbar (`Ctrl+Shift+M`), test di preset "iPhone SE" (375px) dan "iPad" (768px). Cek apakah board game overflow atau tidak.
-- [ ] **Bug hunting**: Coba skenario edge case — join session yang sudah FINISHED, klik move bukan giliran kamu, refresh halaman saat game berlangsung.
+- [ ] **Bug hunting**: Coba skenario edge case join session yang sudah FINISHED, klik move bukan giliran kamu, refresh halaman saat game berlangsung.
 - [ ] **Test Connect Four**: Setelah Track 1 selesai implement, langsung test end-to-end.
 - [ ] **Dokumentasi hasil**: Buat file `docs/TESTING-LOG.md` (pakai template di bawah).
 - [ ] **Bug reporting**: Buat GitHub Issue untuk setiap bug yang ditemukan, label dengan `bug`.
@@ -267,16 +267,16 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 **Task detail:**
 - [ ] **Review docs**: Baca semua file di folder `docs/`, fix typo, improve kalimat yang ambigu. Fokusin ke `PATTERNS.md` dan `GSLC-SLIDE-CONTENT.md`.
-- [ ] **PowerPoint**: Buat slide deck dari `docs/GSLC-SLIDE-CONTENT.md` — content sudah ready, tinggal design visual. 10 slides minimum.
+- [ ] **PowerPoint**: Buat slide deck dari `docs/GSLC-SLIDE-CONTENT.md` content sudah ready, tinggal design visual. 10 slides minimum.
 - [ ] **Export Mermaid diagrams**: Buka [mermaid.live](https://mermaid.live), paste diagram dari `docs/diagrams/README.md`, export PNG, simpan di folder `docs/diagrams/`.
 - [ ] **Screenshots UI**: Jalankan app, screenshot 5 halaman berikut dalam kondisi bagus (bukan loading state):
   1. Landing page (kosong, belum ada session)
   2. Lobby dengan beberapa session aktif
-  3. TicTacToe game board — saat sedang dimainkan
-  4. Chess game board — saat sedang dimainkan
-  5. `/architecture` page — scroll ke bagian diagram
+  3. TicTacToe game board saat sedang dimainkan
+  4. Chess game board saat sedang dimainkan
+  5. `/architecture` page scroll ke bagian diagram
 - [ ] **Update README.md**: Isi bagian team di root README.md dengan nama asli + NIM.
-- [ ] **Q&A cheat sheet**: Buat file `docs/QA-CHEATSHEET.md` — satu halaman ringkasan jawaban 5 pertanyaan paling mungkin ditanya dosen (referensi: section "Anticipated Professor Questions" di `docs/HANDOFF.md`).
+- [ ] **Q&A cheat sheet**: Buat file `docs/QA-CHEATSHEET.md` satu halaman ringkasan jawaban 5 pertanyaan paling mungkin ditanya dosen (referensi: section "Anticipated Professor Questions" di `docs/HANDOFF.md`).
 
 **Estimasi**: 8–10 jam
 
@@ -331,7 +331,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ## 🎯 Pattern Assignment untuk Presentasi
 
-Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 pattern** — terutama yang di-assign ke track masing-masing.
+Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 pattern** terutama yang di-assign ke track masing-masing.
 
 | Track | Pattern yang Harus Dikuasai |
 |-------|---------------------------|
@@ -343,29 +343,29 @@ Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 p
 
 Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
-1. **Pattern ini itu apa?** — 1 kalimat definisi simpel, bukan definisi buku teks.
-2. **Kenapa kami pakai di project ini?** — 1 kalimat justifikasi spesifik ke codebase kita.
-3. **Di mana lokasinya?** — file path konkret.
-4. **Apa yang rusak kalau pattern ini dihilangkan?** — impact analysis.
+1. **Pattern ini itu apa?** 1 kalimat definisi simpel, bukan definisi buku teks.
+2. **Kenapa kami pakai di project ini?** 1 kalimat justifikasi spesifik ke codebase kita.
+3. **Di mana lokasinya?** file path konkret.
+4. **Apa yang rusak kalau pattern ini dihilangkan?** impact analysis.
 
 **Contoh untuk Facade pattern:**
-1. "Facade itu satu class yang nyembunyiin kompleksitas di baliknya — client cukup panggil 1 method, gak perlu tau ada berapa subsystem yang dikoordinasikan."
-2. "Kita pakai karena operasi `makeMove` itu sebenarnya koordinasiin 6 subsystem sekaligus: authorization, game state, validator, event emitter, cache invalidation, dan registry. Kalau gak ada Facade, Controller harus tau semua itu — melanggar Single Responsibility Principle."
+1. "Facade itu satu class yang nyembunyiin kompleksitas di baliknya, client cukup panggil 1 method, gak perlu tau ada berapa subsystem yang dikoordinasikan."
+2. "Kita pakai karena operasi `makeMove` itu sebenarnya koordinasiin 6 subsystem sekaligus: authorization, game state, validator, event emitter, cache invalidation, dan registry. Kalau gak ada Facade, Controller harus tau semua itu melanggar Single Responsibility Principle."
 3. "`backend/src/business/facades/game-engine.facade.ts`"
-4. "Tanpa Facade, semua logika koordinasi itu harus ada di Controller. Tiap kali ada perubahan workflow (misal: tambah logging), kita harus ubah Controller — padahal Controller harusnya cuma handle HTTP, bukan business logic."
+4. "Tanpa Facade, semua logika koordinasi itu harus ada di Controller. Tiap kali ada perubahan workflow (misal: tambah logging), kita harus ubah Controller padahal Controller harusnya cuma handle HTTP, bukan business logic."
 
 **Tips belajar pattern (langkah konkret):**
 1. Buka `docs/PATTERNS.md`, temukan section pattern-mu.
 2. Buka file code aktual di path yang tertulis.
-3. Baca komentar di atasnya — ada penjelasan kenapa pattern ini dipilih.
-4. Coba buka file test-nya (di `backend/test/`) — dari test kelihatan pattern dipakai untuk apa.
+3. Baca komentar di atasnya ada penjelasan kenapa pattern ini dipilih.
+4. Coba buka file test-nya (di `backend/test/`) dari test kelihatan pattern dipakai untuk apa.
 5. Coba "modifikasi mental": kalau pattern ini dihapus, aku harus nulis apa untuk replace behavior-nya?
 
 ---
 
 ## 🔧 Yang Belum Selesai
 
-### Priority 1 — Wajib Selesai Sebelum Submit
+### Priority 1 Wajib Selesai Sebelum Submit
 
 **Task 1.1: Implement Connect Four**
 - Owner: Track 1 (Project Lead)
@@ -395,14 +395,14 @@ Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
   - [ ] Consistent visual design
 
 **Task 1.4: Dry-Run Presentasi (2x)**
-- Owner: Track 5 (Presentation) — koordinasikan dengan semua anggota
+- Owner: Track 5 (Presentation) koordinasikan dengan semua anggota
 - Estimasi: 2–3 jam (2 sesi)
 - Acceptance criteria:
   - [ ] Setiap anggota bisa jawab 5 pertanyaan tentang pattern-nya
   - [ ] Total durasi presentasi sesuai limit dosen (tanya ke dosen)
   - [ ] Live demo jalan tanpa glitch
 
-### Priority 2 — Sangat Direkomendasikan
+### Priority 2 Sangat Direkomendasikan
 
 | Task | Owner | Estimasi |
 |------|-------|---------|
@@ -412,7 +412,7 @@ Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 | Screenshots UI berkualitas tinggi (5 screenshots) | Track 3 | 1 jam |
 | Export Mermaid diagrams ke PNG | Track 3 | 30 menit |
 
-### Priority 3 — Nice to Have (Skip kalau waktu tidak cukup)
+### Priority 3 Nice to Have (Skip kalau waktu tidak cukup)
 
 | Task | Owner | Estimasi | Catatan |
 |------|-------|---------|--------|
@@ -515,12 +515,12 @@ Setiap hari kerja (minimal saat ada progress), kirim update singkat dengan forma
 Contoh:
 ```
 ✅ Done: Setup lokal berhasil, berhasil jalankan 2-player TicTacToe
-🚧 WIP:  Testing Chess di Firefox — ada visual glitch di coordinate labels
+🚧 WIP:  Testing Chess di Firefox ada visual glitch di coordinate labels
 ❌ Blocker: Tidak ada
 ⏰ ETA:  Testing selesai besok sore
 ```
 
-Kalau ada blocker, tag langsung orangnya di grup — jangan didiamkan, karena blocker yang tidak diselesaikan bisa delay seluruh tim.
+Kalau ada blocker, tag langsung orangnya di grup jangan didiamkan, karena blocker yang tidak diselesaikan bisa delay seluruh tim.
 
 ### Meeting Sync
 
@@ -532,11 +532,11 @@ Kalau ada blocker, tag langsung orangnya di grup — jangan didiamkan, karena bl
 ### Kalau Stuck
 
 Urutan yang disarankan kalau mentok:
-1. Coba cari sendiri 15 menit — baca error message dengan teliti, Google spesifik error-nya
-2. Tanya di grup tim — mungkin ada yang sudah nemu masalah yang sama
-3. Ping project lead langsung — tidak ada pertanyaan yang terlalu "noob"
+1. Coba cari sendiri 15 menit baca error message dengan teliti, Google spesifik error-nya
+2. Tanya di grup tim mungkin ada yang sudah nemu masalah yang sama
+3. Ping project lead langsung tidak ada pertanyaan yang terlalu "noob"
 
-Untuk pertanyaan teknis tentang codebase, bisa buka Claude Code dan tanya langsung — itu yang dipake pas build foundation ini.
+Untuk pertanyaan teknis tentang codebase, bisa buka Claude Code dan tanya langsung itu yang dipake pas build foundation ini.
 
 ### Deadline Estimasi
 
@@ -584,6 +584,6 @@ game-session-manager/
 
 ---
 
-> 💡 **Pro tip**: Kalau ada yang mau nambah fitur atau fix sesuatu yang belum ada di task list, diskusi dulu di grup sebelum mulai — biar gak ada duplikasi effort atau conflict sama pekerjaan orang lain.
+> 💡 **Pro tip**: Kalau ada yang mau nambah fitur atau fix sesuatu yang belum ada di task list, diskusi dulu di grup sebelum mulai biar gak ada duplikasi effort atau conflict sama pekerjaan orang lain.
 >
 > Semangat! Project ini kalau berhasil di-present dengan baik bisa jadi portfolio yang impressive untuk kalian semua. 🚀
