@@ -337,7 +337,7 @@ Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 p
 | Track 4 (Feature Dev) | Proxy (Auth + Cache), Template Method |
 | Track 5 (Presentation) | Observer + Layered Architecture overview |
 
-Untuk setiap pattern, kamu harus bisa jawab 4 pertanyaan ini dalam **<1 menit**:
+Untuk setiap pattern, wajib bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
 1. **Pattern ini itu apa?** 1 kalimat definisi simpel, bukan definisi buku teks.
 2. **Kenapa kami pakai di project ini?** 1 kalimat justifikasi spesifik ke codebase kita.
