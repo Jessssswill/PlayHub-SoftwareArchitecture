@@ -17,11 +17,11 @@ Penting: codebase ini punya strict **Layered Architecture** dan menggunakan **Go
 
 ## ATURAN WAJIB
 
-1. **Baca file referensi dulu** — jangan langsung nulis kode. Pahami pattern yang ada.
-2. **Ikuti persis struktur yang sama dengan TicTacToe** — naming convention, folder structure, class hierarchy, semua harus konsisten.
-3. **Zero perubahan pada file yang tidak berkaitan** — jangan ubah TicTacToe, Chess, atau file infrastruktur yang sudah jalan, kecuali file yang disebutkan di bagian "Files to Modify".
-4. **Semua tests harus tetap passing** — jalankan `npm test` sebelum selesai dan verifikasi 0 failed.
-5. **Jangan pakai `any` type** — pakai type yang tepat atau `unknown`.
+1. **Baca file referensi dulu** jangan langsung nulis kode. Pahami pattern yang ada.
+2. **Ikuti persis struktur yang sama dengan TicTacToe** naming convention, folder structure, class hierarchy, semua harus konsisten.
+3. **Zero perubahan pada file yang tidak berkaitan** jangan ubah TicTacToe, Chess, atau file infrastruktur yang sudah jalan, kecuali file yang disebutkan di bagian "Files to Modify".
+4. **Semua tests harus tetap passing** jalankan `npm test` sebelum selesai dan verifikasi 0 failed.
+5. **Jangan pakai `any` type** pakai type yang tepat atau `unknown`.
 
 ---
 
@@ -72,7 +72,7 @@ backend/test/                                            ← Lihat struktur test
 
 ### State Representation
 
-Board direpresentasikan sebagai `string[][]` — array of rows, setiap cell berisi `''` (kosong), `'R'` (Red), atau `'Y'` (Yellow).
+Board direpresentasikan sebagai `string[][]` array of rows, setiap cell berisi `''` (kosong), `'R'` (Red), atau `'Y'` (Yellow).
 
 ```
 Row 0: ['', '', '', '', '', '', '']   ← baris paling atas
@@ -90,17 +90,17 @@ Row 5: ['R', 'Y', '', '', '', '', ''] ← baris paling bawah
 ### 1. `backend/src/business/domain/games/connect-four/connect-four.game.ts`
 
 Extend `Game` abstract class. Implement 3 abstract methods:
-- `validateMove(state, move, playerId)` — validasi: kolom dalam range 0–6, kolom belum penuh
-- `applyMove(state, move, playerId)` — clone state, drop biji ke baris terbawah yang kosong di kolom tersebut, update `currentPlayerId` ke player berikutnya
-- `checkEndCondition(state)` — cek apakah ada 4 berjajar (horizontal, vertikal, diagonal), atau draw (board penuh)
+- `validateMove(state, move, playerId)` validasi: kolom dalam range 0–6, kolom belum penuh
+- `applyMove(state, move, playerId)` clone state, drop biji ke baris terbawah yang kosong di kolom tersebut, update `currentPlayerId` ke player berikutnya
+- `checkEndCondition(state)` cek apakah ada 4 berjajar (horizontal, vertikal, diagonal), atau draw (board penuh)
 
 ### 2. `backend/src/business/domain/games/connect-four/connect-four.rules.ts`
 
 Static utility class dengan method:
-- `static isValidColumn(board, col)` — cek col dalam range dan masih ada ruang
-- `static dropPiece(board, col, piece)` — return row index tempat biji jatuh (baris terbawah yang kosong)
-- `static checkWin(board, piece)` — cek apakah `piece` punya 4 berjajar
-- `static isBoardFull(board)` — cek apakah semua 42 cell terisi
+- `static isValidColumn(board, col)` cek col dalam range dan masih ada ruang
+- `static dropPiece(board, col, piece)` return row index tempat biji jatuh (baris terbawah yang kosong)
+- `static checkWin(board, piece)` cek apakah `piece` punya 4 berjajar
+- `static isBoardFull(board)` cek apakah semua 42 cell terisi
 
 Untuk `checkWin`, cek 4 arah:
 - Horizontal: tiap baris, cek 4 berurutan
@@ -111,9 +111,9 @@ Untuk `checkWin`, cek 4 arah:
 ### 3. `backend/src/business/factories/connect-four.factory.ts`
 
 Implement `IGameFactory` interface:
-- `createBoard()` — return 6×7 board kosong: `Array.from({ length: 6 }, () => Array(7).fill(''))`
-- `createRules()` — return instance `ConnectFourRules`
-- `createInitialState(playerIds)` — return `GameState` dengan board kosong dan `currentPlayerId` = playerIds[0]
+- `createBoard()` return 6×7 board kosong: `Array.from({ length: 6 }, () => Array(7).fill(''))`
+- `createRules()` return instance `ConnectFourRules`
+- `createInitialState(playerIds)` return `GameState` dengan board kosong dan `currentPlayerId` = playerIds[0]
 
 ### 4. `backend/src/business/domain/games/connect-four/index.ts`
 
@@ -155,7 +155,7 @@ Requirements UI:
 - Render grid 6×7 menggunakan CSS grid atau flexbox
 - Tiap cell: lingkaran (menggunakan `rounded-full`) di dalam cell persegi
 - Warna lingkaran: merah (`bg-red-500`) untuk `'R'`, kuning-amber (`bg-amber-400`) untuk `'Y'`, abu-abu kosong (`bg-slate-600`) untuk `''`
-- Column headers: 7 tombol di atas board — satu per kolom. Klik kolom → panggil `onColClick(colIndex)`. Disabled kalau `disabled === true`.
+- Column headers: 7 tombol di atas board satu per kolom. Klik kolom → panggil `onColClick(colIndex)`. Disabled kalau `disabled === true`.
 - Hover effect pada column header: highlight kolom yang di-hover
 - Pakai design tokens dari `../../lib/design-tokens` untuk warna background dan border
 
@@ -203,16 +203,16 @@ Ikuti urutan ini supaya bisa test incremental:
 
 ```
 1. Baca semua file referensi dulu (khususnya tic-tac-toe.game.ts dan tic-tac-toe.factory.ts)
-2. Buat connect-four.rules.ts — mulai dari unit yang paling mudah di-isolasi
-3. Buat connect-four.game.ts — extend Game abstract class
+2. Buat connect-four.rules.ts mulai dari unit yang paling mudah di-isolasi
+3. Buat connect-four.game.ts extend Game abstract class
 4. Buat connect-four.factory.ts
-5. Modifikasi game-factory-provider.ts — daftarkan factory baru
-6. Modifikasi GameType enum — pastikan CONNECT_FOUR ada
-7. Jalankan npm test — semua 142 tests lama harus tetap passing
-8. Buat connect-four.spec.ts dan jalankan — semua test baru harus passing
+5. Modifikasi game-factory-provider.ts daftarkan factory baru
+6. Modifikasi GameType enum pastikan CONNECT_FOUR ada
+7. Jalankan npm test semua 142 tests lama harus tetap passing
+8. Buat connect-four.spec.ts dan jalankan semua test baru harus passing
 9. Buat ConnectFourBoard.tsx di frontend
-10. Modifikasi GameBoard.tsx — tambah case CONNECT_FOUR
-11. Modifikasi lobby/page.tsx — tambah Connect Four sebagai pilihan
+10. Modifikasi GameBoard.tsx tambah case CONNECT_FOUR
+11. Modifikasi lobby/page.tsx tambah Connect Four sebagai pilihan
 12. Manual test end-to-end: create session Connect Four, play 2 giliran, verifikasi win condition
 ```
 
