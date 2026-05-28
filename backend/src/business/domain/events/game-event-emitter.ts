@@ -53,6 +53,10 @@ export class GameEventEmitter {
   }
 
   removeAllListeners(event?: keyof GameEventPayloads): void {
-    this.emitter.removeAllListeners(event);
+    if (event) {
+      this.emitter.removeAllListeners(event);
+    } else {
+      this.emitter.removeAllListeners();
+    }
   }
 }

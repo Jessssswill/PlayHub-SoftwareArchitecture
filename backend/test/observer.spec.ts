@@ -97,4 +97,38 @@ describe('Observer — GameEventEmitter', () => {
 
     expect(calls).toHaveLength(0);
   });
+
+  it('removeAllListeners() tanpa argumen menghapus SEMUA listener di semua event', () => {
+    const calls: string[] = [];
+    emitter.on('player.joined', () => calls.push('joined'));
+    emitter.on('player.left', () => calls.push('left'));
+
+    emitter.removeAllListeners();
+    emitter.emit('player.joined', { player: { id: 'p1', name: 'A' } });
+    emitter.emit('player.left', { playerId: 'p1' });
+
+    expect(calls).toHaveLength(0);
+  });
+
+  it('off() dengan listener yang tidak terdaftar tidak melempar error', () => {
+    const listener = () => {};
+    expect(() => emitter.off('player.joined', listener)).not.toThrow();
+  });
+
+  it('beberapa listener once() pada event yang sama semua terpanggil sekali', () => {
+    const calls: string[] = [];
+    emitter.once('state.changed', () => calls.push('once-1'));
+    emitter.once('state.changed', () => calls.push('once-2'));
+
+    emitter.emit('state.changed', { from: GameStatus.WAITING, to: GameStatus.IN_PROGRESS });
+    emitter.emit('state.changed', { from: GameStatus.IN_PROGRESS, to: GameStatus.PAUSED });
+
+    expect(calls).toEqual(['once-1', 'once-2']);
+  });
+
+  it('emit() pada event tanpa listener tidak melempar error', () => {
+    expect(() => 
+      emitter.emit('player.left', { playerId: 'p99' })
+    ).not.toThrow();
+  });
 });
