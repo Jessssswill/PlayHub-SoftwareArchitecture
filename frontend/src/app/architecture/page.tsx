@@ -55,9 +55,9 @@ graph TD
 `;
 
 const CATEGORY_STYLES: Record<string, string> = {
-  Creational: 'bg-blue-950 text-blue-300 border border-blue-800',
-  Structural: 'bg-indigo-950 text-indigo-300 border border-indigo-800',
-  Behavioral: 'bg-sky-950 text-sky-300 border border-sky-800',
+  Creational: 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800',
+  Structural: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800',
+  Behavioral: 'bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800',
 };
 
 const TECH_STACK = [
@@ -97,7 +97,7 @@ function PatternCard({ pattern }: { pattern: Pattern }) {
         </div>
       </div>
       {open && (
-        <div className="mt-3 space-y-2 border-t pt-3 border-slate-700">
+        <div className={`mt-3 space-y-2 border-t pt-3 ${tokens.border}`}>
           <p className={`text-sm ${tokens.textMuted}`}>{pattern.intent}</p>
           <p className={`text-xs font-mono ${tokens.textMuted} truncate`}>{pattern.filePath}</p>
         </div>
@@ -190,7 +190,7 @@ export default function ArchitecturePage() {
         <div className={`${card} overflow-hidden p-0`}>
           <table className="w-full text-sm">
             <thead>
-              <tr className={`bg-slate-900 border-b ${tokens.border}`}>
+              <tr className={`${tokens.bg} border-b ${tokens.border}`}>
                 <th className={`px-4 py-3 text-left font-semibold ${tokens.text} w-1/4`}>Quality</th>
                 <th className={`px-4 py-3 text-left font-semibold ${tokens.text} w-1/4`}>Mechanism</th>
                 <th className={`px-4 py-3 text-left font-semibold ${tokens.text}`}>Evidence</th>
@@ -200,7 +200,7 @@ export default function ArchitecturePage() {
               {ISO_ROWS.map((row, i) => (
                 <tr
                   key={row.quality}
-                  className={`border-b ${tokens.border} last:border-0 ${i % 2 === 1 ? 'bg-slate-900/50' : ''}`}
+                  className={`border-b ${tokens.border} last:border-0 ${i % 2 === 1 ? 'bg-muted/5' : ''}`}
                 >
                   <td className={`px-4 py-3 font-medium ${tokens.text}`}>{row.quality}</td>
                   <td className={`px-4 py-3 ${tokens.accentText} font-medium`}>{row.mechanism}</td>

@@ -14,10 +14,14 @@ const makeTttState = (board?: string[][]): GameState =>
 
 const makeChessState = (): GameState => {
   const cells: string[][] = Array.from({ length: 8 }, () => Array(8).fill(''));
-  cells[0] = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'];
-  cells[1] = Array(8).fill('P');
-  cells[6] = Array(8).fill('p');
-  cells[7] = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
+  // Row 0 (Rank 8) - Black back rank
+  cells[0] = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
+  // Row 1 (Rank 7) - Black pawns
+  cells[1] = Array(8).fill('p');
+  // Row 6 (Rank 2) - White pawns
+  cells[6] = Array(8).fill('P');
+  // Row 7 (Rank 1) - White back rank
+  cells[7] = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'];
   return new GameState({ boardState: cells, currentPlayerId: 'white', playerOrder: ['white', 'black'] });
 };
 
@@ -138,8 +142,8 @@ describe('Adapter — AI Engines', () => {
 
     it('Chess: stub move dari e2 ke e4', async () => {
       const move = await adapter.getNextMove(makeChessState(), GameType.CHESS) as ChessMove;
-      expect(move.from).toEqual({ row: 1, col: 4 });
-      expect(move.to).toEqual({ row: 3, col: 4 });
+      expect(move.from).toEqual({ row: 6, col: 4 });
+      expect(move.to).toEqual({ row: 4, col: 4 });
     }, 500);
   });
 });

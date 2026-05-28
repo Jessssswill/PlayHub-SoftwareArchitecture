@@ -103,12 +103,12 @@ export default function GamePageClient({ sessionId }: Props) {
 
   const statusBadge =
     currentSession.status === GameStatus.IN_PROGRESS
-      ? 'bg-blue-950 text-blue-300 border border-blue-800'
+      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
       : currentSession.status === GameStatus.FINISHED
-        ? 'bg-red-950 text-red-300 border border-red-800'
+        ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
         : currentSession.status === GameStatus.PAUSED
-          ? 'bg-slate-700 text-slate-300 border border-slate-600'
-          : 'bg-amber-950 text-amber-300 border border-amber-800';
+          ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700'
+          : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
@@ -134,7 +134,7 @@ export default function GamePageClient({ sessionId }: Props) {
 
       {/* Player identity selector */}
       {!myPlayerId && (
-        <div className={`mb-6 p-4 ${card}`}>
+        <div className={`mb-6 p-4 ${card} border-zinc-300 dark:border-zinc-700`}>
           <p className={`text-sm font-medium ${tokens.text} mb-3`}>Who are you?</p>
           <div className="flex gap-3 flex-wrap">
             {currentSession.players.map((p) => (
@@ -161,8 +161,8 @@ export default function GamePageClient({ sessionId }: Props) {
         <div
           className={`mb-6 p-4 rounded-xl border text-center ${
             endResult?.isDraw
-              ? `bg-slate-800 border-slate-600 ${tokens.textMuted}`
-              : 'bg-blue-950 border-blue-800 text-blue-200'
+              ? `bg-zinc-50 dark:bg-zinc-900/40 border-zinc-200 dark:border-zinc-700 ${tokens.textMuted}`
+              : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300'
           }`}
         >
           {endResult?.isDraw ? (
@@ -184,8 +184,8 @@ export default function GamePageClient({ sessionId }: Props) {
         <div
           className={`mb-4 px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2.5 border ${
             isMyTurn
-              ? 'bg-blue-950 border-blue-800 text-blue-200'
-              : `bg-slate-800 ${tokens.border} ${tokens.textMuted}`
+              ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300'
+              : `bg-zinc-50 dark:bg-zinc-900/40 border ${tokens.border} ${tokens.textMuted}`
           }`}
         >
           {isMyTurn ? (

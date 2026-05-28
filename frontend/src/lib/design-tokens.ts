@@ -1,15 +1,15 @@
 export const tokens = {
-  bg: 'bg-slate-950',
-  bgCard: 'bg-slate-800',
-  text: 'text-slate-100',
-  textMuted: 'text-slate-400',
-  border: 'border-slate-700',
-  accent: 'bg-blue-600 hover:bg-blue-500 text-white',
-  accentText: 'text-blue-400',
-  player1: 'text-red-400',
-  player2: 'text-blue-400',
-  success: 'text-emerald-400',
-  danger: 'text-red-400',
+  bg: 'bg-background',
+  bgCard: 'bg-card',
+  text: 'text-foreground',
+  textMuted: 'text-muted',
+  border: 'border-border',
+  accent: 'bg-blue-600 hover:bg-blue-700 text-white',
+  accentText: 'text-blue-600 dark:text-blue-400',
+  player1: 'text-red-500 dark:text-red-400',
+  player2: 'text-blue-500 dark:text-blue-400',
+  success: 'text-emerald-600 dark:text-emerald-400',
+  danger: 'text-red-600 dark:text-red-400',
 } as const;
 
 export const transitions = {
@@ -23,10 +23,9 @@ export const btn = {
     ' disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2' +
     ' focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
   secondary:
-    `bg-slate-700 border ${tokens.border} hover:bg-slate-600 text-slate-100 ${transitions.default}` +
-    ' px-4 py-2 rounded-xl font-medium focus-visible:ring-2 focus-visible:ring-slate-500' +
-    ' focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+    `${tokens.bgCard} border ${tokens.border} hover:bg-zinc-100 dark:hover:bg-zinc-800 ${transitions.default}` +
+    ' px-4 py-2 rounded-lg font-medium focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2',
 } as const;
 
 export const card =
-  `${tokens.bgCard} border ${tokens.border} rounded-xl p-4 ${transitions.default} hover:border-slate-500 shadow-sm shadow-black/30` as const;
+  `${tokens.bgCard} border ${tokens.border} rounded-lg p-4 ${transitions.default} hover:border-zinc-300 dark:hover:border-zinc-700` as const;

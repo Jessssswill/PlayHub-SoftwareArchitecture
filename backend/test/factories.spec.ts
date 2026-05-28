@@ -48,19 +48,24 @@ describe('Abstract Factory — IGameFactory', () => {
       board.cells.forEach((row) => expect(row).toHaveLength(8));
     });
 
-    it('createBoard() baris 0 = back rank putih', () => {
+    it('createBoard() baris 0 = back rank hitam', () => {
       const board = chessFactory.createBoard();
-      expect(board.cells[0]).toEqual(['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']);
+      expect(board.cells[0]).toEqual(['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']);
     });
 
-    it('createBoard() baris 1 = pion putih semua', () => {
+    it('createBoard() baris 1 = pion hitam semua', () => {
       const board = chessFactory.createBoard();
-      board.cells[1].forEach((cell) => expect(cell).toBe('P'));
+      board.cells[1].forEach((cell) => expect(cell).toBe('p'));
     });
 
-    it('createBoard() baris 7 = back rank hitam', () => {
+    it('createBoard() baris 6 = pion putih semua', () => {
       const board = chessFactory.createBoard();
-      expect(board.cells[7]).toEqual(['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']);
+      board.cells[6].forEach((cell) => expect(cell).toBe('P'));
+    });
+
+    it('createBoard() baris 7 = back rank putih', () => {
+      const board = chessFactory.createBoard();
+      expect(board.cells[7]).toEqual(['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']);
     });
 
     it('createRules() return ChessRules', () => {

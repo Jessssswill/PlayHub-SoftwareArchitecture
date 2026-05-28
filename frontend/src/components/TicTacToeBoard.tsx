@@ -18,13 +18,11 @@ export default function TicTacToeBoard({ board, onCellClick, disabled }: Props) 
             onClick={() => !disabled && !cell && onCellClick(r, c)}
             disabled={disabled || !!cell}
             className={`
-              w-24 h-24 aspect-square border-2 rounded-xl flex items-center justify-center
-              text-5xl font-bold transition-all duration-150
-              ${cell ? 'bg-slate-800 border-slate-600 cursor-default' : ''}
-              ${!cell && !disabled
-                ? 'bg-slate-700 border-slate-600 hover:border-blue-500 hover:bg-slate-600 hover:shadow-[0_0_12px_rgba(59,130,246,0.15)] cursor-pointer'
-                : ''}
-              ${!cell && disabled ? 'bg-slate-800 border-slate-700 opacity-60 cursor-default' : ''}
+              w-24 h-24 aspect-square border-2 rounded-lg flex items-center justify-center
+              text-5xl font-bold transition-colors duration-150
+              ${cell ? `${tokens.bgCard} ${tokens.border} cursor-default` : ''}
+              ${!cell && !disabled ? `border-zinc-300 dark:border-zinc-700 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 cursor-pointer ${tokens.bgCard}` : ''}
+              ${!cell && disabled ? `${tokens.border} ${tokens.bgCard} cursor-default` : ''}
             `}
           >
             {cell && (

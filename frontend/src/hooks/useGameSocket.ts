@@ -24,11 +24,17 @@ interface FinishedEvent {
 }
 
 export const useGameSocket = (sessionId: string) => {
-  const { applyMove, updateSessionStatus, setEndResult } = useGameStore();
+  const applyMove = useGameStore((s) => s.applyMove);
+  const updateSessionStatus = useGameStore((s) => s.updateSessionStatus);
+  const setEndResult = useGameStore((s) => s.setEndResult);
 
   useEffect(() => {
-    subscribeToSession(sessionId);
     const socket = getSocket();
+
+    const connect = () => {
+      console.log('Socket connected/reconnected, subscribing to:', sessionId);
+      subscribeToSession(sessionId);
+    };
 
     const onMove = (payload: MoveEvent) => {
       if (payload.sessionId !== sessionId) return;
@@ -54,17 +60,24 @@ export const useGameSocket = (sessionId: string) => {
       setEndResult(payload.endResult);
     };
 
+    // Initial subscription
+    if (socket.connected) {
+      connect();
+    }
+
+    socket.on('connect', connect);
     socket.on('move', onMove);
     socket.on('state', onState);
     socket.on('finished', onFinished);
 
     return () => {
+      socket.off('connect', connect);
       socket.off('move', onMove);
       socket.off('state', onState);
       socket.off('finished', onFinished);
       unsubscribeFromSession(sessionId);
     };
-  }, [sessionId, applyMove, updateSessionStatus]);
+  }, [sessionId, applyMove, updateSessionStatus, setEndResult]);
 };
 
 function formatMoveDescription(move: Record<string, unknown>): string {
