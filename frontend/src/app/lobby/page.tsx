@@ -65,8 +65,8 @@ export default function LobbyCreatePage() {
         {/* Game Type */}
         <div>
           <label className={`block text-sm font-medium ${tokens.text} mb-2`}>Game Type</label>
-          <div className="grid grid-cols-2 gap-3">
-            {([GameType.TIC_TAC_TOE, GameType.CHESS] as const).map((gt) => (
+          <div className="grid grid-cols-3 gap-3">
+            {([GameType.TIC_TAC_TOE, GameType.CHESS, GameType.CONNECT_FOUR] as const).map((gt) => (
               <button
                 type="button"
                 key={gt}
@@ -77,9 +77,11 @@ export default function LobbyCreatePage() {
                     : `${tokens.border} hover:border-zinc-300 dark:hover:border-zinc-600 ${tokens.bgCard}`
                 }`}
               >
-                <div className="text-3xl mb-1">{gt === GameType.TIC_TAC_TOE ? '⭕' : '♟'}</div>
+                <div className="text-3xl mb-1">
+                  {gt === GameType.TIC_TAC_TOE ? '⭕' : gt === GameType.CONNECT_FOUR ? '🔴' : '♟'}
+                </div>
                 <div className={`text-sm font-medium ${tokens.text}`}>
-                  {gt === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : 'Chess'}
+                  {gt === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : gt === GameType.CONNECT_FOUR ? 'Connect Four' : 'Chess'}
                 </div>
               </button>
             ))}

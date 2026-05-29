@@ -74,6 +74,10 @@ export default function GamePageClient({ sessionId }: Props) {
     submitMove({ gameType: GameType.CHESS, playerId: myPlayerId, from, to });
   };
 
+  const handleConnectFourMove = (col: number) => {
+    submitMove({ gameType: GameType.CONNECT_FOUR, playerId: myPlayerId, col });
+  };
+
   if (!currentSession) {
     return (
       <main className={`max-w-3xl mx-auto px-4 py-16`}>
@@ -123,7 +127,11 @@ export default function GamePageClient({ sessionId }: Props) {
             Lobby
           </Link>
           <h1 className={`text-xl font-bold ${tokens.text}`}>
-            {currentSession.gameType === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : 'Chess'}
+            {currentSession.gameType === GameType.TIC_TAC_TOE 
+              ? 'Tic-Tac-Toe' 
+              : currentSession.gameType === GameType.CONNECT_FOUR
+                ? 'Connect Four'
+                : 'Chess'}
           </h1>
           <p className={`text-xs font-mono ${tokens.textMuted}`}>{sessionId}</p>
         </div>
@@ -215,6 +223,7 @@ export default function GamePageClient({ sessionId }: Props) {
             myPlayerId={myPlayerId}
             onTicTacToeMove={handleTTTMove}
             onChessMove={handleChessMove}
+            onConnectFourMove={handleConnectFourMove}
             disabled={boardDisabled}
           />
         </div>

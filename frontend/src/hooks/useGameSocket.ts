@@ -84,6 +84,9 @@ function formatMoveDescription(move: Record<string, unknown>): string {
   if (move.row !== undefined && move.col !== undefined) {
     return `(${move.row}, ${move.col})`;
   }
+  if (move.col !== undefined) {
+    return `Column ${Number(move.col) + 1}`;
+  }
   if (move.from && move.to) {
     const from = move.from as { row: number; col: number };
     const to = move.to as { row: number; col: number };

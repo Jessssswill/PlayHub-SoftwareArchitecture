@@ -4,6 +4,7 @@ import { GameFactoryProvider } from '../factories/game-factory.provider';
 import { GameSessionBuilder } from '../builders/game-session.builder';
 import { TicTacToeGame } from '../domain/games/tic-tac-toe/tic-tac-toe.game';
 import { ChessGame } from '../domain/games/chess/chess.game';
+import { ConnectFourGame } from '../domain/games/connect-four/connect-four.game';
 import { Game, TurnResult } from '../domain/games/game.abstract';
 import { GameSession } from '../domain/game-session';
 import { GameState } from '../domain/games/game-state';
@@ -19,7 +20,7 @@ import { Move } from '../../shared/types/move.types';
  *         koordinasi internal antara GameRegistry, factory, builder, state machine,
  *         dan game engine. Presenter tidak perlu tahu cara kerja dalamnya.
  * @participants GameRegistry, GameFactoryProvider, GameSessionBuilder,
- *               TicTacToeGame, ChessGame (subsystems)
+ *               TicTacToeGame, ChessGame, ConnectFourGame (subsystems)
  */
 @Injectable()
 export class GameEngineFacade {
@@ -31,12 +32,14 @@ export class GameEngineFacade {
     private readonly builder: GameSessionBuilder,
     private readonly tttGame: TicTacToeGame,
     private readonly chessGame: ChessGame,
+    private readonly connectFourGame: ConnectFourGame,
     private readonly validationService: MoveValidationService,
     private readonly eventBus: GameEventBus,
   ) {
     this.engines = new Map<GameType, Game>([
       [GameType.TIC_TAC_TOE, this.tttGame],
       [GameType.CHESS, this.chessGame],
+      [GameType.CONNECT_FOUR, this.connectFourGame],
     ]);
   }
 
