@@ -26,9 +26,9 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
               key={player.id}
               className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg transition-colors duration-150 ${
                 isWinner
-                  ? 'bg-blue-950 border border-blue-800'
+                  ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
                   : isCurrentTurn
-                    ? 'bg-slate-700 border border-slate-600'
+                    ? `bg-zinc-50 dark:bg-zinc-900/40 border ${tokens.border}`
                     : 'border border-transparent'
               }`}
             >
@@ -50,8 +50,8 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
 
               {/* Winner badge */}
               {isWinner && (
-                <span className="flex items-center gap-1 text-xs font-semibold text-blue-400 shrink-0">
-                  <Trophy className="w-3 h-3" /> Winner
+                <span className={`ml-auto flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400`}>
+                  <Trophy className="w-3.5 h-3.5" /> Winner
                 </span>
               )}
             </div>

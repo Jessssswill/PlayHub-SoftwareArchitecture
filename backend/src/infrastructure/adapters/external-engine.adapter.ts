@@ -40,8 +40,8 @@ export class ExternalEngineAdapter implements IAIEngine {
     return {
       gameType: GameType.CHESS,
       playerId: state.currentPlayerId,
-      from: { row: 1, col: 4 }, // e2 → row 1, col 4
-      to: { row: 3, col: 4 },   // e4 → row 3, col 4
+      from: { row: 6, col: 4 }, // e2 → row 6, col 4
+      to: { row: 4, col: 4 },   // e4 → row 4, col 4
     };
   }
 

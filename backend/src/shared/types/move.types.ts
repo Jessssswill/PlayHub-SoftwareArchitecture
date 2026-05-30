@@ -14,8 +14,14 @@ export interface ChessMove {
   to: { row: number; col: number };
 }
 
+export interface ConnectFourMove {
+  gameType: GameType.CONNECT_FOUR;
+  playerId: string;
+  col: number;
+}
+
 /** Discriminated union — TypeScript menyempitkan tipe secara otomatis via gameType. */
-export type Move = TicTacToeMove | ChessMove;
+export type Move = TicTacToeMove | ChessMove | ConnectFourMove;
 
 export interface EndCondition {
   isOver: boolean;

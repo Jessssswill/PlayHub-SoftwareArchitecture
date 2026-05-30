@@ -3,6 +3,7 @@
 import { GameType, GameState } from '../lib/types';
 import TicTacToeBoard from './TicTacToeBoard';
 import ChessBoard from './ChessBoard';
+import ConnectFourBoard from './ConnectFourBoard';
 
 interface Props {
   gameType: GameType;
@@ -10,6 +11,7 @@ interface Props {
   myPlayerId: string | null;
   onTicTacToeMove: (row: number, col: number) => void;
   onChessMove: (from: { row: number; col: number }, to: { row: number; col: number }) => void;
+  onConnectFourMove: (col: number) => void;
   disabled: boolean;
 }
 
@@ -19,6 +21,7 @@ export default function GameBoard({
   myPlayerId,
   onTicTacToeMove,
   onChessMove,
+  onConnectFourMove,
   disabled,
 }: Props) {
   if (gameType === GameType.TIC_TAC_TOE) {
@@ -27,6 +30,20 @@ export default function GameBoard({
         board={gameState.boardState}
         onCellClick={onTicTacToeMove}
         disabled={disabled}
+      />
+    );
+  }
+
+  if (gameType === GameType.CONNECT_FOUR) {
+    const isMyTurn = myPlayerId === gameState.currentPlayerId;
+    const myPiece = myPlayerId === gameState.playerOrder[0] ? 'R' : 'Y';
+
+    return (
+      <ConnectFourBoard
+        board={gameState.boardState}
+        onColClick={onConnectFourMove}
+        disabled={disabled || !isMyTurn}
+        currentPiece={myPiece as 'R' | 'Y'}
       />
     );
   }

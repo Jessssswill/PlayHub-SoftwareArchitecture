@@ -6,8 +6,10 @@ import { GameFactoryProvider } from '../src/business/factories/game-factory.prov
 import { GameSessionBuilder } from '../src/business/builders/game-session.builder';
 import { TicTacToeFactory } from '../src/business/factories/tic-tac-toe.factory';
 import { ChessFactory } from '../src/business/factories/chess.factory';
+import { ConnectFourFactory } from '../src/business/factories/connect-four.factory';
 import { TicTacToeGame } from '../src/business/domain/games/tic-tac-toe/tic-tac-toe.game';
 import { ChessGame } from '../src/business/domain/games/chess/chess.game';
+import { ConnectFourGame } from '../src/business/domain/games/connect-four/connect-four.game';
 import { MoveValidationService } from '../src/business/services/move-validation.service';
 import { GameEventBus } from '../src/business/events/game-event-bus';
 import { GameType } from '../src/shared/types/game-type.enum';
@@ -21,7 +23,8 @@ const intruder: Player = { id: 'intruder', name: 'Hacker' };
 const buildProxy = () => {
   const tttFactory = new TicTacToeFactory();
   const chessFactory = new ChessFactory();
-  const factoryProvider = new GameFactoryProvider(tttFactory, chessFactory);
+  const c4Factory = new ConnectFourFactory();
+  const factoryProvider = new GameFactoryProvider(tttFactory, chessFactory, c4Factory);
   const builder = new GameSessionBuilder();
   const registry = new GameRegistry();
   const facade = new GameEngineFacade(
@@ -30,6 +33,7 @@ const buildProxy = () => {
     builder,
     new TicTacToeGame(),
     new ChessGame(),
+    new ConnectFourGame(),
     new MoveValidationService(),
     new GameEventBus(),
   );

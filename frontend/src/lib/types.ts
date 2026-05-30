@@ -1,6 +1,7 @@
 export enum GameType {
   TIC_TAC_TOE = 'TIC_TAC_TOE',
   CHESS = 'CHESS',
+  CONNECT_FOUR = 'CONNECT_FOUR',
 }
 
 export enum GameStatus {
@@ -61,7 +62,13 @@ export interface ChessMove {
   to: { row: number; col: number };
 }
 
-export type Move = TicTacToeMove | ChessMove;
+export interface ConnectFourMove {
+  gameType: GameType.CONNECT_FOUR;
+  playerId: string;
+  col: number;
+}
+
+export type Move = TicTacToeMove | ChessMove | ConnectFourMove;
 
 export interface MoveRecord {
   playerId: string;

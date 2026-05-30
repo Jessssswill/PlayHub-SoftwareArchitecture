@@ -53,6 +53,22 @@ describe('State Pattern — Game Lifecycle State Machine', () => {
     expect(session.status).toBe(GameStatus.IN_PROGRESS);
   });
 
+  it('WAITING: startGame() dengan < 2 player melempar BadRequestException', () => {
+    const session = new GameSession({
+      id: 'test',
+      gameType: GameType.TIC_TAC_TOE,
+      players: [p1],
+      status: GameStatus.WAITING,
+      currentState: null,
+      createdAt: new Date(),
+      timeControlSeconds: 0,
+      isPrivate: false,
+      allowSpectators: false,
+      maxSpectators: 0,
+    });
+    expect(() => session.startGame()).toThrow('Minimal 2 player');
+  });
+
   it('WAITING: joinPlayer() menambah player dan emit player.joined', () => {
     const session = buildSession();
     const joined: unknown[] = [];
@@ -93,6 +109,12 @@ describe('State Pattern — Game Lifecycle State Machine', () => {
     expect(() => session.startGame()).toThrow();
   });
 
+  it('IN_PROGRESS: resume melempar', () => {
+    const session = buildSession();
+    session.startGame();
+    expect(() => session.resume()).toThrow('tidak sedang di-pause');
+  });
+
   it('IN_PROGRESS: pause() → PAUSED', () => {
     const session = buildSession();
     session.startGame();
@@ -123,6 +145,13 @@ describe('State Pattern — Game Lifecycle State Machine', () => {
     expect(() => session.pause()).toThrow();
   });
 
+  it('PAUSED: startGame melempar', () => {
+    const session = buildSession();
+    session.startGame();
+    session.pause();
+    expect(() => session.startGame()).toThrow('Game sudah dimulai sebelumnya');
+  });
+
   it('PAUSED: resume() → IN_PROGRESS', () => {
     const session = buildSession();
     session.startGame();
@@ -151,6 +180,11 @@ describe('State Pattern — Game Lifecycle State Machine', () => {
     expect(() => session.pause()).toThrow('sudah selesai');
     expect(() => session.resume()).toThrow('sudah selesai');
     expect(() => session.finish()).toThrow('sudah selesai');
+  });
+
+  it('getState() melempar Error jika currentState belum diinisialisasi', () => {
+    const session = buildSession();
+    expect(() => session.getState()).toThrow('belum diinisialisasi');
   });
 
   // ── Observer: state.changed event ────────────────────────────────────────

@@ -4,14 +4,16 @@ import { GameFactoryProvider } from '../src/business/factories/game-factory.prov
 import { GameSessionBuilder } from '../src/business/builders/game-session.builder';
 import { TicTacToeFactory } from '../src/business/factories/tic-tac-toe.factory';
 import { ChessFactory } from '../src/business/factories/chess.factory';
+import { ConnectFourFactory } from '../src/business/factories/connect-four.factory';
 import { TicTacToeGame } from '../src/business/domain/games/tic-tac-toe/tic-tac-toe.game';
 import { ChessGame } from '../src/business/domain/games/chess/chess.game';
+import { ConnectFourGame } from '../src/business/domain/games/connect-four/connect-four.game';
 import { MoveValidationService } from '../src/business/services/move-validation.service';
 import { GameEventBus } from '../src/business/events/game-event-bus';
 import { GameType } from '../src/shared/types/game-type.enum';
 import { GameStatus } from '../src/shared/types/game-status.enum';
 import { Player } from '../src/shared/types/player.interface';
-import { TicTacToeMove } from '../src/shared/types/move.types';
+import { TicTacToeMove, ConnectFourMove } from '../src/shared/types/move.types';
 
 const p1: Player = { id: 'p1', name: 'Alice' };
 const p2: Player = { id: 'p2', name: 'Bob' };
@@ -19,14 +21,16 @@ const p2: Player = { id: 'p2', name: 'Bob' };
 const buildFacade = () => {
   const tttFactory = new TicTacToeFactory();
   const chessFactory = new ChessFactory();
-  const factoryProvider = new GameFactoryProvider(tttFactory, chessFactory);
+  const c4Factory = new ConnectFourFactory();
+  const factoryProvider = new GameFactoryProvider(tttFactory, chessFactory, c4Factory);
   const builder = new GameSessionBuilder();
   const tttGame = new TicTacToeGame();
   const chessGame = new ChessGame();
+  const c4Game = new ConnectFourGame();
   const registry = new GameRegistry();
   const validationService = new MoveValidationService();
   const eventBus = new GameEventBus();
-  const facade = new GameEngineFacade(registry, factoryProvider, builder, tttGame, chessGame, validationService, eventBus);
+  const facade = new GameEngineFacade(registry, factoryProvider, builder, tttGame, chessGame, c4Game, validationService, eventBus);
   return { facade, registry };
 };
 
@@ -67,6 +71,12 @@ describe('Facade — GameEngineFacade', () => {
     expect(session.currentState?.boardState).toHaveLength(8);
   });
 
+  it('createSession() Connect Four menghasilkan papan 6×7', async () => {
+    const session = await facade.createSession(GameType.CONNECT_FOUR, [p1, p2]);
+    expect(session.currentState?.boardState).toHaveLength(6);
+    expect(session.currentState?.boardState[0]).toHaveLength(7);
+  });
+
   // ── getState ──────────────────────────────────────────────────────────────
 
   it('getState() mengembalikan GameState yang benar', async () => {
@@ -92,7 +102,7 @@ describe('Facade — GameEngineFacade', () => {
 
   // ── makeMove ──────────────────────────────────────────────────────────────
 
-  it('makeMove() memperbarui board state session', async () => {
+  it('makeMove() memperbarui board state session (TicTacToe)', async () => {
     const session = await facade.createSession(GameType.TIC_TAC_TOE, [p1, p2]);
     const move: TicTacToeMove = {
       gameType: GameType.TIC_TAC_TOE,
@@ -102,6 +112,18 @@ describe('Facade — GameEngineFacade', () => {
     };
     await facade.makeMove(session.id, p1.id, move);
     expect(session.currentState?.boardState[1][1]).toBe('X');
+  });
+
+  it('makeMove() memperbarui board state session (Connect Four)', async () => {
+    const session = await facade.createSession(GameType.CONNECT_FOUR, [p1, p2]);
+    const move: ConnectFourMove = {
+      gameType: GameType.CONNECT_FOUR,
+      playerId: p1.id,
+      col: 3,
+    };
+    await facade.makeMove(session.id, p1.id, move);
+    // Di Connect Four, biji jatuh ke baris paling bawah (indeks 5)
+    expect(session.currentState?.boardState[5][3]).toBe('R');
   });
 
   it('makeMove() mengembalikan TurnResult dengan newState', async () => {

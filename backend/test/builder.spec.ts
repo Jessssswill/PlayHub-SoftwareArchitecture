@@ -93,6 +93,28 @@ describe('Builder — GameSessionBuilder', () => {
     );
   });
 
+  it('reset() membersihkan semua state builder', () => {
+    builder
+      .forGame(GameType.TIC_TAC_TOE)
+      .addPlayer(p1)
+      .withTimeControl(100)
+      .reset();
+
+    expect(() => builder.build()).toThrow('Game type harus ditentukan');
+  });
+
+  it('withSpectators() tanpa argumen default ke max 0', () => {
+    const session = builder
+      .forGame(GameType.TIC_TAC_TOE)
+      .addPlayer(p1)
+      .addPlayer(p2)
+      .withSpectators()
+      .build();
+
+    expect(session.allowSpectators).toBe(true);
+    expect(session.maxSpectators).toBe(0);
+  });
+
   it('players di-copy sehingga mutasi array luar tidak pengaruhi session', () => {
     const session = builder
       .forGame(GameType.TIC_TAC_TOE)

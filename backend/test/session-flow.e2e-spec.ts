@@ -17,8 +17,10 @@ import { GameFactoryProvider } from '../src/business/factories/game-factory.prov
 import { GameSessionBuilder } from '../src/business/builders/game-session.builder';
 import { TicTacToeFactory } from '../src/business/factories/tic-tac-toe.factory';
 import { ChessFactory } from '../src/business/factories/chess.factory';
+import { ConnectFourFactory } from '../src/business/factories/connect-four.factory';
 import { TicTacToeGame } from '../src/business/domain/games/tic-tac-toe/tic-tac-toe.game';
 import { ChessGame } from '../src/business/domain/games/chess/chess.game';
+import { ConnectFourGame } from '../src/business/domain/games/connect-four/connect-four.game';
 import { GameType } from '../src/shared/types/game-type.enum';
 import { GameStatus } from '../src/shared/types/game-status.enum';
 
@@ -36,10 +38,12 @@ describe('Session Flow (E2E)', () => {
         // Business
         TicTacToeFactory,
         ChessFactory,
+        ConnectFourFactory,
         GameFactoryProvider,
         GameSessionBuilder,
         TicTacToeGame,
         ChessGame,
+        ConnectFourGame,
         MoveValidationService,
         GameEventBus,
         GameEngineFacade,

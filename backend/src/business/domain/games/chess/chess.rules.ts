@@ -113,8 +113,8 @@ export class ChessRules {
 
   private static pawn(state: GameState, move: ChessMove, isWhite: boolean): boolean {
     const { from, to } = move;
-    const dir = isWhite ? 1 : -1;
-    const startRow = isWhite ? 1 : 6;
+    const dir = isWhite ? -1 : 1;
+    const startRow = isWhite ? 6 : 1;
     const rowDiff = to.row - from.row;
     const colDiff = Math.abs(to.col - from.col);
     const target = state.boardState[to.row][to.col];
