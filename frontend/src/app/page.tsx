@@ -13,15 +13,28 @@ import { ErrorState } from '../components/states/ErrorState';
 import { demoSession } from '../lib/api';
 
 const STATUS_BADGE: Record<GameStatus, string> = {
-  [GameStatus.WAITING]: 'bg-amber-950 text-amber-300 border border-amber-800',
-  [GameStatus.IN_PROGRESS]: 'bg-blue-950 text-blue-300 border border-blue-800',
-  [GameStatus.PAUSED]: 'bg-slate-700 text-slate-300 border border-slate-600',
-  [GameStatus.FINISHED]: 'bg-slate-800 text-slate-400 border border-slate-700',
+  [GameStatus.WAITING]: 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800',
+  [GameStatus.IN_PROGRESS]: 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800',
+  [GameStatus.PAUSED]: 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700',
+  [GameStatus.FINISHED]: 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700',
 };
 
 const GAME_ICON_BG: Record<GameType, string> = {
-  [GameType.TIC_TAC_TOE]: 'bg-blue-950 border border-blue-900',
-  [GameType.CHESS]: 'bg-slate-900 border border-slate-700',
+  [GameType.TIC_TAC_TOE]: 'bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800',
+  [GameType.CHESS]: 'bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700',
+  [GameType.CONNECT_FOUR]: 'bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800',
+};
+
+const GAME_LABEL: Record<GameType, string> = {
+  [GameType.TIC_TAC_TOE]: 'Tic-Tac-Toe',
+  [GameType.CHESS]: 'Chess',
+  [GameType.CONNECT_FOUR]: 'Connect Four',
+};
+
+const GAME_ICON: Record<GameType, string> = {
+  [GameType.TIC_TAC_TOE]: '⭕',
+  [GameType.CHESS]: '♟',
+  [GameType.CONNECT_FOUR]: '🔴',
 };
 
 export default function LobbyPage() {
@@ -46,13 +59,9 @@ export default function LobbyPage() {
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
       {/* Page header */}
-      <div className="flex items-start justify-between mb-8 pb-8 border-b border-slate-800">
+      <div className={`flex items-start justify-between mb-8 pb-8 border-b ${tokens.border}`}>
         <div>
-          <h1 className="text-2xl font-bold mb-1">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-200">
-              Game Lobby
-            </span>
-          </h1>
+          <h1 className={`text-2xl font-bold mb-1 ${tokens.text}`}>Game Lobby</h1>
           <p className={`${tokens.textMuted} text-sm`}>
             Sessions auto-refresh every 3 s
           </p>
@@ -127,11 +136,11 @@ function SessionCard({ session }: { session: GameSession }) {
       href={`/game/${session.id}`}
       className="block group"
     >
-      <div className={`relative overflow-hidden bg-slate-800 border rounded-xl p-4
-        transition-all duration-200 shadow-sm shadow-black/30
+      <div className={`relative overflow-hidden bg-card border rounded-xl p-4
+        transition-all duration-200 shadow-sm shadow-black/10 dark:shadow-black/30
         ${isActive
-          ? 'border-slate-600 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.10)]'
-          : 'border-slate-700 hover:border-slate-500'
+          ? 'border-border hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.08)]'
+          : 'border-border hover:border-zinc-400 dark:hover:border-zinc-500'
         }`}
       >
         {/* Left accent bar for active sessions */}
@@ -143,14 +152,14 @@ function SessionCard({ session }: { session: GameSession }) {
           <div className="flex items-center gap-3">
             {/* Game icon badge */}
             <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-lg shrink-0 ${GAME_ICON_BG[session.gameType]}`}>
-              {session.gameType === GameType.TIC_TAC_TOE ? '⭕' : '♟'}
+              {GAME_ICON[session.gameType]}
             </div>
             <div>
               <p className={`font-semibold text-sm ${tokens.text}`}>
                 {session.players.map((p) => p.name).join(' vs ')}
               </p>
               <p className={`text-xs ${tokens.textMuted}`}>
-                {session.gameType === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : 'Chess'} ·{' '}
+                {GAME_LABEL[session.gameType]} ·{' '}
                 {session.currentState?.moveCount ?? 0} moves
               </p>
             </div>

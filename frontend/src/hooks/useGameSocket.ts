@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { subscribeToSession, unsubscribeFromSession, getSocket } from '../lib/socket';
 import { useGameStore } from '../lib/store';
 import { GameState, GameStatus } from '../lib/types';
@@ -23,17 +23,30 @@ interface FinishedEvent {
   endResult: { isOver: boolean; winnerId: string | null; isDraw: boolean };
 }
 
-export const useGameSocket = (sessionId: string) => {
+/**
+ * onSync dipanggil setelah socket berhasil join room (acknowledgment dari server).
+ * GamePageClient menggunakannya untuk re-fetch state terbaru — menghindari race
+ * condition di mana move event tiba sebelum client masuk room.
+ */
+export const useGameSocket = (sessionId: string, onSync?: () => void) => {
   const applyMove = useGameStore((s) => s.applyMove);
   const updateSessionStatus = useGameStore((s) => s.updateSessionStatus);
   const setEndResult = useGameStore((s) => s.setEndResult);
 
+  // Simpan onSync di ref agar tidak perlu masuk dependency array
+  const onSyncRef = useRef(onSync);
+  useEffect(() => {
+    onSyncRef.current = onSync;
+  });
+
   useEffect(() => {
     const socket = getSocket();
 
-    const connect = () => {
-      console.log('Socket connected/reconnected, subscribing to:', sessionId);
-      subscribeToSession(sessionId);
+    const subscribe = () => {
+      subscribeToSession(sessionId, () => {
+        // Server confirm: client sudah join room — aman untuk sync state
+        onSyncRef.current?.();
+      });
     };
 
     const onMove = (payload: MoveEvent) => {
@@ -60,18 +73,17 @@ export const useGameSocket = (sessionId: string) => {
       setEndResult(payload.endResult);
     };
 
-    // Initial subscription
     if (socket.connected) {
-      connect();
+      subscribe();
     }
 
-    socket.on('connect', connect);
+    socket.on('connect', subscribe);
     socket.on('move', onMove);
     socket.on('state', onState);
     socket.on('finished', onFinished);
 
     return () => {
-      socket.off('connect', connect);
+      socket.off('connect', subscribe);
       socket.off('move', onMove);
       socket.off('state', onState);
       socket.off('finished', onFinished);
@@ -90,7 +102,7 @@ function formatMoveDescription(move: Record<string, unknown>): string {
   if (move.from && move.to) {
     const from = move.from as { row: number; col: number };
     const to = move.to as { row: number; col: number };
-    return `${toChessNotation(from)} → ${toChessNotation(to)}`;
+    return `${toChessNotation(from)} to ${toChessNotation(to)}`;
   }
   return JSON.stringify(move);
 }

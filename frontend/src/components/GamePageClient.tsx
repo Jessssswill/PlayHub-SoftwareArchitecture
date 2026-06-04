@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -25,6 +25,18 @@ export default function GamePageClient({ sessionId }: Props) {
   const { currentSession, gameState, moveHistory, myPlayerId, endResult, setSession, setMyPlayerId } =
     useGameStore();
 
+  // Re-fetch state dari server — dipakai setelah WS join confirm + periodic fallback
+  const syncState = useCallback(async () => {
+    try {
+      const sessions = await api.getSessions();
+      const session = sessions.find((s) => s.id === sessionId);
+      if (session) setSession(session);
+    } catch {
+      // silent — polling fallback, jangan ganggu UX
+    }
+  }, [sessionId, setSession]);
+
+  // Initial load — juga set myPlayerId dari sessionStorage
   useEffect(() => {
     const load = async () => {
       try {
@@ -39,13 +51,22 @@ export default function GamePageClient({ sessionId }: Props) {
         const stored = sessionStorage.getItem(`player-id-${sessionId}`);
         if (stored) setMyPlayerId(stored);
       } catch {
-        toast.error('Failed to load session — is the backend running on :3001?');
+        toast.error('Failed to load session. Backend running on :3001?');
       }
     };
     load();
   }, [sessionId, setSession, setMyPlayerId, router]);
 
-  useGameSocket(sessionId);
+  // Polling fallback setiap 5 detik — backup kalau WS event terlewat
+  const syncRef = useRef(syncState);
+  useEffect(() => { syncRef.current = syncState; });
+  useEffect(() => {
+    const interval = setInterval(() => syncRef.current(), 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Pass syncState sebagai callback: dipanggil setelah socket confirm join room
+  useGameSocket(sessionId, syncState);
 
   const handleSelectPlayer = (playerId: string) => {
     setMyPlayerId(playerId);

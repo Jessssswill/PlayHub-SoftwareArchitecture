@@ -66,9 +66,9 @@ backend/test/                                            ← Lihat struktur test
 - **Board**: 6 baris × 7 kolom (rows × cols)
 - **Pemain**: 2 orang. Player 1 = `'R'` (Red), Player 2 = `'Y'` (Yellow)
 - **Move**: Pemain memilih kolom (0–6). Biji jatuh ke baris paling bawah yang kosong di kolom tersebut (gravity).
-- **Win condition**: Salah satu pemain berhasil membuat **4 biji berjajar** — bisa horizontal, vertikal, atau diagonal (kedua arah).
+- **Win condition**: Salah satu pemain berhasil membuat **4 biji berjajar**: bisa horizontal, vertikal, atau diagonal (kedua arah).
 - **Draw**: Board penuh (42 cell terisi) dan tidak ada yang menang.
-- **Move format** yang dikirim dari frontend: `{ col: number }` — hanya perlu kolom, baris dihitung otomatis oleh backend.
+- **Move format** yang dikirim dari frontend: `{ col: number }`. Hanya perlu kolom, baris dihitung otomatis oleh backend.
 
 ### State Representation
 
@@ -193,7 +193,7 @@ Tambahkan Connect Four sebagai pilihan game type di game type selector. Icon yan
 
 ### 5. `frontend/src/lib/patterns-data.ts` (jika ada)
 
-Kalau file ini ada dan berisi list pattern, tidak perlu diubah — Connect Four tidak menambah pattern baru, hanya memanfaatkan pattern yang sudah ada (Abstract Factory, Template Method, dll).
+Kalau file ini ada dan berisi list pattern, tidak perlu diubah. Connect Four tidak menambah pattern baru, hanya memanfaatkan pattern yang sudah ada (Abstract Factory, Template Method, dll).
 
 ---
 

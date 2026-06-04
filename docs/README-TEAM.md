@@ -7,9 +7,9 @@
 
 ## Pembagian Tugas
 
-Dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four yang lagi on progress).
+Dokumentasi utama untuk project **PlayHub** API backend + frontend untuk multiplayer game session (TicTacToe, Chess, dan Connect Four).
 
-Foundation sudah 100% selesai. Backend berjalan, frontend sudah polished, 142 tests passing, dokumentasi sudah lengkap. Yang tersisa sekarang adalah polish, 1 fitur tambahan (Connect Four), dan persiapan presentasi. Estimasi total effort tersisa: **6–10 jam per orang**, tergantung track yang dipilih.
+Foundation sudah 100% selesai. Backend berjalan, frontend sudah polished, **180 tests passing**, dokumentasi sudah lengkap, dan 3 game sudah bisa dimainkan. Yang tersisa sekarang adalah polish, persiapan presentasi, dan testing menyeluruh. Estimasi total effort tersisa: **4–8 jam per orang**, tergantung track yang dipilih.
 
 ---
 
@@ -62,7 +62,7 @@ Fitur frontend:
 |------|--------|---------|
 | TicTacToe | Fully playable end-to-end | |
 | Chess | Basic moves working | Check/checkmate belum, win = king captured |
-| Connect Four | Pending | Factory/enum ada, implementasi belum |
+| Connect Four | Fully playable end-to-end | |
 
 ### Dokumentasi di `docs/`
 
@@ -199,20 +199,20 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 1: Project Lead & Integration (Sudah di-claim)
+### Track 1: Project Lead & Integration — Jessen William (2802391605)
 
-**Scope**: Foundation sudah selesai. Sisa task adalah implement Connect Four dan pastikan semua PR dari tim terintegrasi dengan benar.
+**Scope**: Foundation + Connect Four sudah selesai. Sisa task adalah code review PR dari tim dan final integration testing.
 
 **Sisa task:**
-- [ ] Implement Connect Four (gunakan prompt di `docs/CONNECT-FOUR-PROMPT.md`)
+- [x] ~~Implement Connect Four~~ — sudah selesai, 180 tests passing
 - [ ] Code review semua PR dari anggota tim lain
 - [ ] Final integration testing setelah semua task merge ke `main`
 
-**Estimasi sisa**: 4–5 jam
+**Estimasi sisa**: 2–3 jam
 
 ---
 
-### Track 2: Testing & Quality Assurance
+### Track 2: Testing & Quality Assurance — Yupriando (2802392204)
 
 **Goal**: Pastikan aplikasi bekerja sempurna di semua skenario yang mungkin diuji dosen saat demo.
 
@@ -221,7 +221,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 - [ ] **Cross-browser test**: Jalankan flow lengkap di Chrome, Firefox, dan Edge. Catat kalau ada yang berbeda.
 - [ ] **Responsive test**: Buka Chrome DevTools (`F12`), toggle device toolbar (`Ctrl+Shift+M`), test di preset "iPhone SE" (375px) dan "iPad" (768px). Cek apakah board game overflow atau tidak.
 - [ ] **Bug hunting**: Coba skenario edge case join session yang sudah FINISHED, klik move bukan giliran kamu, refresh halaman saat game berlangsung.
-- [ ] **Test Connect Four**: Setelah Track 1 selesai implement, langsung test end-to-end.
+- [ ] **Test Connect Four**: Game sudah bisa dipilih di lobby, langsung test end-to-end sekarang.
 - [ ] **Dokumentasi hasil**: Buat file `docs/TESTING-LOG.md` (pakai template di bawah).
 - [ ] **Bug reporting**: Buat GitHub Issue untuk setiap bug yang ditemukan, label dengan `bug`.
 
@@ -257,7 +257,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 3: Documentation & Slide Design
+### Track 3: Documentation & Slide Design — Jeremy Felix (2802429794)
 
 **Goal**: Project terlihat polished dan profesional di mata dosen. Slide yang bagus bisa naikkan kesan keseluruhan secara signifikan.
 
@@ -282,7 +282,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 4: Feature & Code Polish
+### Track 4: Feature & Code Polish — Vabregass (2802393913)
 
 **Goal**: Pastikan code quality terjaga dan gameplay-nya solid.
 
@@ -300,7 +300,7 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 ---
 
-### Track 5: Demo & Presentation
+### Track 5: Demo & Presentation — Marco Andrean (2802424250)
 
 **Goal**: Deliverable presentasi yang smooth dan impressive. Dosen terkesan bukan cuma dari kode, tapi dari cara tim menyampaikannya.
 
@@ -329,13 +329,13 @@ Ada **5 track** yang harus dipilih saat meeting tim pertama. Setiap track punya 
 
 Dosen biasanya tanya random ke presentasi. Semua orang **wajib paham minimal 2 pattern** terutama yang di-assign ke track masing-masing.
 
-| Track | Pattern yang Harus Dikuasai |
-|-------|---------------------------|
-| Track 1 (Project Lead) | Abstract Factory, Builder, Prototype |
-| Track 2 (Testing/QA) | Singleton, State |
-| Track 3 (Documentation) | Adapter, Facade |
-| Track 4 (Feature Dev) | Proxy (Auth + Cache), Template Method |
-| Track 5 (Presentation) | Observer + Layered Architecture overview |
+| Nama | Track | Pattern yang Harus Dikuasai |
+|------|-------|---------------------------|
+| Jessen William | Track 1 (Project Lead) | Singleton, Prototype, Template Method |
+| Yupriando | Track 2 (Testing/QA) | Adapter, Facade |
+| Jeremy Felix | Track 3 (Documentation) | Observer, State |
+| Vabregass | Track 4 (Feature Dev) | Abstract Factory, Builder |
+| Marco Andrean | Track 5 (Presentation) | Proxy (Auth + Cache), ISO 25010 |
 
 Untuk setiap pattern, wajib bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
@@ -363,15 +363,10 @@ Untuk setiap pattern, wajib bisa jawab 4 pertanyaan ini dalam **<1 menit**:
 
 ### Priority 1 Wajib Selesai Sebelum Submit
 
-**Task 1.1: Implement Connect Four**
-- Owner: Track 1 (Project Lead)
-- Estimasi: 3–4 jam
-- Cara kerja: Jalankan prompt di `docs/CONNECT-FOUR-PROMPT.md` via Claude Code
-- Acceptance criteria:
-  - [ ] Connect Four bisa dipilih saat create session
-  - [ ] Board 7x6 muncul di frontend dan playable
-  - [ ] Win condition benar: 4 biji berjajar (horizontal, vertikal, diagonal)
-  - [ ] Tests passing
+**Task 1.1: ~~Implement Connect Four~~ — SELESAI**
+- Connect Four sudah fully playable end-to-end
+- 180 tests passing (naik dari 142)
+- Bisa langsung di-test oleh Track 2
 
 **Task 1.2: Multi-Player Manual Testing**
 - Owner: Track 2 (Testing/QA)

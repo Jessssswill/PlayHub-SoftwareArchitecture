@@ -175,18 +175,18 @@ NestJS dipilih secara spesifik karena framework ini natively mendukung pattern y
 
 | Nama | NIM | Kontribusi Utama |
 |------|-----|-----------------|
-| [Member 1] | [NIM] | Backend Lead (Domain Layer, State Machine, Template Method) |
-| [Member 2] | [NIM] | Backend (Factory, Builder, Creational Patterns) |
-| [Member 3] | [NIM] | Backend Infrastructure (Adapter, Facade, AI Engine) |
-| [Member 4] | [NIM] | Frontend (Next.js, Zustand, WebSocket client, Observer) |
-| [Member 5] | [NIM] | Testing, Documentation, Proxy, ISO 25010 Mapping |
+| Jessen William | 2802391605 | Backend Lead (Domain Layer, State Machine, Template Method) |
+| Vabregass | 2802393913 | Backend (Factory, Builder, Creational Patterns) |
+| Yupriando | 2802392204 | Backend Infrastructure (Adapter, Facade, AI Engine) |
+| Jeremy Felix | 2802429794 | Frontend (Next.js, Zustand, WebSocket client, Observer) |
+| Marco Andrean | 2802424250 | Testing, Documentation, Proxy, ISO 25010 Mapping |
 
 **Pattern per orang (untuk presentasi):**
-- Orang 1: Singleton, Prototype, Template Method
-- Orang 2: Abstract Factory, Builder
-- Orang 3: Adapter, Facade
-- Orang 4: Observer, State
-- Orang 5: Proxy (Protection + Cache), ISO 25010
+- Jessen William: Singleton, Prototype, Template Method
+- Vabregass: Abstract Factory, Builder
+- Yupriando: Adapter, Facade
+- Jeremy Felix: Observer, State
+- Marco Andrean: Proxy (Protection + Cache), ISO 25010
 
 ---
 

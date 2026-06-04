@@ -14,8 +14,9 @@
 - ✅ Frontend with Tier S polish (consistent design tokens, Demo Mode, /architecture page)
 - ✅ TicTacToe: fully playable end-to-end
 - ✅ Chess: basic moves working (no check/checkmate detection yet)
+- ✅ Connect Four: fully playable end-to-end (gravity, 4-in-a-row win detection, draw)
 - ✅ Documentation: README, ARCHITECTURE.md, PATTERNS.md, ISO-25010-JUSTIFICATION.md, GSLC-SLIDE-CONTENT.md
-- ✅ Unit tests: facade, proxy-authorization, validation, E2E session flow
+- ✅ Unit tests: 180 tests passing (facade, proxy-authorization, connect-four, validation, E2E session flow)
 - ✅ Swagger at `/api/docs`
 
 ---
@@ -104,13 +105,13 @@ That's it. The Facade, Controller, Gateway, Builder, Registry, and Proxy all wor
 
 Tiap presenter harus paham **intent + lokasi + justifikasi** pola yang ditugaskan:
 
-| Orang | Patterns | File Utama |
-|-------|---------|-----------|
-| **1** | Singleton, Prototype, Template Method | `registry/game-registry.service.ts`, `games/game-state.ts`, `games/game.abstract.ts` |
-| **2** | Abstract Factory, Builder | `factories/`, `builders/game-session.builder.ts` |
-| **3** | Adapter, Facade | `infrastructure/adapters/`, `facades/game-engine.facade.ts` |
-| **4** | Observer, State | `events/game-event-emitter.ts`, `states/` |
-| **5** | Proxy (×2) | `proxies/authorization.proxy.ts`, `proxies/cached-game-state.proxy.ts` |
+| Nama | Patterns | File Utama |
+|------|---------|-----------|
+| **Jessen William** | Singleton, Prototype, Template Method | `registry/game-registry.service.ts`, `games/game-state.ts`, `games/game.abstract.ts` |
+| **Vabregass** | Abstract Factory, Builder | `factories/`, `builders/game-session.builder.ts` |
+| **Yupriando** | Adapter, Facade | `infrastructure/adapters/`, `facades/game-engine.facade.ts` |
+| **Jeremy Felix** | Observer, State | `events/game-event-emitter.ts`, `states/` |
+| **Marco Andrean** | Proxy (×2) | `proxies/authorization.proxy.ts`, `proxies/cached-game-state.proxy.ts` |
 
 Baca `docs/PATTERNS.md` untuk intent lengkap, lokasi file, code snippet, dan UML per pattern.
 

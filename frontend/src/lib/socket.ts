@@ -13,9 +13,19 @@ export const getSocket = (): Socket => {
   return socket;
 };
 
-export const subscribeToSession = (sessionId: string): Socket => {
+/**
+ * Subscribe ke room session dan panggil onJoined setelah server confirm join.
+ * Menggunakan Socket.io acknowledgment agar kita tahu persis kapan client
+ * sudah masuk room — ini mencegah race condition di mana move event
+ * di-broadcast sebelum client join room.
+ */
+export const subscribeToSession = (sessionId: string, onJoined?: () => void): Socket => {
   const s = getSocket();
-  s.emit('subscribe', { sessionId });
+  if (onJoined) {
+    s.emit('subscribe', { sessionId }, onJoined);
+  } else {
+    s.emit('subscribe', { sessionId });
+  }
   return s;
 };
 

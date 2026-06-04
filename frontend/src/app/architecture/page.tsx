@@ -119,12 +119,8 @@ export default function ArchitecturePage() {
       </Link>
 
       {/* Hero */}
-      <section className="pb-8 border-b border-slate-800">
-        <h1 className="text-3xl font-bold mb-2">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-200">
-            System Architecture
-          </span>
-        </h1>
+      <section className={`pb-8 border-b ${tokens.border}`}>
+        <h1 className={`text-3xl font-bold mb-2 ${tokens.text}`}>System Architecture</h1>
         <p className={`text-base ${tokens.textMuted} max-w-2xl`}>
           A layered NestJS backend implementing 10 GoF design patterns, paired with a Next.js 16
           frontend with real-time WebSocket sync. Built for the Software Architecture LEC final project.
