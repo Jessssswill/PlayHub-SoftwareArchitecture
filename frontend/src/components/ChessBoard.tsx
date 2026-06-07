@@ -40,7 +40,6 @@ export default function ChessBoard({ board, onMove, disabled, myPlayerId, curren
         return;
       }
 
-      // If clicking another of my own pieces, change selection instead of moving
       if (piece) {
         const isWhitePiece = piece === piece.toUpperCase();
         const isMyPiece = myIndex === 0 ? isWhitePiece : !isWhitePiece;

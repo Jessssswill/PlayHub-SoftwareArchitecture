@@ -32,9 +32,9 @@ const GAME_LABEL: Record<GameType, string> = {
 };
 
 const GAME_ICON: Record<GameType, string> = {
-  [GameType.TIC_TAC_TOE]: '⭕',
-  [GameType.CHESS]: '♟',
-  [GameType.CONNECT_FOUR]: '🔴',
+  [GameType.TIC_TAC_TOE]: 'TTT',
+  [GameType.CHESS]: 'CHE',
+  [GameType.CONNECT_FOUR]: 'C4',
 };
 
 export default function LobbyPage() {
@@ -45,7 +45,7 @@ export default function LobbyPage() {
   const others = sessions.filter((s) => s.status !== GameStatus.IN_PROGRESS);
 
   const handleDemo = async () => {
-    const toastId = toast.loading('Setting up demo…');
+    const toastId = toast.loading('Setting up demo...');
     try {
       const res = await demoSession();
       toast.success('Demo session ready!', { id: toastId });
@@ -58,12 +58,11 @@ export default function LobbyPage() {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
-      {/* Page header */}
       <div className={`flex items-start justify-between mb-8 pb-8 border-b ${tokens.border}`}>
         <div>
           <h1 className={`text-2xl font-bold mb-1 ${tokens.text}`}>Game Lobby</h1>
           <p className={`${tokens.textMuted} text-sm`}>
-            Sessions auto-refresh every 3 s
+            Sessions auto-refresh every 3 seconds
           </p>
         </div>
         <div className="flex gap-2">
@@ -81,14 +80,13 @@ export default function LobbyPage() {
         </div>
       </div>
 
-      {/* States */}
       {error ? (
         <ErrorState
-          message={`${error} — is the backend running on :3001?`}
+          message={`${error} - is the backend running on port 3001?`}
           onRetry={refetch}
         />
       ) : loading ? (
-        <LoadingState message="Fetching sessions…" />
+        <LoadingState message="Fetching sessions..." />
       ) : sessions.length === 0 ? (
         <EmptyState
           icon={Gamepad2}
@@ -132,10 +130,7 @@ export default function LobbyPage() {
 function SessionCard({ session }: { session: GameSession }) {
   const isActive = session.status === GameStatus.IN_PROGRESS;
   return (
-    <Link
-      href={`/game/${session.id}`}
-      className="block group"
-    >
+    <Link href={`/game/${session.id}`} className="block group">
       <div className={`relative overflow-hidden bg-card border rounded-xl p-4
         transition-all duration-200 shadow-sm shadow-black/10 dark:shadow-black/30
         ${isActive
@@ -143,15 +138,13 @@ function SessionCard({ session }: { session: GameSession }) {
           : 'border-border hover:border-zinc-400 dark:hover:border-zinc-500'
         }`}
       >
-        {/* Left accent bar for active sessions */}
         {isActive && (
           <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-blue-500 rounded-l-xl" />
         )}
 
         <div className={`flex items-center justify-between ${isActive ? 'pl-2' : ''}`}>
           <div className="flex items-center gap-3">
-            {/* Game icon badge */}
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-lg shrink-0 ${GAME_ICON_BG[session.gameType]}`}>
+            <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${GAME_ICON_BG[session.gameType]}`}>
               {GAME_ICON[session.gameType]}
             </div>
             <div>
@@ -159,8 +152,7 @@ function SessionCard({ session }: { session: GameSession }) {
                 {session.players.map((p) => p.name).join(' vs ')}
               </p>
               <p className={`text-xs ${tokens.textMuted}`}>
-                {GAME_LABEL[session.gameType]} ·{' '}
-                {session.currentState?.moveCount ?? 0} moves
+                {GAME_LABEL[session.gameType]} · {session.currentState?.moveCount ?? 0} moves
               </p>
             </div>
           </div>

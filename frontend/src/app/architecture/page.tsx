@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Layers, Cpu, Server, Database } from 'lucide-react';
+import { ChevronDown, ChevronUp, Layers, Cpu, Server, Database, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import MermaidDiagram from '../../components/MermaidDiagram';
 import { patterns, categories, Pattern } from '../../lib/patterns-data';
 import { tokens, transitions, card, btn } from '../../lib/design-tokens';
@@ -16,28 +15,28 @@ graph TD
   end
 
   subgraph PR["Presentation Layer"]
-    SC["SessionController\\nREST API"]
-    GG["GameGateway\\nWebSocket"]
+    SC["SessionController REST API"]
+    GG["GameGateway WebSocket"]
   end
 
   subgraph BL["Business Layer"]
-    AP["AuthorizationProxy\\n(Protection Proxy)"]
-    CP["CachedStateProxy\\n(Cache Proxy)"]
+    AP["AuthorizationProxy Protection Proxy"]
+    CP["CachedStateProxy Cache Proxy"]
     FEA["GameEngineFacade"]
-    GR["GameRegistry\\n(Singleton)"]
-    GEB["GameEventBus\\n(Observer)"]
+    GR["GameRegistry Singleton"]
+    GEB["GameEventBus Observer"]
   end
 
   subgraph DL["Domain Layer"]
-    GSM["GameSession\\n(State Machine)"]
-    TG["TicTacToeGame\\n(Template Method)"]
-    CG["ChessGame\\n(Template Method)"]
-    GEE["GameEventEmitter\\n(Observer)"]
+    GSM["GameSession State Machine"]
+    TG["TicTacToeGame Template Method"]
+    CG["ChessGame Template Method"]
+    GEE["GameEventEmitter Observer"]
   end
 
   subgraph PL["Persistence Layer"]
     IMS["InMemoryStorage"]
-    TOS["TypeOrmStorage\\n(SQLite)"]
+    TOS["TypeOrmStorage SQLite"]
   end
 
   NP -->|HTTP /api| SC
@@ -109,25 +108,22 @@ function PatternCard({ pattern }: { pattern: Pattern }) {
 export default function ArchitecturePage() {
   return (
     <main className="max-w-4xl mx-auto px-4 py-10 space-y-12">
-      {/* Back */}
       <Link
         href="/"
-        className={`inline-flex items-center gap-1 text-sm ${tokens.textMuted} hover:${tokens.text} ${transitions.default}`}
+        className={`inline-flex items-center gap-1 text-sm ${tokens.textMuted} hover:text-foreground ${transitions.default}`}
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Lobby
       </Link>
 
-      {/* Hero */}
       <section className={`pb-8 border-b ${tokens.border}`}>
         <h1 className={`text-3xl font-bold mb-2 ${tokens.text}`}>System Architecture</h1>
         <p className={`text-base ${tokens.textMuted} max-w-2xl`}>
-          A layered NestJS backend implementing 10 GoF design patterns, paired with a Next.js 16
-          frontend with real-time WebSocket sync. Built for the Software Architecture LEC final project.
+          A layered NestJS backend implementing 11 GoF design patterns, paired with a Next.js 16
+          frontend with real-time WebSocket sync.
         </p>
       </section>
 
-      {/* Tech stack */}
       <section>
         <h2 className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-4`}>
           Tech Stack
@@ -145,7 +141,6 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      {/* Architecture diagram */}
       <section>
         <h2 className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-4`}>
           Component Diagram
@@ -155,10 +150,9 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      {/* Design patterns */}
       <section>
         <h2 className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-4`}>
-          Design Patterns (10 GoF)
+          Design Patterns (11 GoF)
         </h2>
         <div className="space-y-3">
           {categories.map((cat) => (
@@ -178,7 +172,6 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      {/* ISO 25010 */}
       <section>
         <h2 className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-4`}>
           ISO 25010 Quality Attributes
@@ -208,7 +201,6 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className={`${card} text-center py-8`}>
         <p className={`text-lg font-semibold ${tokens.text} mb-2`}>See it in action</p>
         <p className={`text-sm ${tokens.textMuted} mb-4`}>

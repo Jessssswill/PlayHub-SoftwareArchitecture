@@ -6,7 +6,7 @@ import { Player } from '../src/shared/types/player.interface';
 const p1: Player = { id: 'p1', name: 'Alice' };
 const p2: Player = { id: 'p2', name: 'Bob' };
 
-describe('Builder — GameSessionBuilder', () => {
+describe('Builder - GameSessionBuilder', () => {
   let builder: GameSessionBuilder;
 
   beforeEach(() => {
@@ -87,7 +87,7 @@ describe('Builder — GameSessionBuilder', () => {
   it('build() me-reset state builder sehingga bisa dipakai ulang', () => {
     builder.forGame(GameType.TIC_TAC_TOE).addPlayer(p1).addPlayer(p2).build();
 
-    // Builder harus fresh setelah build() — game type sudah null
+    // Builder harus fresh setelah build() - game type sudah null
     expect(() => builder.addPlayer(p1).addPlayer(p2).build()).toThrow(
       'Game type harus ditentukan',
     );
@@ -122,7 +122,7 @@ describe('Builder — GameSessionBuilder', () => {
       .addPlayer(p2)
       .build();
 
-    // session.players adalah copy — panjangnya tetap 2
+    // session.players adalah copy - panjangnya tetap 2
     expect(session.players).toHaveLength(2);
   });
 });

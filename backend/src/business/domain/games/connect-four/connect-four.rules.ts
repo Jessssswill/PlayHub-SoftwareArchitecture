@@ -4,12 +4,10 @@ export class ConnectFourRules {
 
   static isValidColumn(board: string[][], col: number): boolean {
     if (col < 0 || col >= this.COLS) return false;
-    // Cek apakah kolom sudah penuh (baris paling atas indeks 0)
     return board[0][col] === '';
   }
 
   static dropPiece(board: string[][], col: number, piece: string): number {
-    // Cari baris terbawah yang kosong
     for (let r = this.ROWS - 1; r >= 0; r--) {
       if (board[r][col] === '') {
         board[r][col] = piece;
@@ -23,7 +21,6 @@ export class ConnectFourRules {
     const rows = this.ROWS;
     const cols = this.COLS;
 
-    // Horizontal
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c <= cols - 4; c++) {
         if (
@@ -37,7 +34,6 @@ export class ConnectFourRules {
       }
     }
 
-    // Vertikal
     for (let r = 0; r <= rows - 4; r++) {
       for (let c = 0; c < cols; c++) {
         if (
@@ -54,7 +50,6 @@ export class ConnectFourRules {
       }
     }
 
-    // Diagonal kanan-bawah (↘)
     for (let r = 0; r <= rows - 4; r++) {
       for (let c = 0; c <= cols - 4; c++) {
         if (
@@ -71,7 +66,6 @@ export class ConnectFourRules {
       }
     }
 
-    // Diagonal kiri-bawah (↙)
     for (let r = 0; r <= rows - 4; r++) {
       for (let c = 3; c < cols; c++) {
         if (
@@ -92,7 +86,6 @@ export class ConnectFourRules {
   }
 
   static isBoardFull(board: string[][]): boolean {
-    // Jika baris paling atas penuh semua, berarti board penuh
     return board[0].every((cell) => cell !== '');
   }
 }

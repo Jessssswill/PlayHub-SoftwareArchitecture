@@ -5,12 +5,6 @@ import { GameType } from '../../shared/types/game-type.enum';
 import { Move, TicTacToeMove, ChessMove } from '../../shared/types/move.types';
 import { ChessRules } from '../../business/domain/games/chess/chess.rules';
 
-/**
- * @pattern Adapter (ConcreteAdapter)
- * @intent Adaptasi strategi "random move" ke interface IAIEngine yang seragam.
- *         TicTacToe: pilih cell kosong acak. Chess: coba posisi acak sampai valid.
- * @participants IAIEngine (target), RandomAiAdapter (adapter)
- */
 @Injectable()
 export class RandomAiAdapter implements IAIEngine {
   async getNextMove(state: GameState, gameType: GameType): Promise<Move> {
@@ -46,7 +40,6 @@ export class RandomAiAdapter implements IAIEngine {
   private randomChessMove(state: GameState): ChessMove {
     const isWhite = state.playerOrder[0] === state.currentPlayerId;
 
-    // Kumpulkan semua piece milik player saat ini
     const ownPieces: [number, number][] = [];
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
@@ -57,7 +50,6 @@ export class RandomAiAdapter implements IAIEngine {
       }
     }
 
-    // Coba random sampai temukan move yang valid (max 200 percobaan)
     for (let attempt = 0; attempt < 200; attempt++) {
       const [fr, fc] = ownPieces[Math.floor(Math.random() * ownPieces.length)];
       const tr = Math.floor(Math.random() * 8);
@@ -72,7 +64,6 @@ export class RandomAiAdapter implements IAIEngine {
         ChessRules.validate(state, candidate);
         return candidate;
       } catch {
-        // Coba lagi
       }
     }
     throw new BadRequestException('AI tidak menemukan move valid setelah 200 percobaan.');

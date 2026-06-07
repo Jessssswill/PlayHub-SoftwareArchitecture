@@ -8,10 +8,10 @@
 ## Cara Membaca Dokumen Ini
 
 Setiap section menjelaskan satu anggota tim dengan format:
-- **Apa yang dikerjakan** — gambaran besar
-- **Kenapa penting** — kontribusi ini solve masalah apa
-- **Detail teknis** — pattern, file, cara kerja
-- **Analogi simpel** — kalau dosen nanya "ini ngapain", bisa jawab dengan ini
+- **Apa yang dikerjakan** - gambaran besar
+- **Kenapa penting** - kontribusi ini solve masalah apa
+- **Detail teknis** - pattern, file, cara kerja
+- **Analogi simpel** - kalau dosen nanya "ini ngapain", bisa jawab dengan ini
 
 ---
 
@@ -41,32 +41,32 @@ TicTacToe, Chess, dan Connect Four semuanya extend class ini. Mereka boleh punya
 **State Pattern** (`backend/src/business/domain/states/`)
 
 4 file state yang masing-masing handle operasi berbeda:
-- `waiting-for-players.state.ts` — bisa `startGame()`, tidak bisa `makeMove()`
-- `in-progress.state.ts` — bisa `makeMove()`, `pause()`, `finish()`
-- `paused.state.ts` — bisa `resume()`, `finish()`, tidak bisa `makeMove()`
-- `finished.state.ts` — tidak bisa operasi apapun
+- `waiting-for-players.state.ts` - bisa `startGame()`, tidak bisa `makeMove()`
+- `in-progress.state.ts` - bisa `makeMove()`, `pause()`, `finish()`
+- `paused.state.ts` - bisa `resume()`, `finish()`, tidak bisa `makeMove()`
+- `finished.state.ts` - tidak bisa operasi apapun
 
 Tanpa pattern ini, kode akan penuh `if (status === 'IN_PROGRESS') { ... } else if (status === 'PAUSED') { ... }` di setiap method. State pattern membuat tiap state self-contained dan mudah ditambah.
 
 **Observer Pattern** (`backend/src/business/domain/events/game-event-emitter.ts`, `backend/src/business/events/game-event-bus.ts`)
 
 Dua level observer:
-1. `GameEventEmitter` — per sesi, emit event lokal (misalnya `move.applied`)
-2. `GameEventBus` — global, forward event ke WebSocket gateway
+1. `GameEventEmitter` - per sesi, emit event lokal (misalnya `move.applied`)
+2. `GameEventBus` - global, forward event ke WebSocket gateway
 
 Game engine tidak tahu ada WebSocket. Ia cuma emit event, dan WebSocket gateway yang subscribe dan forward ke browser.
 
 **Frontend** (`frontend/src/`)
 
 Semua halaman Next.js:
-- `/` — Lobby, daftar sesi aktif, tombol Demo Mode
-- `/lobby` — Form buat sesi baru (pilih game type, input nama)
-- `/game/[sessionId]` — Board game, player list, move history, real-time sync
-- `/architecture` — Showcase Mermaid diagram + 10 pattern accordion (untuk presentasi)
+- `/` - Lobby, daftar sesi aktif, tombol Demo Mode
+- `/lobby` - Form buat sesi baru (pilih game type, input nama)
+- `/game/[sessionId]` - Board game, player list, move history, real-time sync
+- `/architecture` - Showcase Mermaid diagram + 11 pattern accordion (untuk presentasi)
 
-Design system (`frontend/src/lib/design-tokens.ts`) — semua warna, spacing, button style ada di satu file, dipakai konsisten di seluruh UI.
+Design system (`frontend/src/lib/design-tokens.ts`) - semua warna, spacing, button style ada di satu file, dipakai konsisten di seluruh UI.
 
-WebSocket hook (`frontend/src/hooks/useGameSocket.ts`) — subscribe ke room Socket.io, listen event `move`/`state`/`finished`, update Zustand store secara real-time.
+WebSocket hook (`frontend/src/hooks/useGameSocket.ts`) - subscribe ke room Socket.io, listen event `move`/`state`/`finished`, update Zustand store secara real-time.
 
 #### File Utama
 
@@ -139,7 +139,7 @@ Method `build()` lempar exception kalau kondisi tidak terpenuhi. Ini memastikan 
 
 **Singleton Pattern** (`backend/src/infrastructure/registry/game-registry.service.ts`)
 
-`GameRegistry` adalah satu-satunya tempat penyimpanan semua sesi aktif. Karena NestJS default scope adalah singleton, hanya ada satu instance `GameRegistry` yang running — semua request baca/tulis dari registry yang sama. Ini bukan `getInstance()` anti-pattern; ini DI-managed singleton yang bisa di-mock saat testing.
+`GameRegistry` adalah satu-satunya tempat penyimpanan semua sesi aktif. Karena NestJS default scope adalah singleton, hanya ada satu instance `GameRegistry` yang running - semua request baca/tulis dari registry yang sama. Ini bukan `getInstance()` anti-pattern; ini DI-managed singleton yang bisa di-mock saat testing.
 
 **Prototype Pattern** (`backend/src/business/domain/games/game-state.ts`)
 
@@ -167,7 +167,7 @@ backend/src/business/domain/games/
 
 #### Analogi Simpel untuk Dosen
 
-"Abstract Factory itu kayak pabrik yang beda lini produksinya per game. Mau produksi TicTacToe? Pakai lini TicTacToe — dapat papan 3×3, aturan TicTacToe, dan setup awal yang sesuai. Semua kompatibel satu sama lain. Mau tambah Checkers? Buka lini baru, tidak perlu ubah lini yang sudah ada."
+"Abstract Factory itu kayak pabrik yang beda lini produksinya per game. Mau produksi TicTacToe? Pakai lini TicTacToe - dapat papan 3×3, aturan TicTacToe, dan setup awal yang sesuai. Semua kompatibel satu sama lain. Mau tambah Checkers? Buka lini baru, tidak perlu ubah lini yang sudah ada."
 
 ---
 
@@ -202,9 +202,9 @@ Controller tidak perlu tahu ada registry, factory, atau builder. Semuanya tersem
 Interface `IAIEngine` mendefinisikan satu method: `getNextMove(state, gameType): Move`.
 
 Tiga implementasi dengan strategi berbeda:
-- `RandomAiAdapter` — pilih move valid secara acak (untuk demo)
-- `MinimaxAiAdapter` — AI dengan algoritma Minimax (lebih pintar)
-- `ExternalEngineAdapter` — wrapper ke AI engine eksternal via HTTP (Adapter klasik: ubah interface eksternal jadi interface kita)
+- `RandomAiAdapter` - pilih move valid secara acak (untuk demo)
+- `MinimaxAiAdapter` - AI dengan algoritma Minimax (lebih pintar)
+- `ExternalEngineAdapter` - wrapper ke AI engine eksternal via HTTP (Adapter klasik: ubah interface eksternal jadi interface kita)
 
 Semua AI engine bisa di-swap tanpa ubah satu baris pun di Facade atau Controller. Ini adalah kekuatan Adapter pattern.
 
@@ -249,13 +249,13 @@ Backend boleh se-canggih apapun, tapi kalau tidak ada frontend yang bagus, dosen
 **State Management dengan Zustand** (`frontend/src/lib/store.ts`)
 
 Satu store global yang menyimpan:
-- `currentSession` — data sesi yang sedang dimainkan
-- `gameState` — board state terkini (diupdate via WebSocket)
-- `moveHistory` — histori move
-- `myPlayerId` — identitas player di tab ini
-- `endResult` — hasil akhir kalau game selesai
+- `currentSession` - data sesi yang sedang dimainkan
+- `gameState` - board state terkini (diupdate via WebSocket)
+- `moveHistory` - histori move
+- `myPlayerId` - identitas player di tab ini
+- `endResult` - hasil akhir kalau game selesai
 
-Kenapa Zustand bukan Redux? Zustand jauh lebih simpel — tidak perlu action, reducer, dispatch. Langsung update state dengan `set()`.
+Kenapa Zustand bukan Redux? Zustand jauh lebih simpel, tidak perlu action, reducer, dispatch. Langsung update state dengan `set()`.
 
 **WebSocket Real-time** (`frontend/src/hooks/useGameSocket.ts`)
 
@@ -268,17 +268,17 @@ Hook yang:
 
 **Board Components**
 
-`TicTacToeBoard.tsx` — grid 3×3, klik cell → emit move via HTTP POST, tunggu WebSocket event balik untuk update board.
+`TicTacToeBoard.tsx` - grid 3×3, klik cell → emit move via HTTP POST, tunggu WebSocket event balik untuk update board.
 
-`ChessBoard.tsx` — grid 8×8, dua-klik untuk move (klik piece dulu, klik tujuan). Validasi piece milik siapa (putih/hitam) sebelum allow selection.
+`ChessBoard.tsx` - grid 8×8, dua-klik untuk move (klik piece dulu, klik tujuan). Validasi piece milik siapa (putih/hitam) sebelum allow selection.
 
-`ConnectFourBoard.tsx` — grid 6×7, klik kolom → biji jatuh ke baris terbawah yang kosong (gravity). Tampilkan biji merah/kuning.
+`ConnectFourBoard.tsx` - grid 6×7, klik kolom → biji jatuh ke baris terbawah yang kosong (gravity). Tampilkan biji merah/kuning.
 
 **Architecture Page** (`frontend/src/app/architecture/page.tsx`)
 
 Halaman khusus untuk presentasi:
 - Mermaid diagram interaktif dari sistem architecture
-- Accordion untuk 10 design pattern (expand untuk lihat intent + file path)
+- Accordion untuk 11 design pattern (expand untuk lihat intent + file path)
 - ISO 25010 quality attributes table
 - Tech stack cards
 
@@ -314,7 +314,7 @@ frontend/src/
 
 #### Analogi Simpel untuk Dosen
 
-"Jeremy bikin semua yang kelihatan di browser. Backend itu kayak mesin di balik panggung, Jeremy yang bikin panggungnya — termasuk papan mainnya, layar skornya, dan lampu sorotnya. WebSocket-nya kayak walkie-talkie antara dua tab: satu orang gerak, yang lain langsung tahu tanpa perlu refresh."
+"Jeremy bikin semua yang kelihatan di browser. Backend itu kayak mesin di balik panggung, Jeremy yang bikin panggungnya - termasuk papan mainnya, layar skornya, dan lampu sorotnya. WebSocket-nya kayak walkie-talkie antara dua tab: satu orang gerak, yang lain langsung tahu tanpa perlu refresh."
 
 ---
 
@@ -341,7 +341,7 @@ Cara kerjanya:
 3. Jika tidak → lempar `ForbiddenException` (HTTP 403)
 4. Jika ya → forward ke `GameEngineFacade.makeMove()`
 
-Kenapa tidak pakai NestJS Guard? Guard hanya jalan di HTTP layer, tidak bisa diuji tanpa HTTP context, dan tidak bekerja untuk WebSocket. Proxy ini pure TypeScript — bisa diuji dengan unit test biasa dan bekerja untuk semua transport.
+Kenapa tidak pakai NestJS Guard? Guard hanya jalan di HTTP layer, tidak bisa diuji tanpa HTTP context, dan tidak bekerja untuk WebSocket. Proxy ini pure TypeScript - bisa diuji dengan unit test biasa dan bekerja untuk semua transport.
 
 **Caching Proxy** (`backend/src/persistence/proxies/cached-game-state.proxy.ts`)
 
@@ -368,11 +368,11 @@ Ini kritis untuk demo dengan spectator: kalau 10 browser buka session yang sama,
 **Dokumentasi** (`docs/`)
 
 File yang dibuat/dikelola:
-- `ARCHITECTURE.md` — diagram sistem + penjelasan layer
-- `PATTERNS.md` — 11 pattern dengan intent, kode, UML, dan justifikasi
-- `ISO-25010-JUSTIFICATION.md` — mapping pattern ke 8 quality attribute
-- `GSLC-SLIDE-CONTENT.md` — content slide presentasi
-- `HANDOFF.md` — Q&A preparation + Architecture Decision Record
+- `ARCHITECTURE.md` - diagram sistem + penjelasan layer
+- `PATTERNS.md` - 11 pattern dengan intent, kode, UML, dan justifikasi
+- `ISO-25010-JUSTIFICATION.md` - mapping pattern ke 8 quality attribute
+- `GSLC-SLIDE-CONTENT.md` - content slide presentasi
+- `HANDOFF.md` - Q&A preparation + Architecture Decision Record
 
 **ISO 25010 Mapping**
 

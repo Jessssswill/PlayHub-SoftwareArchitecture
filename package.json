@@ -2,7 +2,7 @@
   "name": "game-session-manager",
   "version": "1.0.0",
   "private": true,
-  "description": "Monorepo root — convenience scripts only",
+  "description": "Monorepo root - convenience scripts only",
   "scripts": {
     "dev:backend": "npm --prefix backend run start:dev",
     "dev:frontend": "npm --prefix frontend run dev",

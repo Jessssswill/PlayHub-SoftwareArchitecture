@@ -6,11 +6,6 @@ import { IGameLifecycleState } from './game-lifecycle-state.interface';
 import { ISessionContext } from './session-context.interface';
 import { InProgressState } from './in-progress.state';
 
-/**
- * @pattern State (ConcreteState)
- * @intent Sesi di-pause: move ditolak sampai di-resume, hanya resume dan finish yang valid.
- * @participants IGameLifecycleState, GameSession (via ISessionContext)
- */
 export class PausedState implements IGameLifecycleState {
   getName(): GameStatus {
     return GameStatus.PAUSED;

@@ -34,7 +34,7 @@ const buildFacade = () => {
   return { facade, registry };
 };
 
-describe('Facade — GameEngineFacade', () => {
+describe('Facade - GameEngineFacade', () => {
   let facade: GameEngineFacade;
   let registry: GameRegistry;
 
@@ -50,7 +50,7 @@ describe('Facade — GameEngineFacade', () => {
     expect(typeof session.id).toBe('string');
   });
 
-  it('createSession() langsung memulai game — status IN_PROGRESS', async () => {
+  it('createSession() langsung memulai game - status IN_PROGRESS', async () => {
     const session = await facade.createSession(GameType.TIC_TAC_TOE, [p1, p2]);
     expect(session.status).toBe(GameStatus.IN_PROGRESS);
   });

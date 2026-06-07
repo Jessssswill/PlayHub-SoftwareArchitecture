@@ -7,13 +7,6 @@ import { GameSession } from '../../business/domain/game-session';
 import { Player } from '../../shared/types/player.interface';
 import { GameType } from '../../shared/types/game-type.enum';
 
-/**
- * @pattern Proxy (Protection Proxy)
- * @intent Enforce authorization sebelum delegasi ke GameEngineFacade (real subject).
- *         Client tidak berinteraksi langsung dengan facade — proxy yang memvalidasi
- *         apakah player punya hak atas operasi yang diminta.
- * @participants GameEngineFacade (RealSubject), GameEngineAuthorizationProxy (Proxy)
- */
 @Injectable()
 export class GameEngineAuthorizationProxy {
   constructor(
@@ -28,10 +21,6 @@ export class GameEngineAuthorizationProxy {
     return this.real.createSession(gameType, players);
   }
 
-  /**
-   * Pastikan playerId adalah bagian dari session sebelum izinkan move.
-   * Throw ForbiddenException jika bukan player yang terdaftar.
-   */
   async makeMove(
     sessionId: string,
     playerId: string,
@@ -49,10 +38,6 @@ export class GameEngineAuthorizationProxy {
     return this.real.makeMove(sessionId, playerId, move);
   }
 
-  /**
-   * Hanya player dalam sesi yang boleh mengakhiri game.
-   * (Host identification tidak ada di scope ini — cukup validasi keanggotaan.)
-   */
   async endSession(sessionId: string, requesterId: string): Promise<void> {
     const session = this.registry.get(sessionId);
     const isMember = session.players.some((p) => p.id === requesterId);

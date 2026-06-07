@@ -6,8 +6,14 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { ArrowLeft } from 'lucide-react';
 import { GameType } from '../../lib/types';
-import { tokens, btn, transitions, card } from '../../lib/design-tokens';
+import { tokens, btn, transitions } from '../../lib/design-tokens';
 import { createSession } from '../../lib/api';
+
+const GAME_OPTIONS: { type: GameType; label: string; icon: string }[] = [
+  { type: GameType.TIC_TAC_TOE, label: 'Tic-Tac-Toe', icon: 'TTT' },
+  { type: GameType.CONNECT_FOUR, label: 'Connect Four', icon: 'C4' },
+  { type: GameType.CHESS, label: 'Chess', icon: 'CHE' },
+];
 
 export default function LobbyCreatePage() {
   const router = useRouter();
@@ -21,7 +27,7 @@ export default function LobbyCreatePage() {
     if (!p1Name.trim() || !p2Name.trim()) return;
     setSubmitting(true);
 
-    const toastId = toast.loading('Creating session…');
+    const toastId = toast.loading('Creating session...');
     const p1Id = `player-${Date.now()}-1`;
     const p2Id = `player-${Date.now()}-2`;
 
@@ -44,7 +50,7 @@ export default function LobbyCreatePage() {
     <main className="max-w-md mx-auto px-4 py-10">
       <Link
         href="/"
-        className={`inline-flex items-center gap-1.5 text-sm ${tokens.textMuted} hover:text-slate-100 ${transitions.default} mb-8`}
+        className={`inline-flex items-center gap-1.5 text-sm ${tokens.textMuted} hover:text-foreground ${transitions.default} mb-8`}
       >
         <ArrowLeft className="w-4 h-4" />
         Back to lobby
@@ -52,7 +58,7 @@ export default function LobbyCreatePage() {
 
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-1">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-200">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-slate-400 dark:to-slate-200">
             New Game Session
           </span>
         </h1>
@@ -62,36 +68,29 @@ export default function LobbyCreatePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Game Type */}
         <div>
           <label className={`block text-sm font-medium ${tokens.text} mb-2`}>Game Type</label>
           <div className="grid grid-cols-3 gap-3">
-            {([GameType.TIC_TAC_TOE, GameType.CHESS, GameType.CONNECT_FOUR] as const).map((gt) => (
+            {GAME_OPTIONS.map(({ type, label, icon }) => (
               <button
                 type="button"
-                key={gt}
-                onClick={() => setGameType(gt)}
+                key={type}
+                onClick={() => setGameType(type)}
                 className={`p-4 border-2 rounded-lg text-center transition-colors duration-150 ${
-                  gameType === gt
+                  gameType === type
                     ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                     : `${tokens.border} hover:border-zinc-300 dark:hover:border-zinc-600 ${tokens.bgCard}`
                 }`}
               >
-                <div className="text-3xl mb-1">
-                  {gt === GameType.TIC_TAC_TOE ? '⭕' : gt === GameType.CONNECT_FOUR ? '🔴' : '♟'}
-                </div>
-                <div className={`text-sm font-medium ${tokens.text}`}>
-                  {gt === GameType.TIC_TAC_TOE ? 'Tic-Tac-Toe' : gt === GameType.CONNECT_FOUR ? 'Connect Four' : 'Chess'}
-                </div>
+                <div className={`text-xs font-bold mb-1 ${tokens.textMuted}`}>{icon}</div>
+                <div className={`text-sm font-medium ${tokens.text}`}>{label}</div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-700" />
+        <div className={`border-t ${tokens.border}`} />
 
-        {/* Player Names */}
         {(['Player 1', 'Player 2'] as const).map((label, i) => (
           <div key={label}>
             <label className={`block text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-2`}>
@@ -105,7 +104,7 @@ export default function LobbyCreatePage() {
               required
               className={`w-full border ${tokens.border} rounded-xl px-3 py-2.5 text-sm ${tokens.text}
                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                bg-slate-900 placeholder:text-slate-600 transition-colors duration-150`}
+                bg-card placeholder:text-muted transition-colors duration-150`}
             />
           </div>
         ))}
@@ -115,7 +114,7 @@ export default function LobbyCreatePage() {
           disabled={submitting || !p1Name.trim() || !p2Name.trim()}
           className={`w-full py-2.5 ${btn.primary} text-center text-sm`}
         >
-          {submitting ? 'Creating…' : 'Create Session'}
+          {submitting ? 'Creating...' : 'Create Session'}
         </button>
       </form>
     </main>

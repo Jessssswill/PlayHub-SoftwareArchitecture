@@ -21,7 +21,7 @@ const makeSession = (id: string): GameSession =>
     maxSpectators: 0,
   });
 
-describe('Singleton — GameRegistry via NestJS DI', () => {
+describe('Singleton - GameRegistry via NestJS DI', () => {
   let module: TestingModule;
   let registryA: GameRegistry;
   let registryB: GameRegistry;

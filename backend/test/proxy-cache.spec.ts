@@ -26,7 +26,7 @@ const makeSession = (id: string): GameSession =>
     maxSpectators: 0,
   });
 
-describe('Proxy (Caching) — CachedGameStateProxy', () => {
+describe('Proxy (Caching) - CachedGameStateProxy', () => {
   let proxy: CachedGameStateProxy;
   let mockFacade: jest.Mocked<Pick<GameEngineFacade, 'getState' | 'getSession'>>;
   let session: GameSession;
@@ -107,7 +107,7 @@ describe('Proxy (Caching) — CachedGameStateProxy', () => {
     // Cache state pertama (juga subscribe ke emitter)
     const before = await proxy.getState(sessionId);
 
-    // Emit move.applied — proxy harus auto-invalidate
+    // Emit move.applied - proxy harus auto-invalidate
     session.emitter.emit('move.applied', {
       newState: stateAfterMove,
       move: { gameType: GameType.TIC_TAC_TOE, playerId: 'p1', row: 0, col: 0 },
@@ -122,9 +122,9 @@ describe('Proxy (Caching) — CachedGameStateProxy', () => {
 
   it('subscribe ke emitter hanya dilakukan sekali per sesi', async () => {
     await proxy.getState(sessionId);
-    await proxy.getState(sessionId); // cache hit — tidak subscribe ulang
+    await proxy.getState(sessionId); // cache hit - tidak subscribe ulang
     proxy.invalidate(sessionId);
-    await proxy.getState(sessionId); // cache miss — cek subscription
+    await proxy.getState(sessionId); // cache miss - cek subscription
 
     // getSession hanya dipanggil sekali (saat subscribe pertama kali)
     expect(mockFacade.getSession).toHaveBeenCalledTimes(1);

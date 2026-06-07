@@ -1,6 +1,6 @@
 import { GameState } from '../src/business/domain/games/game-state';
 
-describe('Prototype — GameState.clone()', () => {
+describe('Prototype - GameState.clone()', () => {
   const makeState = (): GameState =>
     new GameState({
       boardState: [
@@ -28,7 +28,7 @@ describe('Prototype — GameState.clone()', () => {
     expect(cloned.lastMoveTimestamp).toBe(original.lastMoveTimestamp);
   });
 
-  it('clone() boardState adalah deep copy — mutasi clone tidak mengubah original', () => {
+  it('clone() boardState adalah deep copy - mutasi clone tidak mengubah original', () => {
     const original = makeState();
     const cloned = original.clone();
 
@@ -46,7 +46,7 @@ describe('Prototype — GameState.clone()', () => {
     expect(cloned.boardState[0]).not.toBe(original.boardState[0]);
   });
 
-  it('clone() capturedPieces adalah copy — mutasi tidak memengaruhi original', () => {
+  it('clone() capturedPieces adalah copy - mutasi tidak memengaruhi original', () => {
     const original = makeState();
     const cloned = original.clone();
 

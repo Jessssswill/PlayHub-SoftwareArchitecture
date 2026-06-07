@@ -48,7 +48,7 @@ const validMove = (playerId: string): TicTacToeMove => ({
   col: 0,
 });
 
-describe('Proxy (Protection) — GameEngineAuthorizationProxy', () => {
+describe('Proxy (Protection) - GameEngineAuthorizationProxy', () => {
   let proxy: GameEngineAuthorizationProxy;
   let facade: GameEngineFacade;
   let sessionId: string;

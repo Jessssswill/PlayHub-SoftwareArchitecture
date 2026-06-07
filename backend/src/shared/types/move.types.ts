@@ -20,12 +20,10 @@ export interface ConnectFourMove {
   col: number;
 }
 
-/** Discriminated union — TypeScript menyempitkan tipe secara otomatis via gameType. */
 export type Move = TicTacToeMove | ChessMove | ConnectFourMove;
 
 export interface EndCondition {
   isOver: boolean;
-  /** null = draw atau game belum selesai */
   winnerId: string | null;
   isDraw: boolean;
 }

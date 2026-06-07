@@ -183,10 +183,10 @@ stateDiagram-v2
 
 | State | `makeMove` | `joinPlayer` | `pause` | `resume` | `finish` |
 |-------|-----------|-------------|---------|---------|---------|
-| WAITING | ❌ throws | ✅ allowed | ❌ throws | ❌ throws | ✅ allowed |
-| IN_PROGRESS | ✅ allowed | ❌ throws | ✅ allowed | ❌ throws | ✅ allowed |
-| PAUSED | ❌ throws | ❌ throws | ❌ throws | ✅ allowed | ✅ allowed |
-| FINISHED | ❌ throws | ❌ throws | ❌ throws | ❌ throws | ❌ throws |
+| WAITING | throws | allowed | throws | throws | allowed |
+| IN_PROGRESS | allowed | throws | allowed | throws | allowed |
+| PAUSED | throws | throws | throws | allowed | allowed |
+| FINISHED | throws | throws | throws | throws | throws |
 
 **Implementasi:** Tiap state adalah class terpisah (`WaitingForPlayersState`, `InProgressState`, `PausedState`, `FinishedState`) yang meng-implement `IGameLifecycleState`. `GameSession` mendelegasikan semua lifecycle ke state object saat ini, tidak ada `if/switch` di session class.
 

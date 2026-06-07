@@ -25,7 +25,7 @@ const makeChessState = (): GameState => {
   return new GameState({ boardState: cells, currentPlayerId: 'white', playerOrder: ['white', 'black'] });
 };
 
-describe('Adapter — AI Engines', () => {
+describe('Adapter - AI Engines', () => {
   // ── RandomAiAdapter ───────────────────────────────────────────────────────
 
   describe('RandomAiAdapter', () => {
@@ -76,9 +76,9 @@ describe('Adapter — AI Engines', () => {
     const adapter = new MinimaxAiAdapter();
 
     it('TicTacToe: mengembalikan move optimal (blok menang lawan)', async () => {
-      // Posisi valid: X:2 pieces [0,2][2,0], O:2 pieces [1,0][1,1] — 4 moves total, giliran X.
+      // Posisi valid: X:2 pieces [0,2][2,0], O:2 pieces [1,0][1,1] - 4 moves total, giliran X.
       // O mengancam row 1 ([1,0][1,1] → butuh [1,2]).
-      // X tidak punya kemenangan langsung — satu-satunya move tidak kalah adalah blok di (1,2).
+      // X tidak punya kemenangan langsung - satu-satunya move tidak kalah adalah blok di (1,2).
       const state = new GameState({
         boardState: [
           ['', '', 'X'],
@@ -111,7 +111,7 @@ describe('Adapter — AI Engines', () => {
 
     it('TicTacToe: mengembalikan move valid di papan kosong', async () => {
       // Pada papan kosong, semua move menghasilkan draw (score 0) dengan optimal play.
-      // Minimax mengembalikan cell pertama yang dievaluasi — yang penting move valid.
+      // Minimax mengembalikan cell pertama yang dievaluasi - yang penting move valid.
       const move = await adapter.getNextMove(makeTttState(), GameType.TIC_TAC_TOE) as TicTacToeMove;
       expect(move.row).toBeGreaterThanOrEqual(0);
       expect(move.row).toBeLessThanOrEqual(2);

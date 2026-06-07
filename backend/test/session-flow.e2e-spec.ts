@@ -47,7 +47,7 @@ describe('Session Flow (E2E)', () => {
         MoveValidationService,
         GameEventBus,
         GameEngineFacade,
-        // Persistence — in-memory, no TypeORM
+        // Persistence - in-memory, no TypeORM
         InMemoryStorage,
         { provide: SESSION_STORAGE_TOKEN, useClass: InMemoryStorage },
         GameEngineAuthorizationProxy,

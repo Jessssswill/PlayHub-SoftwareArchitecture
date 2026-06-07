@@ -10,7 +10,7 @@ const makeState = (): GameState =>
     playerOrder: ['p1', 'p2'],
   });
 
-describe('Observer — GameEventEmitter', () => {
+describe('Observer - GameEventEmitter', () => {
   let emitter: GameEventEmitter;
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('Observer — GameEventEmitter', () => {
     expect(calls).toEqual(['listener-1', 'listener-2']);
   });
 
-  it('off() menghapus listener — tidak terpanggil setelah di-remove', () => {
+  it('off() menghapus listener - tidak terpanggil setelah di-remove', () => {
     const calls: number[] = [];
     const listener = () => calls.push(1);
 

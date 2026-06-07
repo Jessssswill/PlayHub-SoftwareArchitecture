@@ -22,7 +22,7 @@ const validMove: TicTacToeMove = {
   col: 0,
 };
 
-describe('Template Method — Game.executeTurn()', () => {
+describe('Template Method - Game.executeTurn()', () => {
   let game: TicTacToeGame;
   let emitter: GameEventEmitter;
 
@@ -97,7 +97,7 @@ describe('Template Method — Game.executeTurn()', () => {
     expect(finished).toHaveLength(0);
   });
 
-  it('executeTurn() melempar jika validateMove gagal — applyMove tidak dipanggil', () => {
+  it('executeTurn() melempar jika validateMove gagal - applyMove tidak dipanggil', () => {
     const invalidMove: TicTacToeMove = {
       gameType: GameType.TIC_TAC_TOE,
       playerId: 'p2', // bukan giliran p2

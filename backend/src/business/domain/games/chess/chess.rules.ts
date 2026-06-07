@@ -2,18 +2,12 @@ import { BadRequestException } from '@nestjs/common';
 import { GameState } from '../game-state';
 import { ChessMove, EndCondition } from '../../../../shared/types/move.types';
 
-/**
- * Chess rules yang disederhanakan untuk proyek arsitektur software.
- * Implementasi: gerakan dasar per tipe piece.
- * SENGAJA tidak diimplementasikan: castling, en passant, promosi, deteksi check/checkmate.
- * Tujuan: mendemonstrasikan pola Template Method, bukan membuat chess engine lengkap.
- */
 export class ChessRules {
   static validate(state: GameState, move: ChessMove): void {
     const { from, to } = move;
 
     if (!ChessRules.inBounds(from.row, from.col) || !ChessRules.inBounds(to.row, to.col)) {
-      throw new BadRequestException('Posisi move di luar papan 8×8.');
+      throw new BadRequestException('Posisi move di luar papan 8x8.');
     }
 
     const piece = state.boardState[from.row][from.col];
@@ -31,7 +25,6 @@ export class ChessRules {
       throw new BadRequestException(`Bukan giliran player '${move.playerId}'.`);
     }
 
-    // Tidak boleh capture piece sendiri
     const target = state.boardState[to.row][to.col];
     if (target) {
       const isTargetWhite = target === target.toUpperCase();
@@ -88,8 +81,6 @@ export class ChessRules {
     return { isOver: false, winnerId: null, isDraw: false };
   }
 
-  // ── Private helpers ────────────────────────────────────────────────────────
-
   private static inBounds(row: number, col: number): boolean {
     return row >= 0 && row < 8 && col >= 0 && col < 8;
   }
@@ -119,10 +110,8 @@ export class ChessRules {
     const colDiff = Math.abs(to.col - from.col);
     const target = state.boardState[to.row][to.col];
 
-    // Maju 1 petak
     if (colDiff === 0 && rowDiff === dir && !target) return true;
 
-    // Maju 2 petak dari posisi awal
     if (
       colDiff === 0 &&
       rowDiff === 2 * dir &&
@@ -133,7 +122,6 @@ export class ChessRules {
       return true;
     }
 
-    // Capture diagonal
     if (colDiff === 1 && rowDiff === dir && target) return true;
 
     return false;

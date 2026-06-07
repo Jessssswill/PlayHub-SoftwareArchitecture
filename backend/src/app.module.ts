@@ -13,7 +13,6 @@ import { PresentationModule } from './presentation/presentation.module';
       autoLoadEntities: true,
       logging: false,
     }),
-    // PresentationModule → PersistenceModule → BusinessModule → InfrastructureModule
     PresentationModule,
   ],
 })

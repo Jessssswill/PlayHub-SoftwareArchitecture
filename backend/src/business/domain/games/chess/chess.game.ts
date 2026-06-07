@@ -6,13 +6,6 @@ import { GameType } from '../../../../shared/types/game-type.enum';
 import { Move, EndCondition, ChessMove } from '../../../../shared/types/move.types';
 import { ChessRules } from './chess.rules';
 
-/**
- * @pattern Template Method (ConcreteClass)
- * @intent Mengisi hook validate/apply/checkEnd untuk Chess yang disederhanakan.
- *         Sengaja tidak mengimplementasikan castling, en passant, promosi, check/checkmate
- *         — fokus pada demonstrasi pola Template Method, bukan membuat chess engine lengkap.
- * @participants Game (AbstractClass), ChessRules (delegasi pure logic)
- */
 @Injectable()
 export class ChessGame extends Game {
   getType(): GameType {

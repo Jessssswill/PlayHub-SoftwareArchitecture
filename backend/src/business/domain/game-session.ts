@@ -8,14 +8,6 @@ import { IGameLifecycleState } from './states/game-lifecycle-state.interface';
 import { ISessionContext } from './states/session-context.interface';
 import { WaitingForPlayersState } from './states/waiting-for-players.state';
 
-/**
- * Domain entity untuk satu sesi game.
- * Mengimplementasikan ISessionContext sehingga bisa diteruskan ke concrete states
- * tanpa menimbulkan circular import (states hanya kenal ISessionContext).
- *
- * @pattern State — lifecycle didelegasikan ke lifecycleState saat ini.
- * @pattern Observer — emitter per-session untuk notifikasi real-time.
- */
 export class GameSession implements ISessionContext {
   readonly id: string;
   readonly gameType: GameType;
@@ -28,10 +20,8 @@ export class GameSession implements ISessionContext {
   allowSpectators: boolean;
   maxSpectators: number;
 
-  /** Emitter scoped ke sesi ini — satu instance per session (Observer pattern). */
   readonly emitter: GameEventEmitter;
 
-  /** State machine saat ini (State pattern). */
   private lifecycleState: IGameLifecycleState;
 
   constructor(data: {
@@ -60,12 +50,6 @@ export class GameSession implements ISessionContext {
     this.lifecycleState = new WaitingForPlayersState();
   }
 
-  // ── State pattern delegation ───────────────────────────────────────────────
-
-  /**
-   * Ganti lifecycle state dan emit event state.changed.
-   * Dipanggil oleh concrete states saat transisi terjadi.
-   */
   transitionTo(newState: IGameLifecycleState): void {
     const from = this.status;
     this.lifecycleState = newState;
@@ -77,10 +61,6 @@ export class GameSession implements ISessionContext {
     this.lifecycleState.joinPlayer(this, player);
   }
 
-  /**
-   * Lifecycle guard — dipanggil facade sebelum meneruskan ke game engine.
-   * Throw jika state saat ini tidak mengizinkan move.
-   */
   canAcceptMove(move: Move): void {
     this.lifecycleState.canAcceptMove(this, move);
   }
@@ -105,12 +85,10 @@ export class GameSession implements ISessionContext {
     return this.lifecycleState;
   }
 
-  /** Player yang sedang giliran berdasarkan currentState. Null jika state belum ada. */
   getCurrentPlayer(): string | null {
     return this.currentState?.currentPlayerId ?? null;
   }
 
-  /** Return currentState. Throw jika belum diinisialisasi. */
   getState(): GameState {
     if (!this.currentState) {
       throw new Error('Game state belum diinisialisasi.');

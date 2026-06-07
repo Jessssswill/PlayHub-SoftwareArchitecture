@@ -111,7 +111,7 @@ describe('TicTacToe Rules', () => {
 
   // ── Deteksi menang ────────────────────────────────────────────────────────
 
-  describe('checkEnd() — win detection', () => {
+  describe('checkEnd() - win detection', () => {
     it('mendeteksi menang pada baris horizontal', () => {
       const state = new GameState({
         boardState: [

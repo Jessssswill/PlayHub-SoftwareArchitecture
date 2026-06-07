@@ -33,8 +33,6 @@ export class SessionController {
     private readonly cacheProxy: CachedGameStateProxy,
   ) {}
 
-  // ── POST /sessions ──────────────────────────────────────────────────────────
-
   @Post()
   @ApiOperation({ summary: 'Buat sesi game baru dengan 2 player' })
   @ApiResponse({ status: 201, description: 'Sesi berhasil dibuat dan langsung IN_PROGRESS' })
@@ -47,12 +45,8 @@ export class SessionController {
     return this.serialize(session);
   }
 
-  // ── POST /sessions/demo ─────────────────────────────────────────────────────
-
   @Post('demo')
-  @ApiOperation({
-    summary: 'Demo: buat sesi TicTacToe dengan 2 dummy player dan 3 move pre-played',
-  })
+  @ApiOperation({ summary: 'Buat sesi TicTacToe demo dengan 3 move pre-played' })
   @ApiResponse({ status: 201, description: 'Sesi demo berhasil dibuat' })
   async demoSession() {
     const players: [Player, Player] = [
@@ -61,7 +55,6 @@ export class SessionController {
     ];
     const session = await this.proxy.createSession(GameType.TIC_TAC_TOE, players);
 
-    // 3 pre-played moves: Alice(0,0) → Bob(1,1) → Alice(0,1)
     await this.proxy.makeMove(session.id, 'demo-alice', {
       gameType: GameType.TIC_TAC_TOE,
       playerId: 'demo-alice',
@@ -85,10 +78,8 @@ export class SessionController {
     return { sessionId: session.id, state };
   }
 
-  // ── GET /sessions ───────────────────────────────────────────────────────────
-
   @Get()
-  @ApiOperation({ summary: 'List semua sesi aktif, opsional filter berdasarkan status' })
+  @ApiOperation({ summary: 'List semua sesi, opsional filter berdasarkan status' })
   @ApiQuery({ name: 'status', enum: GameStatus, required: false })
   @ApiResponse({ status: 200, description: 'Daftar sesi' })
   listSessions(@Query('status') status?: string) {
@@ -97,18 +88,14 @@ export class SessionController {
     return filtered.map((s) => this.serialize(s));
   }
 
-  // ── GET /sessions/:id ───────────────────────────────────────────────────────
-
   @Get(':id')
-  @ApiOperation({ summary: 'Ambil game state sesi (via caching proxy)' })
+  @ApiOperation({ summary: 'Ambil game state sesi via caching proxy' })
   @ApiParam({ name: 'id', description: 'ID sesi' })
   @ApiResponse({ status: 200, description: 'Game state saat ini' })
   @ApiResponse({ status: 404, description: 'Sesi tidak ditemukan' })
   async getState(@Param('id') id: string) {
     return this.cacheProxy.getState(id);
   }
-
-  // ── POST /sessions/:id/join ─────────────────────────────────────────────────
 
   @Post(':id/join')
   @ApiOperation({ summary: 'Bergabung ke sesi sebagai player atau spectator' })
@@ -120,10 +107,8 @@ export class SessionController {
     return { joined: true, sessionId: id };
   }
 
-  // ── DELETE /sessions/:id ────────────────────────────────────────────────────
-
   @Delete(':id')
-  @ApiOperation({ summary: 'Akhiri sesi (hanya anggota sesi yang bisa)' })
+  @ApiOperation({ summary: 'Akhiri sesi, hanya anggota sesi yang bisa' })
   @ApiParam({ name: 'id', description: 'ID sesi' })
   @ApiQuery({ name: 'requesterId', description: 'ID player yang mengakhiri sesi', required: true })
   @ApiResponse({ status: 200, description: 'Sesi berhasil diakhiri' })
@@ -137,23 +122,16 @@ export class SessionController {
     return { ended: true, sessionId: id };
   }
 
-  // ── POST /sessions/:id/move ─────────────────────────────────────────────────
-
   @Post(':id/move')
-  @ApiOperation({
-    summary: 'Kirim move (Authorization Proxy → MoveValidationService → Facade)',
-  })
+  @ApiOperation({ summary: 'Kirim move via Authorization Proxy ke Facade' })
   @ApiParam({ name: 'id', description: 'ID sesi' })
   @ApiResponse({ status: 201, description: 'Move berhasil dieksekusi' })
   @ApiResponse({ status: 400, description: 'Move tidak valid atau bukan giliran Anda' })
   @ApiResponse({ status: 403, description: 'Bukan anggota sesi' })
   async makeMove(@Param('id') id: string, @Body() dto: MakeMoveDto) {
-    // Gabungkan playerId ke dalam move agar sesuai discriminated union Move
     const move = { ...dto.move, playerId: dto.playerId } as unknown as Move;
     return this.proxy.makeMove(id, dto.playerId, move);
   }
-
-  // ── helpers ─────────────────────────────────────────────────────────────────
 
   private serialize(session: GameSession) {
     return {

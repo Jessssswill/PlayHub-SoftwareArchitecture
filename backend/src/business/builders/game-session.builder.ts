@@ -5,13 +5,6 @@ import { GameStatus } from '../../shared/types/game-status.enum';
 import { Player } from '../../shared/types/player.interface';
 import { GameSession } from '../domain/game-session';
 
-/**
- * @pattern Builder
- * @intent Menghindari telescoping constructor pada GameSession yang punya banyak
- *         parameter optional. Builder memastikan objek hanya bisa dibuat dalam
- *         kondisi valid (min 2 player, time control > 0 jika diset).
- * @participants GameSession (Product), GameSessionBuilder (ConcreteBuilder)
- */
 @Injectable()
 export class GameSessionBuilder {
   private gameType: GameType | null = null;
@@ -21,7 +14,6 @@ export class GameSessionBuilder {
   private allowSpectatorsFlag = false;
   private maxSpectatorsCount = 0;
 
-  /** Reset builder ke kondisi awal, bisa di-reuse untuk session berikutnya. */
   reset(): this {
     this.gameType = null;
     this.players = [];
@@ -42,7 +34,6 @@ export class GameSessionBuilder {
     return this;
   }
 
-  /** timeControlSeconds harus > 0 jika diset. */
   withTimeControl(seconds: number): this {
     this.timeControlSeconds = seconds;
     return this;
@@ -59,7 +50,6 @@ export class GameSessionBuilder {
     return this;
   }
 
-  /** Validasi dan bangun GameSession. Throw jika konfigurasi tidak valid. */
   build(): GameSession {
     if (!this.gameType) {
       throw new BadRequestException('Game type harus ditentukan sebelum build().');

@@ -8,18 +8,7 @@ export interface TurnResult {
   endResult: EndCondition;
 }
 
-/**
- * @pattern Template Method
- * @intent Mendefinisikan skeleton satu giliran: validate → apply → checkEnd → emit.
- *         Urutan langkah tidak boleh diubah subclass; hanya isi tiap langkah yang
- *         bervariasi per game type (Chess vs TicTacToe).
- * @participants TicTacToeGame, ChessGame (ConcreteClass), GameEngineFacade (caller)
- */
 export abstract class Game {
-  /**
-   * Template method — JANGAN di-override di subclass.
-   * Urutan: validateMove → applyMove → checkEndCondition → emit move.applied.
-   */
   executeTurn(state: GameState, move: Move, emitter: GameEventEmitter): TurnResult {
     this.validateMove(state, move);
     const newState = this.applyMove(state, move);
@@ -31,10 +20,6 @@ export abstract class Game {
     return { newState, endResult };
   }
 
-  /**
-   * Cek apakah move legal tanpa melempar exception.
-   * Digunakan MoveValidationService untuk early rejection dengan pesan ramah.
-   */
   isValidMove(state: GameState, move: Move): boolean {
     try {
       this.validateMove(state, move);
@@ -44,13 +29,10 @@ export abstract class Game {
     }
   }
 
-  /** Lempar BadRequestException jika move tidak valid — tidak return apapun. */
   protected abstract validateMove(state: GameState, move: Move): void;
 
-  /** Terapkan move, return immutable-style GameState baru. */
   protected abstract applyMove(state: GameState, move: Move): GameState;
 
-  /** Return EndCondition setiap saat; isOver:false jika game belum selesai. */
   protected abstract checkEndCondition(state: GameState): EndCondition;
 
   abstract getType(): GameType;

@@ -25,18 +25,15 @@ export default function GamePageClient({ sessionId }: Props) {
   const { currentSession, gameState, moveHistory, myPlayerId, endResult, setSession, setMyPlayerId } =
     useGameStore();
 
-  // Re-fetch state dari server — dipakai setelah WS join confirm + periodic fallback
   const syncState = useCallback(async () => {
     try {
       const sessions = await api.getSessions();
       const session = sessions.find((s) => s.id === sessionId);
       if (session) setSession(session);
     } catch {
-      // silent — polling fallback, jangan ganggu UX
     }
   }, [sessionId, setSession]);
 
-  // Initial load — juga set myPlayerId dari sessionStorage
   useEffect(() => {
     const load = async () => {
       try {
@@ -51,13 +48,12 @@ export default function GamePageClient({ sessionId }: Props) {
         const stored = sessionStorage.getItem(`player-id-${sessionId}`);
         if (stored) setMyPlayerId(stored);
       } catch {
-        toast.error('Failed to load session. Backend running on :3001?');
+        toast.error('Failed to load session. Backend running on port 3001?');
       }
     };
     load();
   }, [sessionId, setSession, setMyPlayerId, router]);
 
-  // Polling fallback setiap 5 detik — backup kalau WS event terlewat
   const syncRef = useRef(syncState);
   useEffect(() => { syncRef.current = syncState; });
   useEffect(() => {
@@ -65,7 +61,6 @@ export default function GamePageClient({ sessionId }: Props) {
     return () => clearInterval(interval);
   }, []);
 
-  // Pass syncState sebagai callback: dipanggil setelah socket confirm join room
   useGameSocket(sessionId, syncState);
 
   const handleSelectPlayer = (playerId: string) => {
@@ -101,8 +96,8 @@ export default function GamePageClient({ sessionId }: Props) {
 
   if (!currentSession) {
     return (
-      <main className={`max-w-3xl mx-auto px-4 py-16`}>
-        <LoadingState message="Loading session…" />
+      <main className="max-w-3xl mx-auto px-4 py-16">
+        <LoadingState message="Loading session..." />
       </main>
     );
   }
@@ -111,7 +106,7 @@ export default function GamePageClient({ sessionId }: Props) {
     return (
       <main className="max-w-3xl mx-auto px-4 py-16">
         <ErrorState
-          message="Game state unavailable — waiting for sync…"
+          message="Game state unavailable, waiting for sync..."
           onRetry={() => window.location.reload()}
         />
       </main>
@@ -135,24 +130,25 @@ export default function GamePageClient({ sessionId }: Props) {
           ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700'
           : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800';
 
+  const GAME_TITLE: Record<GameType, string> = {
+    [GameType.TIC_TAC_TOE]: 'Tic-Tac-Toe',
+    [GameType.CHESS]: 'Chess',
+    [GameType.CONNECT_FOUR]: 'Connect Four',
+  };
+
   return (
     <main className="max-w-5xl mx-auto px-4 py-8">
-      {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
           <Link
             href="/"
-            className={`inline-flex items-center gap-1 text-sm ${tokens.textMuted} hover:${tokens.text} ${transitions.default} mb-1`}
+            className={`inline-flex items-center gap-1 text-sm ${tokens.textMuted} hover:text-foreground ${transitions.default} mb-1`}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Lobby
           </Link>
           <h1 className={`text-xl font-bold ${tokens.text}`}>
-            {currentSession.gameType === GameType.TIC_TAC_TOE 
-              ? 'Tic-Tac-Toe' 
-              : currentSession.gameType === GameType.CONNECT_FOUR
-                ? 'Connect Four'
-                : 'Chess'}
+            {GAME_TITLE[currentSession.gameType]}
           </h1>
           <p className={`text-xs font-mono ${tokens.textMuted}`}>{sessionId}</p>
         </div>
@@ -161,7 +157,6 @@ export default function GamePageClient({ sessionId }: Props) {
         </span>
       </div>
 
-      {/* Player identity selector */}
       {!myPlayerId && (
         <div className={`mb-6 p-4 ${card} border-zinc-300 dark:border-zinc-700`}>
           <p className={`text-sm font-medium ${tokens.text} mb-3`}>Who are you?</p>
@@ -185,7 +180,6 @@ export default function GamePageClient({ sessionId }: Props) {
         </div>
       )}
 
-      {/* Game over banner */}
       {(isFinished || endResult) && (
         <div
           className={`mb-6 p-4 rounded-xl border text-center ${
@@ -208,7 +202,6 @@ export default function GamePageClient({ sessionId }: Props) {
         </div>
       )}
 
-      {/* Turn indicator */}
       {!isFinished && (
         <div
           className={`mb-4 px-4 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2.5 border ${
@@ -223,19 +216,18 @@ export default function GamePageClient({ sessionId }: Props) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
-              Your turn — click to move
+              Your turn, click to move
             </>
           ) : (
             <>
               <Clock className="w-3.5 h-3.5 shrink-0" />
               Waiting for{' '}
-              {currentSession.players.find((p) => p.id === gameState.currentPlayerId)?.name ?? '…'}
+              {currentSession.players.find((p) => p.id === gameState.currentPlayerId)?.name ?? '...'}
             </>
           )}
         </div>
       )}
 
-      {/* Main layout */}
       <div className="flex gap-6 items-start">
         <div className="flex-shrink-0">
           <GameBoard

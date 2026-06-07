@@ -6,12 +6,6 @@ import { IGameLifecycleState } from './game-lifecycle-state.interface';
 import { ISessionContext } from './session-context.interface';
 import { InProgressState } from './in-progress.state';
 
-/**
- * @pattern State (ConcreteState)
- * @intent Representasi sesi yang belum dimulai: player boleh bergabung,
- *         move ditolak sampai game di-start secara eksplisit.
- * @participants IGameLifecycleState, GameSession (via ISessionContext)
- */
 export class WaitingForPlayersState implements IGameLifecycleState {
   getName(): GameStatus {
     return GameStatus.WAITING;
@@ -36,11 +30,11 @@ export class WaitingForPlayersState implements IGameLifecycleState {
   }
 
   pause(_session: ISessionContext): void {
-    throw new BadRequestException('Tidak bisa pause — game belum dimulai.');
+    throw new BadRequestException('Tidak bisa pause, game belum dimulai.');
   }
 
   resume(_session: ISessionContext): void {
-    throw new BadRequestException('Tidak bisa resume — game belum dimulai.');
+    throw new BadRequestException('Tidak bisa resume, game belum dimulai.');
   }
 
   finish(session: ISessionContext): void {

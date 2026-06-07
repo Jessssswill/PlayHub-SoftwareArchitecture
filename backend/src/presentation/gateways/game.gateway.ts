@@ -11,14 +11,6 @@ import {
 import { Server, Socket } from 'socket.io';
 import { GameEventBus } from '../../business/events/game-event-bus';
 
-/**
- * @pattern Observer (Presentation Entry)
- * @intent Subscribe ke GameEventBus (global domain event stream), forward
- *         event ke WebSocket clients (players + spectators) real-time.
- *         Setiap sesi punya room sendiri: "session:<id>".
- *         Client harus emit 'subscribe' dengan sessionId untuk masuk room.
- * @participants GameEventBus (subject), Socket.io clients (concrete observers)
- */
 @WebSocketGateway({ cors: { origin: '*' } })
 export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
@@ -28,10 +20,6 @@ export class GameGateway
 
   constructor(private readonly eventBus: GameEventBus) {}
 
-  /**
-   * Dipanggil setelah WebSocket server di-init — saat ini server sudah siap.
-   * Subscribe ke global event bus untuk broadcast ke room.
-   */
   afterInit(server: Server): void {
     this.eventBus.on('move.applied', (p) =>
       server.to(`session:${p.sessionId}`).emit('move', p),
@@ -52,10 +40,8 @@ export class GameGateway
   }
 
   handleDisconnect(_client: Socket): void {
-    // no-op — Socket.io mengelola room cleanup otomatis saat disconnect
   }
 
-  /** Client subscribe ke room sesi tertentu untuk menerima event real-time. */
   @SubscribeMessage('subscribe')
   handleSubscribe(
     @MessageBody() data: { sessionId: string },
@@ -66,7 +52,6 @@ export class GameGateway
     return { subscribed: true, room };
   }
 
-  /** Client keluar dari room sesi. */
   @SubscribeMessage('unsubscribe')
   handleUnsubscribe(
     @MessageBody() data: { sessionId: string },

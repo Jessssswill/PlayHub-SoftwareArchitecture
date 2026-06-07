@@ -22,7 +22,7 @@ const buildSession = (): GameSession =>
     .addPlayer(p2)
     .build();
 
-describe('State Pattern — Game Lifecycle State Machine', () => {
+describe('State Pattern - Game Lifecycle State Machine', () => {
   // ── Initial state ────────────────────────────────────────────────────────
 
   it('session baru selalu dimulai dalam status WAITING', () => {

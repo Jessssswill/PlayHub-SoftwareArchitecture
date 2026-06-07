@@ -4,7 +4,7 @@ import { ConnectFourFactory } from '../src/business/factories/connect-four.facto
 import { GameFactoryProvider } from '../src/business/factories/game-factory.provider';
 import { GameType } from '../src/shared/types/game-type.enum';
 
-describe('Abstract Factory — IGameFactory', () => {
+describe('Abstract Factory - IGameFactory', () => {
   const tttFactory = new TicTacToeFactory();
   const chessFactory = new ChessFactory();
   const c4Factory = new ConnectFourFactory();

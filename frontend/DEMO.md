@@ -1,12 +1,12 @@
-# Demo Flow — Game Session Manager
+# Demo Flow: Game Session Manager
 
 ## Prerequisites
 
 ```bash
-# Terminal 1 — backend
+# Terminal 1 - backend
 cd backend && npm run start:dev   # http://localhost:3001
 
-# Terminal 2 — frontend
+# Terminal 2 - frontend
 cd frontend && npm run dev         # http://localhost:3000
 ```
 
@@ -22,7 +22,7 @@ cd frontend && npm run dev         # http://localhost:3000
 6. **Window A**: automatically identified as Alice (creator)
 7. Alice clicks a cell → move appears in BOTH windows instantly (WebSocket)
 8. Bob clicks a cell → move appears in both windows
-9. Play until winner — green banner shows in both windows
+9. Play until winner - green banner shows in both windows
 
 **Expected**: No page refresh needed. Both windows stay in sync.
 

@@ -8,10 +8,6 @@ class ConnectFourRulesStub implements GameRules {
   readonly name = 'ConnectFourRules';
 }
 
-/**
- * @pattern Abstract Factory (Concrete Factory)
- * @intent Menciptakan keluarga objek (Board, Rules, InitialState) khusus untuk Connect Four.
- */
 @Injectable()
 export class ConnectFourFactory implements IGameFactory {
   createBoard(): Board<string> {

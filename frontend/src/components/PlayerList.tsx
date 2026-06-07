@@ -32,7 +32,6 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
                     : 'border border-transparent'
               }`}
             >
-              {/* Player color dot */}
               <span className={`text-sm leading-none ${i === 0 ? tokens.player1 : tokens.player2}`}>●</span>
 
               <span className={`font-medium text-sm ${tokens.text} flex-1 truncate`}>
@@ -40,7 +39,6 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
                 {isMe && <span className={`ml-1 text-xs ${tokens.textMuted}`}>(you)</span>}
               </span>
 
-              {/* Current turn: pulsing dot */}
               {isCurrentTurn && (
                 <span className="relative flex h-2 w-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
@@ -48,9 +46,8 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
                 </span>
               )}
 
-              {/* Winner badge */}
               {isWinner && (
-                <span className={`ml-auto flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400`}>
+                <span className="ml-auto flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
                   <Trophy className="w-3.5 h-3.5" /> Winner
                 </span>
               )}

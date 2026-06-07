@@ -6,12 +6,6 @@ import { GameType } from '../../../../shared/types/game-type.enum';
 import { Move, EndCondition, TicTacToeMove } from '../../../../shared/types/move.types';
 import { TicTacToeRules } from './tic-tac-toe.rules';
 
-/**
- * @pattern Template Method (ConcreteClass)
- * @intent Mengisi hook validate/apply/checkEnd untuk TicTacToe 3×3.
- *         executeTurn() tidak di-override — logika urutan giliran ada di Game abstract.
- * @participants Game (AbstractClass), TicTacToeRules (delegasi pure logic)
- */
 @Injectable()
 export class TicTacToeGame extends Game {
   getType(): GameType {

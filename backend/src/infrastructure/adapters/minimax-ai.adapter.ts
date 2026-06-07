@@ -10,13 +10,6 @@ interface MinimaxResult {
   col: number;
 }
 
-/**
- * @pattern Adapter (ConcreteAdapter)
- * @intent Adaptasi algoritma minimax ke interface IAIEngine.
- *         TicTacToe: minimax depth-9 (exhaustive — ruang state kecil).
- *         Chess: belum diimplementasi (NotImplementedException).
- * @participants IAIEngine (target), MinimaxAiAdapter (adapter)
- */
 @Injectable()
 export class MinimaxAiAdapter implements IAIEngine {
   async getNextMove(state: GameState, gameType: GameType): Promise<Move> {
@@ -38,7 +31,7 @@ export class MinimaxAiAdapter implements IAIEngine {
 
     const result = this.minimax(board, aiSymbol, oppSymbol, true);
     if (result.row === -1) {
-      throw new BadRequestException('Minimax tidak menemukan move valid — papan sudah penuh?');
+      throw new BadRequestException('Minimax tidak menemukan move valid, papan sudah penuh?');
     }
     return {
       gameType: GameType.TIC_TAC_TOE,
@@ -54,7 +47,6 @@ export class MinimaxAiAdapter implements IAIEngine {
     oppSymbol: string,
     isMaximizing: boolean,
   ): MinimaxResult {
-    // Cek kondisi terminal
     if (this.checkWin(board, aiSymbol)) return { score: 10, row: -1, col: -1 };
     if (this.checkWin(board, oppSymbol)) return { score: -10, row: -1, col: -1 };
 

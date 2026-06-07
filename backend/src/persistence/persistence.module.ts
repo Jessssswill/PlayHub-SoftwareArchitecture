@@ -10,7 +10,6 @@ import { SESSION_STORAGE_TOKEN } from './adapters/storage.interface';
 
 @Module({
   imports: [
-    // BusinessModule sudah re-export InfrastructureModule → GameRegistry tersedia
     BusinessModule,
     TypeOrmModule.forFeature([GameSessionEntity]),
   ],
@@ -19,8 +18,6 @@ import { SESSION_STORAGE_TOKEN } from './adapters/storage.interface';
     CachedGameStateProxy,
     InMemoryStorage,
     TypeOrmStorage,
-    // Bind token ke TypeOrmStorage untuk production;
-    // test bisa override dengan InMemoryStorage
     {
       provide: SESSION_STORAGE_TOKEN,
       useClass: TypeOrmStorage,
@@ -32,7 +29,6 @@ import { SESSION_STORAGE_TOKEN } from './adapters/storage.interface';
     InMemoryStorage,
     TypeOrmStorage,
     SESSION_STORAGE_TOKEN,
-    // Re-export BusinessModule agar AppModule dapat facade & registry
     BusinessModule,
   ],
 })

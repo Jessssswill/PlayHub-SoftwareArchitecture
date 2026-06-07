@@ -5,10 +5,6 @@ import { ConnectFourMove, EndCondition } from '../../../../shared/types/move.typ
 import { ConnectFourRules } from './connect-four.rules';
 import { GameType } from '../../../../shared/types/game-type.enum';
 
-/**
- * @pattern Template Method (ConcreteClass)
- * @intent Implementasi Connect Four menggunakan kerangka Game abstract class.
- */
 @Injectable()
 export class ConnectFourGame extends Game {
   getType(): GameType {
@@ -31,7 +27,6 @@ export class ConnectFourGame extends Game {
 
     ConnectFourRules.dropPiece(newState.boardState, move.col, piece);
 
-    // Ganti giliran
     const currentIndex = state.playerOrder.indexOf(move.playerId);
     newState.currentPlayerId = state.playerOrder[(currentIndex + 1) % state.playerOrder.length];
 
@@ -39,10 +34,6 @@ export class ConnectFourGame extends Game {
   }
 
   checkEndCondition(state: GameState): EndCondition {
-    // Kita harus cek kedua pemain karena kita ingin tahu siapa yang menang
-    // Di Connect Four, cuma pemain yang barusan jalan yang bisa menang.
-    // Tapi untuk simplicity kita cek keduaya atau simpan lastPlayerId.
-    // playerOrder[0] = 'R', playerOrder[1] = 'Y'
     const p1 = state.playerOrder[0];
     const p2 = state.playerOrder[1];
 

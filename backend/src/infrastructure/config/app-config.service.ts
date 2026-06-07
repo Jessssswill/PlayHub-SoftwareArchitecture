@@ -1,13 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-/**
- * @pattern Singleton
- * @intent Wrapper type-safe di atas ConfigService NestJS agar caller tidak
- *         perlu tahu nama env variable atau default value-nya.
- *         Diakses via DI — satu instance untuk seluruh aplikasi.
- * @participants ConfigService (wrapped), semua service yang butuh config
- */
 @Injectable()
 export class AppConfigService {
   constructor(private readonly config: ConfigService) {}
@@ -20,7 +13,6 @@ export class AppConfigService {
     return this.config.get<string>('DATABASE', 'game.db');
   }
 
-  /** Apakah synchronize TypeORM aktif — hanya true di development. */
   get dbSynchronize(): boolean {
     return this.config.get<string>('NODE_ENV', 'development') !== 'production';
   }

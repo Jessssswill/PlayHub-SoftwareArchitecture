@@ -23,17 +23,11 @@ interface FinishedEvent {
   endResult: { isOver: boolean; winnerId: string | null; isDraw: boolean };
 }
 
-/**
- * onSync dipanggil setelah socket berhasil join room (acknowledgment dari server).
- * GamePageClient menggunakannya untuk re-fetch state terbaru — menghindari race
- * condition di mana move event tiba sebelum client masuk room.
- */
 export const useGameSocket = (sessionId: string, onSync?: () => void) => {
   const applyMove = useGameStore((s) => s.applyMove);
   const updateSessionStatus = useGameStore((s) => s.updateSessionStatus);
   const setEndResult = useGameStore((s) => s.setEndResult);
 
-  // Simpan onSync di ref agar tidak perlu masuk dependency array
   const onSyncRef = useRef(onSync);
   useEffect(() => {
     onSyncRef.current = onSync;
@@ -44,7 +38,6 @@ export const useGameSocket = (sessionId: string, onSync?: () => void) => {
 
     const subscribe = () => {
       subscribeToSession(sessionId, () => {
-        // Server confirm: client sudah join room — aman untuk sync state
         onSyncRef.current?.();
       });
     };

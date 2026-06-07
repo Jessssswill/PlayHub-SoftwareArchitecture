@@ -5,7 +5,6 @@ import { Player } from '../../shared/types/player.interface';
 import { Move, EndCondition } from '../../shared/types/move.types';
 import { GameState } from '../domain/games/game-state';
 
-/** Payload tiap event di global bus — selalu menyertakan sessionId untuk room routing. */
 export interface BusPayloads {
   'move.applied': { sessionId: string; newState: GameState; move: Move; endResult: EndCondition };
   'state.changed': { sessionId: string; from: GameStatus; to: GameStatus };
@@ -13,13 +12,6 @@ export interface BusPayloads {
   'game.finished': { sessionId: string; endResult: EndCondition };
 }
 
-/**
- * @pattern Observer (Global Bus)
- * @intent Meneruskan event per-session ke subscriber global (WebSocket Gateway)
- *         dengan sessionId di setiap payload untuk routing ke room yang tepat.
- *         Singleton NestJS DI — satu bus untuk seluruh aplikasi.
- * @participants GameEngineFacade (publisher), GameGateway (subscriber)
- */
 @Injectable()
 export class GameEventBus {
   private readonly emitter = new EventEmitter();

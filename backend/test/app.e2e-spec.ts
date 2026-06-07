@@ -21,7 +21,7 @@ import { TicTacToeGame } from '../src/business/domain/games/tic-tac-toe/tic-tac-
 import { ChessGame } from '../src/business/domain/games/chess/chess.game';
 import { GameType } from '../src/shared/types/game-type.enum';
 
-describe('App (e2e) — sanity check', () => {
+describe('App (e2e) - sanity check', () => {
   let app: INestApplication;
 
   beforeAll(async () => {

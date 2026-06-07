@@ -5,12 +5,6 @@ import { Move } from '../../../shared/types/move.types';
 import { IGameLifecycleState } from './game-lifecycle-state.interface';
 import { ISessionContext } from './session-context.interface';
 
-/**
- * @pattern State (ConcreteState)
- * @intent Terminal state — semua aksi ditolak. Mencegah interaksi apapun
- *         setelah game selesai tanpa perlu kondisional di setiap method.
- * @participants IGameLifecycleState, GameSession (via ISessionContext)
- */
 export class FinishedState implements IGameLifecycleState {
   getName(): GameStatus {
     return GameStatus.FINISHED;

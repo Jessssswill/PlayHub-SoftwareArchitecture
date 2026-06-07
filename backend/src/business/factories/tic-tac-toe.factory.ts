@@ -7,12 +7,6 @@ class TicTacToeRules implements GameRules {
   readonly name = 'TicTacToeRules';
 }
 
-/**
- * @pattern Abstract Factory (ConcreteFactory)
- * @intent Membuat set komponen TicTacToe: papan 3×3 kosong, rules dasar,
- *         dan initial state dengan player pertama sebagai giliran pertama.
- * @participants IGameFactory (AbstractFactory), TicTacToeRules, Board, GameState
- */
 @Injectable()
 export class TicTacToeFactory implements IGameFactory {
   createBoard(): Board<string> {

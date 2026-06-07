@@ -7,13 +7,6 @@ interface CacheEntry {
   ts: number;
 }
 
-/**
- * @pattern Proxy (Caching / Virtual Proxy)
- * @intent Cache hasil getState() agar spectator broadcast tidak memicu
- *         registry lookup berulang untuk setiap client. Invalidasi otomatis
- *         saat move.applied diterima dari session emitter.
- * @participants GameEngineFacade (RealSubject), CachedGameStateProxy (Proxy)
- */
 @Injectable()
 export class CachedGameStateProxy {
   private readonly cache = new Map<string, CacheEntry>();
@@ -30,7 +23,6 @@ export class CachedGameStateProxy {
 
     const state = await this.facade.getState(sessionId);
 
-    // Subscribe ke move.applied sekali per sesi untuk auto-invalidate
     if (!this.subscribed.has(sessionId)) {
       const session = this.facade.getSession(sessionId);
       session.emitter.on('move.applied', () => this.invalidate(sessionId));
@@ -41,12 +33,10 @@ export class CachedGameStateProxy {
     return state;
   }
 
-  /** Hapus cache untuk sesi tertentu — dipanggil juga secara manual jika perlu. */
   invalidate(sessionId: string): void {
     this.cache.delete(sessionId);
   }
 
-  /** Expose cache size untuk keperluan testing. */
   get cacheSize(): number {
     return this.cache.size;
   }

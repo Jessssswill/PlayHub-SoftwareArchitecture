@@ -36,7 +36,6 @@ import { GameEventBus } from './events/game-event-bus';
     MoveValidationService,
     GameEventBus,
     GameEngineFacade,
-    // Re-export InfrastructureModule agar GameRegistry tersedia di PersistenceModule
     InfrastructureModule,
   ],
 })

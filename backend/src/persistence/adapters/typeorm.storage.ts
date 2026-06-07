@@ -9,13 +9,6 @@ import { GameStatus } from '../../shared/types/game-status.enum';
 import { GameState } from '../../business/domain/games/game-state';
 import { Player } from '../../shared/types/player.interface';
 
-/**
- * @pattern Adapter (ConcreteAdapter)
- * @intent Adaptasi TypeORM Repository ke interface ISessionStorage,
- *         termasuk serialisasi/deserialisasi GameSession ↔ GameSessionEntity.
- *         Business layer tidak tahu bahwa SQLite dipakai di bawahnya.
- * @participants ISessionStorage (target), TypeORM Repository (adaptee)
- */
 @Injectable()
 export class TypeOrmStorage implements ISessionStorage {
   constructor(
@@ -42,8 +35,6 @@ export class TypeOrmStorage implements ISessionStorage {
     const entities = await this.repo.find();
     return entities.map((e) => this.toDomain(e));
   }
-
-  // ── Mapping helpers ────────────────────────────────────────────────────────
 
   private toEntity(session: GameSession): GameSessionEntity {
     const entity = new GameSessionEntity();
