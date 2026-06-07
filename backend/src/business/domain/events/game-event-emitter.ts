@@ -39,7 +39,10 @@ export class GameEventEmitter {
     return this;
   }
 
-  emit<K extends keyof GameEventPayloads>(event: K, payload: GameEventPayloads[K]): void {
+  emit<K extends keyof GameEventPayloads>(
+    event: K,
+    payload: GameEventPayloads[K],
+  ): void {
     this.emitter.emit(event, payload);
   }
 

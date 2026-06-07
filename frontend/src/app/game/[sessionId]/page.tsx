@@ -1,4 +1,4 @@
-import GamePageClient from '../../../components/GamePageClient';
+import GamePageClient from "../../../components/GamePageClient";
 
 export default async function GamePage({
   params,

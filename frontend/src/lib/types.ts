@@ -1,14 +1,14 @@
 export enum GameType {
-  TIC_TAC_TOE = 'TIC_TAC_TOE',
-  CHESS = 'CHESS',
-  CONNECT_FOUR = 'CONNECT_FOUR',
+  TIC_TAC_TOE = "TIC_TAC_TOE",
+  CHESS = "CHESS",
+  CONNECT_FOUR = "CONNECT_FOUR",
 }
 
 export enum GameStatus {
-  WAITING = 'WAITING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  PAUSED = 'PAUSED',
-  FINISHED = 'FINISHED',
+  WAITING = "WAITING",
+  IN_PROGRESS = "IN_PROGRESS",
+  PAUSED = "PAUSED",
+  FINISHED = "FINISHED",
 }
 
 export interface Player {

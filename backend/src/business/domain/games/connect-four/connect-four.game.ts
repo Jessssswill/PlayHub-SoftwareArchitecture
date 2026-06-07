@@ -1,7 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Game } from '../game.abstract';
 import { GameState } from '../game-state';
-import { ConnectFourMove, EndCondition } from '../../../../shared/types/move.types';
+import {
+  ConnectFourMove,
+  EndCondition,
+} from '../../../../shared/types/move.types';
 import { ConnectFourRules } from './connect-four.rules';
 import { GameType } from '../../../../shared/types/game-type.enum';
 
@@ -13,7 +16,9 @@ export class ConnectFourGame extends Game {
 
   protected validateMove(state: GameState, move: ConnectFourMove): void {
     if (move.playerId !== state.currentPlayerId) {
-      throw new BadRequestException(`Bukan giliran Anda. Giliran: ${state.currentPlayerId}`);
+      throw new BadRequestException(
+        `Bukan giliran Anda. Giliran: ${state.currentPlayerId}`,
+      );
     }
 
     if (!ConnectFourRules.isValidColumn(state.boardState, move.col)) {
@@ -28,7 +33,8 @@ export class ConnectFourGame extends Game {
     ConnectFourRules.dropPiece(newState.boardState, move.col, piece);
 
     const currentIndex = state.playerOrder.indexOf(move.playerId);
-    newState.currentPlayerId = state.playerOrder[(currentIndex + 1) % state.playerOrder.length];
+    newState.currentPlayerId =
+      state.playerOrder[(currentIndex + 1) % state.playerOrder.length];
 
     return newState;
   }

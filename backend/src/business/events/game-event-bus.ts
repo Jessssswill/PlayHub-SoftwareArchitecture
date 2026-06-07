@@ -6,7 +6,12 @@ import { Move, EndCondition } from '../../shared/types/move.types';
 import { GameState } from '../domain/games/game-state';
 
 export interface BusPayloads {
-  'move.applied': { sessionId: string; newState: GameState; move: Move; endResult: EndCondition };
+  'move.applied': {
+    sessionId: string;
+    newState: GameState;
+    move: Move;
+    endResult: EndCondition;
+  };
   'state.changed': { sessionId: string; from: GameStatus; to: GameStatus };
   'player.joined': { sessionId: string; player: Player };
   'game.finished': { sessionId: string; endResult: EndCondition };

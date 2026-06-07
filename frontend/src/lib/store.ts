@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { GameSession, GameState, MoveRecord, GameStatus } from './types';
+import { create } from "zustand";
+import { GameSession, GameState, MoveRecord, GameStatus } from "./types";
 
 export interface EndResult {
   isOver: boolean;
@@ -34,7 +34,9 @@ export const useGameStore = create<GameStore>((set) => ({
 
   updateSessionStatus: (status) =>
     set((prev) =>
-      prev.currentSession ? { currentSession: { ...prev.currentSession, status } } : {},
+      prev.currentSession
+        ? { currentSession: { ...prev.currentSession, status } }
+        : {},
     ),
 
   setGameState: (state) => set({ gameState: state }),
@@ -50,5 +52,11 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   reset: () =>
-    set({ currentSession: null, gameState: null, moveHistory: [], myPlayerId: null, endResult: null }),
+    set({
+      currentSession: null,
+      gameState: null,
+      moveHistory: [],
+      myPlayerId: null,
+      endResult: null,
+    }),
 }));

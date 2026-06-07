@@ -1,15 +1,19 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import './globals.css';
-import { Providers } from '../components/Providers';
-import { tokens } from '../lib/design-tokens';
+import type { Metadata } from "next";
+import Link from "next/link";
+import "./globals.css";
+import { Providers } from "../components/Providers";
+import { tokens } from "../lib/design-tokens";
 
 export const metadata: Metadata = {
-  title: 'Game Session Manager',
-  description: 'Multiplayer game lobby with real-time sync',
+  title: "Game Session Manager",
+  description: "Multiplayer game lobby with real-time sync",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className={`${tokens.bg} ${tokens.text} min-h-screen`}>

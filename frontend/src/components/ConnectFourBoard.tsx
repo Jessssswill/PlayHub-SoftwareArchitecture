@@ -1,37 +1,46 @@
-'use client';
+"use client";
 
-import { tokens } from '../lib/design-tokens';
+import { tokens } from "../lib/design-tokens";
 
 interface Props {
   board: string[][];
   onColClick: (col: number) => void;
   disabled: boolean;
-  currentPiece: 'R' | 'Y' | null;
+  currentPiece: "R" | "Y" | null;
 }
 
-export default function ConnectFourBoard({ board, onColClick, disabled, currentPiece }: Props) {
+export default function ConnectFourBoard({
+  board,
+  onColClick,
+  disabled,
+  currentPiece,
+}: Props) {
   return (
-    <div className={`flex flex-col items-center gap-4 ${tokens.bgCard} p-6 rounded-xl shadow-2xl border ${tokens.border}`}>
+    <div
+      className={`flex flex-col items-center gap-4 ${tokens.bgCard} p-6 rounded-xl shadow-2xl border ${tokens.border}`}
+    >
       <div className="grid grid-cols-7 gap-2 w-full max-w-[500px]">
         {Array.from({ length: 7 }).map((_, colIndex) => (
           <button
             key={colIndex}
             onClick={() => onColClick(colIndex)}
-            disabled={disabled || board[0][colIndex] !== ''}
+            disabled={disabled || board[0][colIndex] !== ""}
             className={`
               h-10 rounded-t-lg transition-all duration-200 flex items-center justify-center text-sm font-bold
               ${
-                disabled || board[0][colIndex] !== ''
-                  ? 'bg-zinc-200 dark:bg-zinc-700 opacity-50 cursor-not-allowed'
-                  : 'bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 active:scale-95 group cursor-pointer'
+                disabled || board[0][colIndex] !== ""
+                  ? "bg-zinc-200 dark:bg-zinc-700 opacity-50 cursor-not-allowed"
+                  : "bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 active:scale-95 group cursor-pointer"
               }
             `}
             title={`Drop in column ${colIndex + 1}`}
           >
-            <span className={`
+            <span
+              className={`
               transform transition-transform group-hover:translate-y-1
-              ${currentPiece === 'R' ? 'text-red-500' : 'text-amber-400'}
-            `}>
+              ${currentPiece === "R" ? "text-red-500" : "text-amber-400"}
+            `}
+            >
               v
             </span>
           </button>
@@ -50,9 +59,9 @@ export default function ConnectFourBoard({ board, onColClick, disabled, currentP
                 <div
                   className={`
                     w-full h-full rounded-full transition-all duration-500 transform
-                    ${cell === 'R' ? 'bg-red-500 scale-100 shadow-lg' : ''}
-                    ${cell === 'Y' ? 'bg-amber-400 scale-100 shadow-lg' : ''}
-                    ${cell === '' ? 'bg-zinc-300 dark:bg-zinc-700 scale-90' : ''}
+                    ${cell === "R" ? "bg-red-500 scale-100 shadow-lg" : ""}
+                    ${cell === "Y" ? "bg-amber-400 scale-100 shadow-lg" : ""}
+                    ${cell === "" ? "bg-zinc-300 dark:bg-zinc-700 scale-90" : ""}
                   `}
                 />
               </div>

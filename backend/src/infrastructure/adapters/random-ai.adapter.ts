@@ -14,7 +14,9 @@ export class RandomAiAdapter implements IAIEngine {
       case GameType.CHESS:
         return this.randomChessMove(state);
       default:
-        throw new BadRequestException(`AI belum mendukung game type: ${gameType}`);
+        throw new BadRequestException(
+          `AI belum mendukung game type: ${gameType}`,
+        );
     }
   }
 
@@ -28,7 +30,8 @@ export class RandomAiAdapter implements IAIEngine {
     if (emptyCells.length === 0) {
       throw new BadRequestException('Tidak ada cell kosong tersisa untuk AI.');
     }
-    const [row, col] = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    const [row, col] =
+      emptyCells[Math.floor(Math.random() * emptyCells.length)];
     return {
       gameType: GameType.TIC_TAC_TOE,
       playerId: state.currentPlayerId,
@@ -63,9 +66,10 @@ export class RandomAiAdapter implements IAIEngine {
       try {
         ChessRules.validate(state, candidate);
         return candidate;
-      } catch {
-      }
+      } catch {}
     }
-    throw new BadRequestException('AI tidak menemukan move valid setelah 200 percobaan.');
+    throw new BadRequestException(
+      'AI tidak menemukan move valid setelah 200 percobaan.',
+    );
   }
 }

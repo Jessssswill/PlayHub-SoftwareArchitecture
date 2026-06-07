@@ -56,7 +56,10 @@ export class TypeOrmStorage implements ISessionStorage {
   private toDomain(entity: GameSessionEntity): GameSession {
     const players: Player[] = JSON.parse(entity.playersJson);
     const currentState: GameState | null = entity.currentStateJson
-      ? Object.assign(new GameState({ boardState: [[]], currentPlayerId: '' }), JSON.parse(entity.currentStateJson))
+      ? Object.assign(
+          new GameState({ boardState: [[]], currentPlayerId: '' }),
+          JSON.parse(entity.currentStateJson),
+        )
       : null;
 
     return new GameSession({

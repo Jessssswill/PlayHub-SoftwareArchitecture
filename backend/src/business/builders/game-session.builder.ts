@@ -52,7 +52,9 @@ export class GameSessionBuilder {
 
   build(): GameSession {
     if (!this.gameType) {
-      throw new BadRequestException('Game type harus ditentukan sebelum build().');
+      throw new BadRequestException(
+        'Game type harus ditentukan sebelum build().',
+      );
     }
     if (this.players.length < 2) {
       throw new BadRequestException(

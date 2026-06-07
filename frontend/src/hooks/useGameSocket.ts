@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { subscribeToSession, unsubscribeFromSession, getSocket } from '../lib/socket';
-import { useGameStore } from '../lib/store';
-import { GameState, GameStatus } from '../lib/types';
+import { useEffect, useRef } from "react";
+import {
+  subscribeToSession,
+  unsubscribeFromSession,
+  getSocket,
+} from "../lib/socket";
+import { useGameStore } from "../lib/store";
+import { GameState, GameStatus } from "../lib/types";
 
 interface MoveEvent {
   sessionId: string;
@@ -44,7 +48,9 @@ export const useGameSocket = (sessionId: string, onSync?: () => void) => {
 
     const onMove = (payload: MoveEvent) => {
       if (payload.sessionId !== sessionId) return;
-      const playerId = String((payload.move as Record<string, unknown>).playerId ?? '');
+      const playerId = String(
+        (payload.move as Record<string, unknown>).playerId ?? "",
+      );
       applyMove(payload.newState, {
         playerId,
         description: formatMoveDescription(payload.move),
@@ -70,16 +76,16 @@ export const useGameSocket = (sessionId: string, onSync?: () => void) => {
       subscribe();
     }
 
-    socket.on('connect', subscribe);
-    socket.on('move', onMove);
-    socket.on('state', onState);
-    socket.on('finished', onFinished);
+    socket.on("connect", subscribe);
+    socket.on("move", onMove);
+    socket.on("state", onState);
+    socket.on("finished", onFinished);
 
     return () => {
-      socket.off('connect', subscribe);
-      socket.off('move', onMove);
-      socket.off('state', onState);
-      socket.off('finished', onFinished);
+      socket.off("connect", subscribe);
+      socket.off("move", onMove);
+      socket.off("state", onState);
+      socket.off("finished", onFinished);
       unsubscribeFromSession(sessionId);
     };
   }, [sessionId, applyMove, updateSessionStatus, setEndResult]);
@@ -101,7 +107,7 @@ function formatMoveDescription(move: Record<string, unknown>): string {
 }
 
 function toChessNotation(pos: { row: number; col: number }): string {
-  const file = String.fromCharCode('a'.charCodeAt(0) + pos.col);
+  const file = String.fromCharCode("a".charCodeAt(0) + pos.col);
   const rank = 8 - pos.row;
   return `${file}${rank}`;
 }

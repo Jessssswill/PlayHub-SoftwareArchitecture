@@ -3,7 +3,11 @@ import { BadRequestException } from '@nestjs/common';
 import { Game } from '../game.abstract';
 import { GameState } from '../game-state';
 import { GameType } from '../../../../shared/types/game-type.enum';
-import { Move, EndCondition, TicTacToeMove } from '../../../../shared/types/move.types';
+import {
+  Move,
+  EndCondition,
+  TicTacToeMove,
+} from '../../../../shared/types/move.types';
 import { TicTacToeRules } from './tic-tac-toe.rules';
 
 @Injectable()

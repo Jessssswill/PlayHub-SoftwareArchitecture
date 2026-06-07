@@ -40,13 +40,17 @@ export class CreateSessionDto {
   @Type(() => PlayerDto)
   players!: [PlayerDto, PlayerDto];
 
-  @ApiPropertyOptional({ description: 'Durasi time control dalam detik (0 = tanpa batas)' })
+  @ApiPropertyOptional({
+    description: 'Durasi time control dalam detik (0 = tanpa batas)',
+  })
   @IsOptional()
   @IsNumber()
   @Min(0)
   timeControlSeconds?: number;
 
-  @ApiPropertyOptional({ description: 'Apakah sesi private (hanya bisa diakses dengan ID)' })
+  @ApiPropertyOptional({
+    description: 'Apakah sesi private (hanya bisa diakses dengan ID)',
+  })
   @IsOptional()
   @IsBoolean()
   isPrivate?: boolean;

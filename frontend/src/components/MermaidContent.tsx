@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 interface Props {
   chart: string;
@@ -12,8 +12,12 @@ export default function MermaidContent({ chart }: Props) {
   useEffect(() => {
     let cancelled = false;
     const render = async () => {
-      const mermaid = (await import('mermaid')).default;
-      mermaid.initialize({ startOnLoad: false, theme: 'dark', fontFamily: 'inherit' });
+      const mermaid = (await import("mermaid")).default;
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "dark",
+        fontFamily: "inherit",
+      });
       if (cancelled || !ref.current) return;
       const id = `mermaid-${Math.random().toString(36).slice(2)}`;
       try {
@@ -22,11 +26,13 @@ export default function MermaidContent({ chart }: Props) {
           ref.current.innerHTML = svg;
         }
       } catch {
-        if (ref.current) ref.current.textContent = 'Diagram render failed.';
+        if (ref.current) ref.current.textContent = "Diagram render failed.";
       }
     };
     render();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [chart]);
 
   return <div ref={ref} className="w-full overflow-x-auto" />;

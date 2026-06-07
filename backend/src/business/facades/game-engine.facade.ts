@@ -40,7 +40,10 @@ export class GameEngineFacade {
     players: [Player, Player],
   ): Promise<GameSession> {
     const factory = this.factoryProvider.getFactory(gameType);
-    const initialState = factory.createInitialState([players[0].id, players[1].id]);
+    const initialState = factory.createInitialState([
+      players[0].id,
+      players[1].id,
+    ]);
 
     const session = this.builder
       .forGame(gameType)
@@ -83,7 +86,11 @@ export class GameEngineFacade {
 
     this.validationService.validate(session, playerId, move, engine);
 
-    const result = engine.executeTurn(session.currentState, move, session.emitter);
+    const result = engine.executeTurn(
+      session.currentState,
+      move,
+      session.emitter,
+    );
     session.currentState = result.newState;
 
     if (result.endResult.isOver) {
@@ -96,7 +103,9 @@ export class GameEngineFacade {
   async getState(sessionId: string): Promise<GameState> {
     const session = this.registry.get(sessionId);
     if (!session.currentState) {
-      throw new NotFoundException('Game state belum diinisialisasi untuk sesi ini.');
+      throw new NotFoundException(
+        'Game state belum diinisialisasi untuk sesi ini.',
+      );
     }
     return session.currentState;
   }

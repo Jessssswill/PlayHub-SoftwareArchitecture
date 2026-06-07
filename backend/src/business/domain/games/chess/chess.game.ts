@@ -3,7 +3,11 @@ import { BadRequestException } from '@nestjs/common';
 import { Game } from '../game.abstract';
 import { GameState } from '../game-state';
 import { GameType } from '../../../../shared/types/game-type.enum';
-import { Move, EndCondition, ChessMove } from '../../../../shared/types/move.types';
+import {
+  Move,
+  EndCondition,
+  ChessMove,
+} from '../../../../shared/types/move.types';
 import { ChessRules } from './chess.rules';
 
 @Injectable()

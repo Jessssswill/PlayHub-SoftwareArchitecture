@@ -12,7 +12,9 @@ const BACK_RANK = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'];
 @Injectable()
 export class ChessFactory implements IGameFactory {
   createBoard(): Board<string> {
-    const cells: string[][] = Array.from({ length: 8 }, () => Array(8).fill(''));
+    const cells: string[][] = Array.from({ length: 8 }, () =>
+      Array(8).fill(''),
+    );
     cells[0] = BACK_RANK.map((p) => p.toLowerCase());
     cells[1] = Array(8).fill('p');
     cells[6] = Array(8).fill('P');

@@ -1,4 +1,8 @@
-import { Injectable, NotImplementedException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotImplementedException,
+  BadRequestException,
+} from '@nestjs/common';
 import { IAIEngine } from './ai-engine.interface';
 import { GameState } from '../../business/domain/games/game-state';
 import { GameType } from '../../shared/types/game-type.enum';
@@ -25,13 +29,16 @@ export class MinimaxAiAdapter implements IAIEngine {
   }
 
   private minimaxMove(state: GameState): TicTacToeMove {
-    const aiSymbol = state.playerOrder.indexOf(state.currentPlayerId) === 0 ? 'X' : 'O';
+    const aiSymbol =
+      state.playerOrder.indexOf(state.currentPlayerId) === 0 ? 'X' : 'O';
     const oppSymbol = aiSymbol === 'X' ? 'O' : 'X';
     const board = state.boardState.map((row) => [...row]);
 
     const result = this.minimax(board, aiSymbol, oppSymbol, true);
     if (result.row === -1) {
-      throw new BadRequestException('Minimax tidak menemukan move valid, papan sudah penuh?');
+      throw new BadRequestException(
+        'Minimax tidak menemukan move valid, papan sudah penuh?',
+      );
     }
     return {
       gameType: GameType.TIC_TAC_TOE,
@@ -48,7 +55,8 @@ export class MinimaxAiAdapter implements IAIEngine {
     isMaximizing: boolean,
   ): MinimaxResult {
     if (this.checkWin(board, aiSymbol)) return { score: 10, row: -1, col: -1 };
-    if (this.checkWin(board, oppSymbol)) return { score: -10, row: -1, col: -1 };
+    if (this.checkWin(board, oppSymbol))
+      return { score: -10, row: -1, col: -1 };
 
     const emptyCells = this.getEmptyCells(board);
     if (emptyCells.length === 0) return { score: 0, row: -1, col: -1 };
@@ -76,12 +84,49 @@ export class MinimaxAiAdapter implements IAIEngine {
 
   private checkWin(board: string[][], symbol: string): boolean {
     const lines: [number, number][][] = [
-      [[0,0],[0,1],[0,2]], [[1,0],[1,1],[1,2]], [[2,0],[2,1],[2,2]],
-      [[0,0],[1,0],[2,0]], [[0,1],[1,1],[2,1]], [[0,2],[1,2],[2,2]],
-      [[0,0],[1,1],[2,2]], [[0,2],[1,1],[2,0]],
+      [
+        [0, 0],
+        [0, 1],
+        [0, 2],
+      ],
+      [
+        [1, 0],
+        [1, 1],
+        [1, 2],
+      ],
+      [
+        [2, 0],
+        [2, 1],
+        [2, 2],
+      ],
+      [
+        [0, 0],
+        [1, 0],
+        [2, 0],
+      ],
+      [
+        [0, 1],
+        [1, 1],
+        [2, 1],
+      ],
+      [
+        [0, 2],
+        [1, 2],
+        [2, 2],
+      ],
+      [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+      ],
+      [
+        [0, 2],
+        [1, 1],
+        [2, 0],
+      ],
     ];
     return lines.some(
-      ([[r0,c0],[r1,c1],[r2,c2]]) =>
+      ([[r0, c0], [r1, c1], [r2, c2]]) =>
         board[r0][c0] === symbol &&
         board[r1][c1] === symbol &&
         board[r2][c2] === symbol,

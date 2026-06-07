@@ -1,6 +1,8 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const MermaidContent = dynamic(() => import('./MermaidContent'), { ssr: false });
+const MermaidContent = dynamic(() => import("./MermaidContent"), {
+  ssr: false,
+});
 
 interface Props {
   chart: string;

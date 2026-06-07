@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Trophy } from 'lucide-react';
-import { Player, GameStatus } from '../lib/types';
-import { tokens, card } from '../lib/design-tokens';
+import { Trophy } from "lucide-react";
+import { Player, GameStatus } from "../lib/types";
+import { tokens, card } from "../lib/design-tokens";
 
 interface Props {
   players: Player[];
@@ -12,13 +12,24 @@ interface Props {
   winnerId?: string | null;
 }
 
-export default function PlayerList({ players, currentPlayerId, myPlayerId, status, winnerId }: Props) {
+export default function PlayerList({
+  players,
+  currentPlayerId,
+  myPlayerId,
+  status,
+  winnerId,
+}: Props) {
   return (
     <div className={card}>
-      <h3 className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-3`}>Players</h3>
+      <h3
+        className={`text-xs font-semibold ${tokens.textMuted} uppercase tracking-wider mb-3`}
+      >
+        Players
+      </h3>
       <div className="space-y-1.5">
         {players.map((player, i) => {
-          const isCurrentTurn = player.id === currentPlayerId && status === GameStatus.IN_PROGRESS;
+          const isCurrentTurn =
+            player.id === currentPlayerId && status === GameStatus.IN_PROGRESS;
           const isWinner = player.id === winnerId;
           const isMe = player.id === myPlayerId;
           return (
@@ -26,17 +37,27 @@ export default function PlayerList({ players, currentPlayerId, myPlayerId, statu
               key={player.id}
               className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg transition-colors duration-150 ${
                 isWinner
-                  ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
+                  ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
                   : isCurrentTurn
                     ? `bg-zinc-50 dark:bg-zinc-900/40 border ${tokens.border}`
-                    : 'border border-transparent'
+                    : "border border-transparent"
               }`}
             >
-              <span className={`text-sm leading-none ${i === 0 ? tokens.player1 : tokens.player2}`}>●</span>
+              <span
+                className={`text-sm leading-none ${i === 0 ? tokens.player1 : tokens.player2}`}
+              >
+                ●
+              </span>
 
-              <span className={`font-medium text-sm ${tokens.text} flex-1 truncate`}>
+              <span
+                className={`font-medium text-sm ${tokens.text} flex-1 truncate`}
+              >
                 {player.name}
-                {isMe && <span className={`ml-1 text-xs ${tokens.textMuted}`}>(you)</span>}
+                {isMe && (
+                  <span className={`ml-1 text-xs ${tokens.textMuted}`}>
+                    (you)
+                  </span>
+                )}
               </span>
 
               {isCurrentTurn && (

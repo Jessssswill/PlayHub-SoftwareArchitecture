@@ -24,7 +24,9 @@ export class GameFactoryProvider {
   getFactory(type: GameType): IGameFactory {
     const factory = this.factoryMap.get(type);
     if (!factory) {
-      throw new NotFoundException(`No factory registered for game type: ${type}`);
+      throw new NotFoundException(
+        `No factory registered for game type: ${type}`,
+      );
     }
     return factory;
   }

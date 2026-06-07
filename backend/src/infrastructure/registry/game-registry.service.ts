@@ -16,7 +16,9 @@ export class GameRegistry {
   get(id: string): GameSession {
     const session = this.sessions.get(id);
     if (!session) {
-      throw new NotFoundException(`Session '${id}' tidak ditemukan di registry.`);
+      throw new NotFoundException(
+        `Session '${id}' tidak ditemukan di registry.`,
+      );
     }
     return session;
   }

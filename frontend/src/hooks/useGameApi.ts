@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useCallback } from 'react';
-import * as api from '../lib/api';
-import { GameSession } from '../lib/types';
+import { useEffect, useState, useCallback } from "react";
+import * as api from "../lib/api";
+import { GameSession } from "../lib/types";
 
 export const useSessionList = (pollInterval = 3000) => {
   const [sessions, setSessions] = useState<GameSession[]>([]);
@@ -15,7 +15,7 @@ export const useSessionList = (pollInterval = 3000) => {
       setSessions(data);
       setError(null);
     } catch {
-      setError('Gagal memuat sesi');
+      setError("Gagal memuat sesi");
     } finally {
       setLoading(false);
     }
