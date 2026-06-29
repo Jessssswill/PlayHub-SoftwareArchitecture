@@ -1,0 +1,18 @@
+{
+  "name": "game-session-manager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo root - convenience scripts only",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run start:dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,green\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:backend": "npm --prefix backend run test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

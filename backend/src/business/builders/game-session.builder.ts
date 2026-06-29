@@ -1,0 +1,84 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
+import { GameType } from '../../shared/types/game-type.enum';
+import { GameStatus } from '../../shared/types/game-status.enum';
+import { Player } from '../../shared/types/player.interface';
+import { GameSession } from '../domain/game-session';
+
+@Injectable()
+export class GameSessionBuilder {
+  private gameType: GameType | null = null;
+  private players: Player[] = [];
+  private timeControlSeconds = 0;
+  private isPrivateFlag = false;
+  private allowSpectatorsFlag = false;
+  private maxSpectatorsCount = 0;
+
+  reset(): this {
+    this.gameType = null;
+    this.players = [];
+    this.timeControlSeconds = 0;
+    this.isPrivateFlag = false;
+    this.allowSpectatorsFlag = false;
+    this.maxSpectatorsCount = 0;
+    return this;
+  }
+
+  forGame(type: GameType): this {
+    this.gameType = type;
+    return this;
+  }
+
+  addPlayer(player: Player): this {
+    this.players.push(player);
+    return this;
+  }
+
+  withTimeControl(seconds: number): this {
+    this.timeControlSeconds = seconds;
+    return this;
+  }
+
+  asPrivate(): this {
+    this.isPrivateFlag = true;
+    return this;
+  }
+
+  withSpectators(max = 0): this {
+    this.allowSpectatorsFlag = true;
+    this.maxSpectatorsCount = max;
+    return this;
+  }
+
+  build(): GameSession {
+    if (!this.gameType) {
+      throw new BadRequestException(
+        'Game type harus ditentukan sebelum build().',
+      );
+    }
+    if (this.players.length < 1) {
+      throw new BadRequestException(
+        `Session butuh minimal 1 player, saat ini hanya ${this.players.length}.`,
+      );
+    }
+    if (this.timeControlSeconds < 0) {
+      throw new BadRequestException('Time control tidak boleh negatif.');
+    }
+
+    const session = new GameSession({
+      id: randomUUID(),
+      gameType: this.gameType,
+      players: [...this.players],
+      status: GameStatus.WAITING,
+      currentState: null,
+      createdAt: new Date(),
+      timeControlSeconds: this.timeControlSeconds,
+      isPrivate: this.isPrivateFlag,
+      allowSpectators: this.allowSpectatorsFlag,
+      maxSpectators: this.maxSpectatorsCount,
+    });
+
+    this.reset();
+    return session;
+  }
+}
